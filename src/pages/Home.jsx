@@ -26,22 +26,45 @@ export default function Home() {
                         v2.0 Now Live
                     </div>
 
-                    <h1 className="flex flex-wrap items-center justify-center gap-x-1 gap-y-2 text-4xl md:text-7xl font-mono font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-8" aria-label={headline}>
-                        {letters.map((char, index) => (
-                            <span
-                                key={index}
-                                className={cn(
-                                    "inline-block animate-enter-3d opacity-0 origin-bottom transition-colors duration-500",
-                                    index % 3 === 0 ? "text-rubik-blue" : index % 5 === 0 ? "text-rubik-red" : "text-zinc-900 dark:text-zinc-100"
-                                )}
-                                style={{
-                                    animationDelay: `${index * 40}ms`,
-                                    minWidth: char === " " ? "0.3em" : "auto"
-                                }}
-                            >
-                                {char}
-                            </span>
-                        ))}
+                    <h1 className="flex flex-col items-center justify-center gap-y-4 font-mono font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-8" aria-label={headline}>
+                        {/* First Line: CubeStation */}
+                        <div className="flex flex-wrap justify-center gap-x-2 text-5xl md:text-8xl">
+                            {"CubeStation".split("").map((char, index) => (
+                                <span
+                                    key={`line1-${index}`}
+                                    className={cn(
+                                        "inline-block animate-enter-3d opacity-0 origin-bottom transition-colors duration-500",
+                                        "text-zinc-900 dark:text-zinc-100"
+                                    )}
+                                    style={{
+                                        animationDelay: `${index * 40}ms`,
+                                    }}
+                                >
+                                    {char}
+                                </span>
+                            ))}
+                        </div>
+                        
+                        {/* Second Line: Student Learning Hub */}
+                        <div className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-2xl md:text-4xl text-zinc-600 dark:text-zinc-300">
+                            {"Student Learning Hub".split(" ").map((word, wordIndex) => (
+                                <span key={wordIndex} className="whitespace-nowrap">
+                                    {word.split("").map((char, charIndex) => (
+                                        <span
+                                            key={`line2-${wordIndex}-${charIndex}`}
+                                            className={cn(
+                                                "inline-block animate-enter-3d opacity-0 origin-bottom transition-colors duration-500",
+                                            )}
+                                            style={{
+                                                animationDelay: `${(15 + wordIndex * 5 + charIndex) * 40}ms`,
+                                            }}
+                                        >
+                                            {char}
+                                        </span>
+                                    ))}
+                                </span>
+                            ))}
+                        </div>
                     </h1>
 
                     <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed font-medium animate-fade-in-up opacity-0" style={{ animationDelay: '800ms' }}>
