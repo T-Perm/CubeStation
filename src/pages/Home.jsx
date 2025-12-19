@@ -3,6 +3,7 @@ import { Button } from "../components/ui/button"
 import { Card, CardContent } from "../components/ui/card"
 import { Users, BookOpen, UserPlus, Trophy, Clock } from "lucide-react"
 import { cn } from "../lib/utils"
+import ThreeBackground from "../components/ThreeBackground"
 
 export default function Home() {
     const headline = "CubeStation: Student Learning Hub"
@@ -16,9 +17,10 @@ export default function Home() {
     ]
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col relative min-h-screen">
+            <ThreeBackground />
             {/* Hero Section */}
-            <section className="relative py-24 md:py-32 px-4 overflow-hidden bg-white dark:bg-zinc-950 transition-colors duration-300">
+            <section className="relative py-24 md:py-32 px-4 overflow-hidden bg-transparent transition-colors duration-300">
                 <div className="container mx-auto max-w-5xl text-center relative z-10">
 
                     <div className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rubik-green/10 border border-rubik-green/20 text-xs font-bold font-mono text-rubik-green dark:text-rubik-green animate-fade-in-up">
@@ -91,11 +93,11 @@ export default function Home() {
             </section>
 
             {/* Stats Grid */}
-            <section className="py-12 bg-zinc-50 dark:bg-zinc-900/50 border-y border-zinc-100 dark:border-zinc-800 transition-colors">
+            <section className="py-12 bg-white/50 dark:bg-zinc-950/50 backdrop-blur-sm border-y border-zinc-100 dark:border-zinc-800 transition-colors">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {stats.map((stat, i) => (
-                            <Card key={i} className="group hover:shadow-xl transition-all duration-300 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:-translate-y-1">
+                            <Card key={i} className="group hover:shadow-xl transition-all duration-300 border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md hover:-translate-y-1">
                                 <CardContent className="p-6 flex items-start justify-between">
                                     <div>
                                         <div className="font-mono font-bold text-3xl text-zinc-900 dark:text-zinc-100 mb-1">{stat.label.split(' ')[0]}</div>
