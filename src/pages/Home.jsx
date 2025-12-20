@@ -4,16 +4,17 @@ import { Card, CardContent } from "../components/ui/card"
 import { Users, BookOpen, UserPlus, Trophy, Clock } from "lucide-react"
 import { cn } from "../lib/utils"
 import ThreeBackground from "../components/ThreeBackground"
+import { LiquidGlassCard } from "../components/ui/liquid-glass"
 
 export default function Home() {
     const headline = "CubeStation: Student Learning Hub"
     const letters = headline.split("")
 
     const stats = [
-        { label: "5K+ Peers", icon: Users, color: "bg-rubik-blue text-white", desc: "Active community" },
-        { label: "1M+ Algos", icon: BookOpen, color: "bg-rubik-green text-white", desc: "Curated database" },
-        { label: "Join Session", icon: UserPlus, color: "bg-rubik-yellow text-black", desc: "Live coaching" },
-        { label: "Track PBs", icon: Trophy, color: "bg-rubik-red text-white", desc: "Advanced stats" },
+        { label: "5K+ Peers", icon: Users, color: "bg-rubik-blue text-white dark:bg-transparent dark:text-rubik-blue dark:ring-1 dark:ring-rubik-blue/50 dark:shadow-[0_0_20px_rgba(59,130,246,0.3)]", desc: "Active community" },
+        { label: "1M+ Algos", icon: BookOpen, color: "bg-rubik-green text-white dark:bg-transparent dark:text-rubik-green dark:ring-1 dark:ring-rubik-green/50 dark:shadow-[0_0_20px_rgba(34,197,94,0.3)]", desc: "Curated database" },
+        { label: "Join Session", icon: UserPlus, color: "bg-rubik-yellow text-black dark:bg-transparent dark:text-rubik-yellow dark:ring-1 dark:ring-rubik-yellow/50 dark:shadow-[0_0_20px_rgba(234,179,8,0.3)]", desc: "Live coaching" },
+        { label: "Track PBs", icon: Trophy, color: "bg-rubik-red text-white dark:bg-transparent dark:text-rubik-red dark:ring-1 dark:ring-rubik-red/50 dark:shadow-[0_0_20px_rgba(239,68,68,0.3)]", desc: "Advanced stats" },
     ]
 
     return (
@@ -97,18 +98,26 @@ export default function Home() {
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {stats.map((stat, i) => (
-                            <Card key={i} className="group hover:shadow-xl transition-all duration-300 border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md hover:-translate-y-1">
-                                <CardContent className="p-6 flex items-start justify-between">
+                            <LiquidGlassCard 
+                                key={i} 
+                                draggable={false}
+                                shadowIntensity="xs"
+                                glowIntensity="none"
+                                blurIntensity="xl"
+                                borderRadius="40px"
+                                className="group transition-all duration-300 bg-white/80 dark:bg-transparent hover:-translate-y-1 overflow-hidden"
+                            >
+                                <CardContent className="p-6 flex items-start justify-between relative z-10">
                                     <div>
                                         <div className="font-mono font-bold text-3xl text-zinc-900 dark:text-zinc-100 mb-1">{stat.label.split(' ')[0]}</div>
                                         <div className="font-medium text-zinc-900 dark:text-zinc-200">{stat.label.split(' ').slice(1).join(' ')}</div>
                                         <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 uppercase tracking-wider font-bold">{stat.desc}</div>
                                     </div>
-                                    <div className={cn("p-3 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300", stat.color)}>
+                                    <div className={cn("p-3 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300 backdrop-blur-xl", stat.color)}>
                                         <stat.icon className="w-5 h-5 md:w-6 h-6" />
                                     </div>
                                 </CardContent>
-                            </Card>
+                            </LiquidGlassCard>
                         ))}
                     </div>
                 </div>

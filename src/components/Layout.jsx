@@ -62,7 +62,7 @@ export default function Layout({ children }) {
 
             {/* Sticky Top Nav */}
             <header className="sticky top-0 z-50 w-full border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md shadow-sm transition-all">
-                <div className="container flex h-16 items-center justify-between mx-auto px-4">
+                <div className="container flex h-16 items-center justify-between mx-auto px-4 gap-4">
                     <div className="flex items-center gap-8">
                         <Link to="/" className="flex items-center gap-2 group">
                             <div className="w-8 h-8 bg-zinc-900 dark:bg-white rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
@@ -80,7 +80,7 @@ export default function Layout({ children }) {
                                     key={item.href}
                                     to={item.href}
                                     className={cn(
-                                        "flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-full transition-all hover:bg-zinc-100 dark:hover:bg-zinc-800",
+                                        "flex items-center gap-2 px-3 py-2 text-sm font-semibold rounded-full transition-all hover:bg-zinc-100 dark:hover:bg-zinc-800",
                                         location.pathname === item.href
                                             ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-md"
                                             : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
