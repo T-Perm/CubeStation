@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import { useSolves } from "../contexts/SolveContext"
 import Confetti from "react-confetti"
-import { Play, RotateCcw, Trash2, Check, AlertCircle, Trophy, Save, History, Settings } from "lucide-react"
+import { Play, RotateCcw, Trash2, Check, AlertCircle, Trophy, Save, History, Settings, Mic, MicOff } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
 import { Button } from "../components/ui/button"
 import { Badge } from "../components/ui/badge"
@@ -229,18 +229,24 @@ export default function Timer() {
 
     // --- UI Helpers ---
     const getTimerColor = () => {
-        if (timerState === "running") return "text-white"
-        if (timerState === "inspection") {
+        const activeStatus = stackmat.isActive ? stackmat.status : timerState;
+
+        if (activeStatus === "RUNNING") return "text-white"
+        if (activeStatus === "STOPPED" || timerState === "finished") return "text-white"
+        if (activeStatus === "inspection") {
             if (inspectionTime <= 0) return "text-rubik-red"
             if (inspectionTime <= 8000) return "text-rubik-orange"
             return "text-rubik-yellow"
         }
-        if (timerState === "holding") return "text-rubik-green"
-        if (timerState === "finished") return "text-white"
+        if (activeStatus === "holding") return "text-rubik-green"
         return "text-rubik-orange" // Idle color
     }
 
     const currentDisplayTime = () => {
+        if (stackmat.isActive && (stackmat.status === 'RUNNING' || stackmat.status === 'STOPPED' || stackmat.status === 'IDLE')) {
+            return stackmat.time;
+        }
+
         if (timerState === "inspection") {
             const seconds = Math.ceil(inspectionTime / 1000)
             if (seconds <= -2) return "DNF"
@@ -250,19 +256,36 @@ export default function Timer() {
         return formatTime(time)
     }
 
+    const currentTimerStatus = stackmat.isActive ? stackmat.status : timerState;
+
     return (
         <div className="container mx-auto p-4 max-w-6xl min-h-[calc(100vh-80px)]">
             {isNewPB && <Confetti width={windowSize.width} height={windowSize.height} recycle={false} numberOfPieces={200} />}
 
-            {/* Top Bar: Scramble */}
+            {/* Top Bar: Scramble & Hardware Toggle */}
             <div className="mb-6 space-y-4">
-                <Card className="border-t-4 border-t-rubik-blue shadow-sm bg-white dark:bg-zinc-900">
+                <Card className="border-t-4 border-t-rubik-blue shadow-sm bg-white dark:bg-zinc-900 overflow-hidden relative">
                     <CardContent className="p-6 flex flex-col md:flex-row items-center justify-between gap-4">
                         <div className="flex-1 text-center md:text-left">
                             <h2 className="text-2xl md:text-3xl font-mono font-medium tracking-wide text-zinc-900 dark:text-zinc-100 leading-relaxed">
                                 {scramble}
                             </h2>
-                            <p className="text-xs text-zinc-400 mt-2 font-mono">WCA 3x3 Scramble • Hold Space to Start</p>
+                            <div className="flex items-center justify-center md:justify-start gap-4 mt-2">
+                                <p className="text-xs text-zinc-400 font-mono">
+                                    {stackmat.isActive ? "Hardware Timer Direct" : "Manual Mode • Space to Start"}
+                                </p>
+                                <div className="h-3 w-px bg-zinc-200 dark:bg-zinc-800" />
+                                <button
+                                    onClick={stackmat.toggleStackmat}
+                                    className={cn(
+                                        "flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider transition-colors",
+                                        stackmat.isActive ? "text-rubik-green" : "text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
+                                    )}
+                                >
+                                    <Mic className={cn("w-3.5 h-3.5", stackmat.isActive && "animate-pulse")} />
+                                    Stackmat {stackmat.isActive ? "Connected" : "Off"}
+                                </button>
+                            </div>
                         </div>
                         <Button
                             onClick={() => setScramble(generateScramble())}
@@ -345,16 +368,6 @@ export default function Timer() {
 
                 {/* Sidebar Stats */}
                 <div className="space-y-6">
-                    {/* Stackmat Integration */}
-                    <StackmatDisplay
-                        time={stackmat.time}
-                        status={stackmat.status}
-                        signalStrength={stackmat.signalStrength}
-                        isActive={stackmat.isActive}
-                        error={stackmat.error}
-                        toggleStackmat={stackmat.toggleStackmat}
-                    />
-
                     {/* Session Summary */}
                     <Card>
                         <CardHeader className="pb-2">
