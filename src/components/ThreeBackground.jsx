@@ -1,11 +1,11 @@
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, useState, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Float, Environment } from '@react-three/drei'
 import * as THREE from 'three'
 
 function Puzzle({ type = '3x3', position, rotation, scale = 1, color }) {
   const meshRef = useRef()
-  
+
   const rotationSpeed = useMemo(() => ({
     x: (Math.random() - 0.5) * 0.4,
     y: (Math.random() - 0.5) * 0.4,
@@ -25,7 +25,7 @@ function Puzzle({ type = '3x3', position, rotation, scale = 1, color }) {
 }
 
 function RubiksCube({ dim, position, rotation, scale, meshRef, color }) {
-  const size = 0.95 
+  const size = 0.95
   const gap = 0.05
   const offset = (dim - 1) / 2
 
@@ -33,9 +33,9 @@ function RubiksCube({ dim, position, rotation, scale, meshRef, color }) {
     const temp = []
     const start = -offset
     const end = offset
-    for(let x = 0; x < dim; x++) {
-      for(let y = 0; y < dim; y++) {
-        for(let z = 0; z < dim; z++) {
+    for (let x = 0; x < dim; x++) {
+      for (let y = 0; y < dim; y++) {
+        for (let z = 0; z < dim; z++) {
           temp.push([x - offset, y - offset, z - offset])
         }
       }
@@ -98,20 +98,20 @@ function FloatingCubes() {
   return (
     <>
       {puzzles.map((p, i) => (
-        <Float 
-            key={i} 
-            speed={p.speed} 
-            rotationIntensity={1} 
-            floatIntensity={2} 
-            floatingRange={[-1, 1]}
+        <Float
+          key={i}
+          speed={p.speed}
+          rotationIntensity={1}
+          floatIntensity={2}
+          floatingRange={[-1, 1]}
         >
-          <Puzzle 
+          <Puzzle
             type={p.type}
-            position={p.pos} 
+            position={p.pos}
             scale={p.scale}
             color={{
-                top: i % 2 === 0 ? "#ffffff" : "#eab308",
-                bottom: i % 2 === 0 ? "#eab308" : "#ffffff",
+              top: i % 2 === 0 ? "#ffffff" : "#eab308",
+              bottom: i % 2 === 0 ? "#eab308" : "#ffffff",
             }}
           />
         </Float>
@@ -124,8 +124,8 @@ function Rig() {
   const { camera, mouse } = useThree()
   useFrame((state, delta) => {
     // Smoothly interpolate camera position based on mouse
-    const x = (mouse.x * 2) 
-    const y = (mouse.y * 2) 
+    const x = (mouse.x * 2)
+    const y = (mouse.y * 2)
     camera.position.lerp(new THREE.Vector3(x, y, 10), 0.05)
     camera.lookAt(0, 0, 0)
   })
@@ -133,6 +133,21 @@ function Rig() {
 }
 
 export default function ThreeBackground() {
+  const [reduceMotion, setReduceMotion] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('reduceMotion') === 'true';
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const handleReduceMotion = (e) => setReduceMotion(e.detail);
+    window.addEventListener('reduce-motion-change', handleReduceMotion);
+    return () => window.removeEventListener('reduce-motion-change', handleReduceMotion);
+  }, []);
+
+  if (reduceMotion) return null;
+
   return (
     <div className="fixed inset-0 z-0 pointer-events-none opacity-40 grayscale-[20%]">
       <Canvas camera={{ position: [0, 0, 10], fov: 45 }}>

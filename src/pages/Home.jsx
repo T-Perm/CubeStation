@@ -29,7 +29,7 @@ export default function Home() {
                         v2.0 Now Live
                     </div>
 
-                    <h1 className="flex flex-col items-center justify-center gap-y-4 font-mono font-bold tracking-tight text-zinc-900 dark:text-zinc-300 mb-8" aria-label={headline}>
+                    <h1 className="flex flex-col items-center justify-center gap-y-4 font-mono font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-8" aria-label={headline}>
                         {/* First Line: CubeStation */}
                         <div className="flex flex-wrap justify-center gap-x-2 text-5xl md:text-8xl">
                             {"CubeStation".split("").map((char, index) => (
@@ -37,7 +37,7 @@ export default function Home() {
                                     key={`line1-${index}`}
                                     className={cn(
                                         "inline-block animate-enter-3d opacity-0 origin-bottom transition-colors duration-500",
-                                        "text-zinc-900 dark:text-zinc-300"
+                                        "text-zinc-900 dark:text-zinc-100"
                                     )}
                                     style={{
                                         animationDelay: `${index * 40}ms`,
@@ -82,7 +82,7 @@ export default function Home() {
                             </Button>
                         </Link>
                         <Link to="/schedule">
-                            <Button size="xl" variant="outline" className="px-8 rounded-xl font-bold bg-white dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700 border-2 hover:-translate-y-1 transition-all">
+                            <Button size="xl" variant="outline" className="px-8 rounded-xl font-bold bg-white dark:bg-zinc-800 dark:text-zinc-100 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700 border-2 hover:-translate-y-1 transition-all">
                                 Browse Sessions
                             </Button>
                         </Link>
@@ -94,7 +94,7 @@ export default function Home() {
             </section>
 
             {/* Stats Grid */}
-            <section className="py-12 bg-white/50 dark:bg-zinc-950/50 backdrop-blur-sm border-y border-zinc-300 dark:border-zinc-800 transition-colors">
+            <section className="py-12 bg-white/50 dark:bg-zinc-950/50 backdrop-blur-sm border-y border-zinc-100 dark:border-zinc-800 transition-colors">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {stats.map((stat, i) => (
@@ -109,9 +109,9 @@ export default function Home() {
                             >
                                 <CardContent className="p-6 flex items-start justify-between relative z-10">
                                     <div>
-                                        <div className="font-mono font-bold text-3xl text-zinc-900 dark:text-zinc-300 mb-1">{stat.label.split(' ')[0]}</div>
+                                        <div className="font-mono font-bold text-3xl text-zinc-900 dark:text-zinc-100 mb-1">{stat.label.split(' ')[0]}</div>
                                         <div className="font-medium text-zinc-900 dark:text-zinc-200">{stat.label.split(' ').slice(1).join(' ')}</div>
-                                        <div className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 uppercase tracking-wider font-bold">{stat.desc}</div>
+                                        <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 uppercase tracking-wider font-bold">{stat.desc}</div>
                                     </div>
                                     <div className={cn("p-3 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300 backdrop-blur-xl", stat.color)}>
                                         <stat.icon className="w-5 h-5 md:w-6 h-6" />

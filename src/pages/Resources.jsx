@@ -58,7 +58,7 @@ export default function Resources() {
         {
             label: "Go Pro",
             onClick: triggerToast,
-            icon: <Sparkles className="h-6 w-6 text-rubik-yellow" />,
+            icon: <Sparkles className="h-6 w-6 text-yellow-600 dark:text-rubik-yellow" />,
             isActive: false
         }
     ];
@@ -116,18 +116,22 @@ export default function Resources() {
                                 </div>
                             </div>
 
-                            {/* Coming Soon / Placeholder to fill grid */}
-                            <div className="md:col-span-3 bg-gradient-to-r from-neutral-800 to-neutral-900 rounded-xl p-8 flex items-center justify-between text-white relative overflow-hidden">
-                                <div className="relative z-10">
-                                    <h3 className="text-2xl font-bold mb-1">More Tutorials Coming Soon</h3>
-                                    <p className="text-neutral-400">Blindfolded, One-Handed, and more.</p>
+                            {/* One-Handed Solving */}
+                            <div
+                                onClick={() => window.location.href = '/resources/tutorial/oh-guide'}
+                                className="md:col-span-3 bg-white dark:bg-neutral-800 rounded-xl p-6 border border-neutral-200 dark:border-neutral-700 cursor-pointer hover:border-rubik-red hover:shadow-lg transition-all group relative overflow-hidden"
+                            >
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-rubik-red/5 rounded-full -mr-10 -mt-10 pointer-events-none" />
+                                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                                    <div className="relative z-10">
+                                        <h3 className="text-xl font-bold mb-1 text-neutral-800 dark:text-neutral-100 group-hover:text-rubik-red transition-colors">One-Handed Solving (OH)</h3>
+                                        <p className="text-sm text-neutral-500 dark:text-neutral-400">Master the art of turning with a single hand. Expert techniques.</p>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-xs font-bold bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded text-neutral-600 dark:text-neutral-300">Expert</span>
+                                        <IconUserBolt className="w-6 h-6 text-neutral-300 group-hover:text-rubik-red transition-colors" />
+                                    </div>
                                 </div>
-                                <div className="flex -space-x-4">
-                                    {[1, 2, 3].map(i => (
-                                        <div key={i} className="w-10 h-10 rounded-full bg-neutral-700 border-2 border-neutral-800 flex items-center justify-center text-xs font-bold">?</div>
-                                    ))}
-                                </div>
-                                <IconVideo className="absolute -bottom-4 right-10 w-24 h-24 text-white/5" />
                             </div>
                         </div>
                     </div>

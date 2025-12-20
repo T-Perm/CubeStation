@@ -42,8 +42,6 @@
   --color-rubik-green: #22c55e;
   --color-rubik-yellow: #eab308;
 
-  --color-zinc-300: oklch(20.5% 0 0);
-
   --animate-enter-3d: enter-3d 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
   --animate-fade-in-up: fade-in-up 0.8s ease-out forwards;
 }
@@ -75,7 +73,7 @@
 }
 
 html.dark body {
-  @apply bg-zinc-950 text-zinc-300;
+  @apply bg-zinc-950 text-zinc-100;
 }
 
 /* Explicit Overrides for Dark Mode Backgrounds */
@@ -104,12 +102,12 @@ html.dark body {
 .dark .card {
   background-color: theme('colors.zinc.900') !important;
   border-color: theme('colors.zinc.800') !important;
-  color: theme('colors.zinc.300') !important;
+  color: theme('colors.zinc.100') !important;
 }
 
 /* Force dark mode text for specific elements that stick to light mode colors */
 .dark h1 span {
-  color: theme('colors.zinc.300');
+  color: theme('colors.zinc.100');
 }
 
 .dark h1 span.text-rubik-blue {
@@ -122,7 +120,7 @@ html.dark body {
 
 .dark footer span.font-mono,
 .dark header span.font-mono {
-  color: theme('colors.zinc.300') !important;
+  color: theme('colors.zinc.100') !important;
 }
 
 .dark footer a {

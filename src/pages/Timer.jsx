@@ -2,13 +2,12 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import { useSolves } from "../contexts/SolveContext"
 import Confetti from "react-confetti"
-import { Play, RotateCcw, Trash2, Check, AlertCircle, Trophy, Save, History, Settings, Mic, MicOff } from "lucide-react"
+import { Play, RotateCcw, Trash2, Check, AlertCircle, Trophy, Save, History, Settings } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
 import { Button } from "../components/ui/button"
 import { Badge } from "../components/ui/badge"
 import { Progress } from "../components/ui/progress"
 import { cn } from "../lib/utils"
-import StackmatDisplay from "../components/StackmatDisplay"
 
 // --- Helper Functions for Cube Logic ---
 
@@ -59,9 +58,6 @@ export default function Timer() {
     const [timerState, setTimerState] = useState("idle") // idle, inspection, holding, ready, running, finished
     const [inspectionTime, setInspectionTime] = useState(15000) // 15s in ms
     const [penalty, setPenalty] = useState(0) // 0, 2000 (+2), or Infinity (DNF)
-
-    // Hardware Timer Hook
-    const stackmat = StackmatDisplay.useStackmat();
 
     // Note: isNewPB logic assumes context handles it or we calculate locally.
     // For simplicity, we'll calculate locally based on solves from context + new time.
@@ -194,59 +190,21 @@ export default function Timer() {
         }
     }, [handleKeyDown, handleKeyUp])
 
-    // --- Stackmat Auto-Save Logic ---
-    const lastStackmatStatus = useRef(stackmat.status);
-    useEffect(() => {
-        if (stackmat.status === 'STOPPED' && lastStackmatStatus.current === 'RUNNING') {
-            // Convert "0:00.00" string to ms
-            const [min, rest] = stackmat.time.split(':');
-            const [sec, hun] = rest.split('.');
-            const totalMs = (parseInt(min) * 60000) + (parseInt(sec) * 1000) + (parseInt(hun) * 10);
-
-            const newSolve = {
-                id: Date.now(),
-                time: totalMs,
-                scramble: scramble,
-                date: new Date().toISOString(),
-                penalty: 0
-            };
-
-            addSolve(newSolve);
-            setScramble(generateScramble()); // Get next scramble
-
-            // Check PB for confetti
-            const currentBest = solves.length > 0
-                ? Math.min(...solves.filter(s => s.penalty !== Infinity).map(s => s.time + s.penalty))
-                : Infinity;
-
-            if (totalMs < currentBest) {
-                setIsNewPB(true);
-                setTimeout(() => setIsNewPB(false), 5000);
-            }
-        }
-        lastStackmatStatus.current = stackmat.status;
-    }, [stackmat.status, stackmat.time, scramble, addSolve, solves]);
 
     // --- UI Helpers ---
     const getTimerColor = () => {
-        const activeStatus = stackmat.isActive ? stackmat.status : timerState;
-
-        if (activeStatus === "RUNNING") return "text-white"
-        if (activeStatus === "STOPPED" || timerState === "finished") return "text-white"
-        if (activeStatus === "inspection") {
+        if (timerState === "running") return "text-zinc-900"
+        if (timerState === "inspection") {
             if (inspectionTime <= 0) return "text-rubik-red"
             if (inspectionTime <= 8000) return "text-rubik-orange"
             return "text-rubik-yellow"
         }
-        if (activeStatus === "holding") return "text-rubik-green"
+        if (timerState === "holding") return "text-rubik-green"
+        if (timerState === "finished") return "text-zinc-900"
         return "text-rubik-orange" // Idle color
     }
 
     const currentDisplayTime = () => {
-        if (stackmat.isActive && (stackmat.status === 'RUNNING' || stackmat.status === 'STOPPED' || stackmat.status === 'IDLE')) {
-            return stackmat.time;
-        }
-
         if (timerState === "inspection") {
             const seconds = Math.ceil(inspectionTime / 1000)
             if (seconds <= -2) return "DNF"
@@ -256,40 +214,23 @@ export default function Timer() {
         return formatTime(time)
     }
 
-    const currentTimerStatus = stackmat.isActive ? stackmat.status : timerState;
-
     return (
         <div className="container mx-auto p-4 max-w-6xl min-h-[calc(100vh-80px)]">
             {isNewPB && <Confetti width={windowSize.width} height={windowSize.height} recycle={false} numberOfPieces={200} />}
 
-            {/* Top Bar: Scramble & Hardware Toggle */}
+            {/* Top Bar: Scramble */}
             <div className="mb-6 space-y-4">
-                <Card className="border-zinc-800 bg-zinc-950 border-t-4 border-t-rubik-blue shadow-none overflow-hidden relative">
+                <Card className="border-t-4 border-t-rubik-blue shadow-sm bg-white">
                     <CardContent className="p-6 flex flex-col md:flex-row items-center justify-between gap-4">
                         <div className="flex-1 text-center md:text-left">
-                            <h2 className="text-2xl md:text-3xl font-mono font-medium tracking-wide text-zinc-300 leading-relaxed">
+                            <h2 className="text-2xl md:text-3xl font-mono font-medium tracking-wide text-zinc-900 leading-relaxed">
                                 {scramble}
                             </h2>
-                            <div className="flex items-center justify-center md:justify-start gap-4 mt-2">
-                                <p className="text-xs text-zinc-600 font-mono">
-                                    {stackmat.isActive ? "Hardware Timer Direct" : "Manual Mode • Space to Start"}
-                                </p>
-                                <div className="h-3 w-px bg-zinc-800" />
-                                <button
-                                    onClick={stackmat.toggleStackmat}
-                                    className={cn(
-                                        "flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider transition-colors",
-                                        stackmat.isActive ? "text-rubik-green" : "text-zinc-600 hover:text-zinc-300"
-                                    )}
-                                >
-                                    <Mic className={cn("w-3.5 h-3.5", stackmat.isActive && "animate-pulse")} />
-                                    Stackmat {stackmat.isActive ? "Connected" : "Off"}
-                                </button>
-                            </div>
+                            <p className="text-xs text-zinc-400 mt-2 font-mono">WCA 3x3 Scramble • Hold Space to Start</p>
                         </div>
                         <Button
                             onClick={() => setScramble(generateScramble())}
-                            className="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-zinc-800 shrink-0 border"
+                            className="bg-zinc-100 hover:bg-zinc-200 text-zinc-900 shrink-0"
                             size="icon"
                         >
                             <RotateCcw className="w-5 h-5" />
@@ -302,11 +243,11 @@ export default function Timer() {
 
                 {/* Main Timer Area */}
                 <div className="lg:col-span-2 space-y-6">
-                    <Card
-                        className="h-[400px] md:h-[500px] flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 bg-zinc-950 border-zinc-800 shadow-none border"
+                    <Card className="h-[400px] md:h-[500px] flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-300"
                         onClick={() => {
                             // Touch support placeholder
                             if (window.innerWidth < 768 && timerState === 'idle') handleKeyDown({ code: 'Space', preventDefault: () => { } })
+                            // Simplified touch logic would go here
                         }}
                     >
                         {/* Background Pulse for Inspection */}
@@ -321,7 +262,7 @@ export default function Timer() {
                         </div>
 
                         {timerState === "idle" && (
-                            <p className="absolute bottom-12 text-zinc-600 animate-pulse font-mono text-sm">
+                            <p className="absolute bottom-12 text-zinc-400 animate-pulse font-mono text-sm">
                                 Press Spacebar to Start
                             </p>
                         )}
@@ -352,11 +293,11 @@ export default function Timer() {
                                 >
                                     DNF
                                 </Button>
-                                <div className="w-px h-6 bg-zinc-800 mx-2" />
+                                <div className="w-px h-6 bg-zinc-200 mx-2" />
                                 <Button
                                     variant="ghost"
                                     size="icon"
-                                    className="text-zinc-600 hover:text-rubik-red"
+                                    className="text-zinc-400 hover:text-rubik-red"
                                     onClick={() => deleteSolve(solves[0].id)}
                                 >
                                     <Trash2 className="w-4 h-4" />
@@ -369,60 +310,61 @@ export default function Timer() {
                 {/* Sidebar Stats */}
                 <div className="space-y-6">
                     {/* Session Summary */}
-                    <Card className="bg-zinc-950 border-zinc-800 shadow-none">
+                    <Card>
                         <CardHeader className="pb-2">
                             <div className="flex items-center justify-between">
-                                <CardTitle className="text-sm uppercase tracking-widest text-zinc-600 font-bold">Session Stats</CardTitle>
-                                <Badge variant="outline" className="font-mono bg-zinc-900 border-zinc-800 text-zinc-400">{solves.length} Solves</Badge>
+                                <CardTitle className="text-sm uppercase tracking-widest text-zinc-500 font-bold">Session Stats</CardTitle>
+                                <Badge variant="outline" className="font-mono">{solves.length} Solves</Badge>
                             </div>
                         </CardHeader>
                         <CardContent className="grid grid-cols-2 gap-4">
-                            <div className="bg-zinc-900 p-4 rounded-xl border border-zinc-800">
-                                <div className="text-xs text-zinc-600 font-medium mb-1">Best Single</div>
+                            <div className="bg-zinc-50 p-4 rounded-xl border border-zinc-100">
+                                <div className="text-xs text-zinc-500 font-medium mb-1">Best Single</div>
                                 <div className="text-2xl font-mono font-bold text-rubik-green">{getBestSingle()}</div>
                             </div>
-                            <div className="bg-zinc-900 p-4 rounded-xl border border-zinc-800">
-                                <div className="text-xs text-zinc-600 font-medium mb-1">Current Ao5</div>
+                            <div className="bg-zinc-50 p-4 rounded-xl border border-zinc-100">
+                                <div className="text-xs text-zinc-500 font-medium mb-1">Current Ao5</div>
                                 <div className="text-2xl font-mono font-bold text-rubik-blue">{getAo5()}</div>
                             </div>
                         </CardContent>
                     </Card>
 
                     {/* Solve History */}
-                    <Card className="bg-zinc-950 border-zinc-800 shadow-none flex-1 min-h-[300px]">
+                    <Card className="flex-1 min-h-[300px]">
                         <CardHeader>
                             <div className="flex items-center justify-between">
-                                <CardTitle className="text-sm uppercase tracking-widest text-zinc-600 font-bold">History</CardTitle>
-                                <Button variant="ghost" size="icon" className="h-6 w-6"><Settings className="w-4 h-4 text-zinc-600 hover:text-zinc-400" /></Button>
+                                <CardTitle className="text-sm uppercase tracking-widest text-zinc-500 font-bold">History</CardTitle>
+                                <Button variant="ghost" size="icon" className="h-6 w-6"><Settings className="w-4 h-4 text-zinc-400" /></Button>
                             </div>
                         </CardHeader>
                         <CardContent className="p-0">
-                            <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
+                            <div className="max-h-[300px] overflow-y-auto">
                                 <table className="w-full text-sm text-left">
-                                    <thead className="text-xs text-zinc-600 bg-zinc-900/50 sticky top-0 uppercase">
+                                    <thead className="text-xs text-zinc-500 bg-zinc-50 sticky top-0 uppercase">
                                         <tr>
                                             <th className="px-4 py-3 font-medium">#</th>
                                             <th className="px-4 py-3 font-medium">Time</th>
                                             <th className="px-4 py-3 font-medium">Ao5</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-zinc-900">
+                                    <tbody className="divide-y divide-zinc-100">
                                         {solves.map((solve, i) => (
-                                            <tr key={solve.id} className="hover:bg-zinc-900/40 transition-colors group">
-                                                <td className="px-4 py-3 font-mono text-zinc-600 w-12">{solves.length - i}</td>
-                                                <td className="px-4 py-3 font-mono font-medium text-zinc-300">
+                                            <tr key={solve.id} className="hover:bg-zinc-50/50 transition-colors group">
+                                                <td className="px-4 py-3 font-mono text-zinc-400 w-12">{solves.length - i}</td>
+                                                <td className="px-4 py-3 font-mono font-medium text-zinc-700">
                                                     {solve.penalty === Infinity ? <span className="text-rubik-red">DNF</span> :
                                                         solve.penalty === 2000 ? <span className="text-rubik-yellow">{formatTime(solve.time + 2000)}+</span> :
                                                             formatTime(solve.time)}
                                                 </td>
-                                                <td className="px-4 py-3 font-mono text-zinc-600">
+                                                <td className="px-4 py-3 font-mono text-zinc-500">
+                                                    {/* Ao5 calc for individual rows omitted for brevity, usually complex to calc backwards efficiently in mock */}
                                                     --
                                                 </td>
                                             </tr>
                                         ))}
                                         {solves.length === 0 && (
                                             <tr>
-                                                <td colSpan={3} className="px-4 py-8 text-center text-zinc-600 italic">
+                                                <td colSpan={3} className="px-4 py-8 text-center text-zinc-400 italic">
                                                     No solves yet. Start timer!
                                                 </td>
                                             </tr>

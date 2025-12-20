@@ -5,6 +5,7 @@ import { Box, Calendar, LayoutDashboard, Library, Menu, X, MessageCircle, Clock,
 import { useState, useEffect } from "react"
 import { Badge } from "./ui/badge"
 import SearchModal from "./SearchModal"
+import ScrollToTop from "./ScrollToTop"
 
 export default function Layout({ children }) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -15,6 +16,14 @@ export default function Layout({ children }) {
         }
         return 'light';
     })
+
+    // Add reduce motion state
+    const [reduceMotion, setReduceMotion] = useState(() => {
+        if (typeof window !== 'undefined') {
+            return localStorage.getItem('reduceMotion') === 'true';
+        }
+        return false;
+    });
 
     useEffect(() => {
         const root = window.document.documentElement;
@@ -49,7 +58,7 @@ export default function Layout({ children }) {
         { label: "Timer", href: "/timer", icon: Clock, color: "text-rubik-orange" },
         { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard, color: "text-rubik-green" },
         { label: "Schedule", href: "/schedule", icon: Calendar, color: "text-rubik-red" },
-        { label: "Resources", href: "/resources", icon: Library, color: "text-rubik-yellow" },
+        { label: "Resources", href: "/resources", icon: Library, color: "text-yellow-600 dark:text-rubik-yellow" },
     ]
 
     return (
@@ -171,6 +180,26 @@ export default function Layout({ children }) {
                                 <br />
                                 Built for the FBLA 2025-2026 Website Design competition.
                             </p>
+                            <div className="mt-6">
+                                <label className="flex items-center gap-2 text-xs font-bold text-zinc-500 cursor-pointer hover:text-zinc-900 dark:hover:text-zinc-300 transition-colors">
+                                    <input
+                                        type="checkbox"
+                                        className="rounded border-zinc-300 text-rubik-blue focus:ring-rubik-blue"
+                                        checked={reduceMotion}
+                                        onChange={(e) => {
+                                            const newVal = e.target.checked;
+                                            setReduceMotion(newVal);
+                                            localStorage.setItem('reduceMotion', newVal);
+                                            window.dispatchEvent(new Event('storage'));
+                                            // Force reload/re-render of 3D component effectively by simple state signal if needed, 
+                                            // but localStorage event might be enough if components listen to it.
+                                            // Actually, we'll expose this via window event.
+                                            window.dispatchEvent(new CustomEvent('reduce-motion-change', { detail: newVal }));
+                                        }}
+                                    />
+                                    Reduce Motion / Low Quality Mode
+                                </label>
+                            </div>
                         </div>
                         <div>
                             <h4 className="font-bold text-zinc-900 dark:text-zinc-300 mb-4 uppercase text-xs tracking-widest">Learn</h4>
@@ -208,6 +237,7 @@ export default function Layout({ children }) {
                 <MessageCircle className="h-6 w-6 text-white" />
             </Button>
             <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+            <ScrollToTop />
         </div>
     )
 }

@@ -94,5 +94,22 @@ export const tutorialsData = {
                 tips: ["Stages: Orient Edges (EO) -> Solve UL/UR edges -> Solve centers and last 4 edges (4c)."]
             }
         ]
+    },
+    "oh-guide": {
+        title: "One-Handed Solving",
+        description: "Learn to solve the cube with only one hand. Essential for becoming a well-rounded speedcuber.",
+        difficulty: "Expert",
+        steps: [
+            {
+                title: "Turning Technique",
+                content: "Rest the cube on the table (if allowed) or hold it in your left hand. Use your pinky and ring fingers for stability, and index/middle/thumb for turns.",
+                tips: ["Practice 'Table Abuse' starts.", "Pinky flicks are crucial for U2 moves."]
+            },
+            {
+                title: "Algorithm Changes",
+                content: "Some algorithms that are fast for 2H are terrible for OH. Learn RU-gen or LU-gen algs specifically.",
+                tips: ["Avoid cube rotations (x, y, z) as much as possible."]
+            }
+        ]
     }
 }
