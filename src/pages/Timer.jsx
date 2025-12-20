@@ -193,14 +193,14 @@ export default function Timer() {
 
     // --- UI Helpers ---
     const getTimerColor = () => {
-        if (timerState === "running") return "text-zinc-900"
+        if (timerState === "running") return "text-white"
         if (timerState === "inspection") {
             if (inspectionTime <= 0) return "text-rubik-red"
             if (inspectionTime <= 8000) return "text-rubik-orange"
             return "text-rubik-yellow"
         }
         if (timerState === "holding") return "text-rubik-green"
-        if (timerState === "finished") return "text-zinc-900"
+        if (timerState === "finished") return "text-white"
         return "text-rubik-orange" // Idle color
     }
 
@@ -220,17 +220,17 @@ export default function Timer() {
 
             {/* Top Bar: Scramble */}
             <div className="mb-6 space-y-4">
-                <Card className="border-t-4 border-t-rubik-blue shadow-sm bg-white">
+                <Card className="border-t-4 border-t-rubik-blue shadow-sm bg-white dark:bg-zinc-900">
                     <CardContent className="p-6 flex flex-col md:flex-row items-center justify-between gap-4">
                         <div className="flex-1 text-center md:text-left">
-                            <h2 className="text-2xl md:text-3xl font-mono font-medium tracking-wide text-zinc-900 leading-relaxed">
+                            <h2 className="text-2xl md:text-3xl font-mono font-medium tracking-wide text-zinc-900 dark:text-zinc-100 leading-relaxed">
                                 {scramble}
                             </h2>
                             <p className="text-xs text-zinc-400 mt-2 font-mono">WCA 3x3 Scramble • Hold Space to Start</p>
                         </div>
                         <Button
                             onClick={() => setScramble(generateScramble())}
-                            className="bg-zinc-100 hover:bg-zinc-200 text-zinc-900 shrink-0"
+                            className="bg-zinc-100 hover:bg-zinc-200 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 shrink-0"
                             size="icon"
                         >
                             <RotateCcw className="w-5 h-5" />
@@ -243,7 +243,7 @@ export default function Timer() {
 
                 {/* Main Timer Area */}
                 <div className="lg:col-span-2 space-y-6">
-                    <Card className="h-[400px] md:h-[500px] flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-300"
+                    <Card className="h-[400px] md:h-[500px] flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-300 bg-zinc-900 border-zinc-800"
                         onClick={() => {
                             // Touch support placeholder
                             if (window.innerWidth < 768 && timerState === 'idle') handleKeyDown({ code: 'Space', preventDefault: () => { } })
@@ -262,7 +262,7 @@ export default function Timer() {
                         </div>
 
                         {timerState === "idle" && (
-                            <p className="absolute bottom-12 text-zinc-400 animate-pulse font-mono text-sm">
+                            <p className="absolute bottom-12 text-zinc-500 animate-pulse font-mono text-sm">
                                 Press Spacebar to Start
                             </p>
                         )}
