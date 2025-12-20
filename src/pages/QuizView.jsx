@@ -18,7 +18,7 @@ export default function QuizView() {
     if (!quiz) {
         return (
             <div className="flex flex-col items-center justify-center h-full p-8 text-center">
-                <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">Quiz Not Found</h2>
+                <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-300">Quiz Not Found</h2>
                 <Button onClick={() => navigate('/resources')} className="mt-4">
                     Back to Resources
                 </Button>
@@ -95,7 +95,7 @@ export default function QuizView() {
 
                     <div className="bg-white dark:bg-zinc-800 rounded-2xl p-8 shadow-lg text-center">
                         <Trophy className="w-16 h-16 mx-auto mb-4 text-yellow-500" />
-                        <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">
+                        <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-300 mb-2">
                             Quiz Complete!
                         </h1>
                         <p className="text-zinc-600 dark:text-zinc-400 mb-6">{quiz.title}</p>
@@ -163,7 +163,7 @@ export default function QuizView() {
                 {/* Quiz Header */}
                 <div className="mb-6">
                     <div className="flex items-center justify-between mb-2">
-                        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+                        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-300">
                             {quiz.title}
                         </h1>
                         <span className={cn(
@@ -193,7 +193,7 @@ export default function QuizView() {
 
                 {/* Question Card */}
                 <div className="bg-white dark:bg-zinc-800 rounded-2xl p-8 shadow-lg mb-6">
-                    <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-6">
+                    <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-300 mb-6">
                         {question.question}
                     </h2>
 

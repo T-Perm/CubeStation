@@ -17,7 +17,7 @@ export default function Copyright() {
                 </Button>
 
                 <div className="bg-white dark:bg-zinc-800 rounded-2xl p-8 shadow-sm border border-zinc-200 dark:border-zinc-700">
-                    <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-6 flex items-center gap-3">
+                    <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-300 mb-6 flex items-center gap-3">
                         <Scale className="w-8 h-8 text-neutral-500" />
                         Copyright & Sources
                     </h1>
@@ -26,7 +26,7 @@ export default function Copyright() {
 
                         {/* Fair Use Statement */}
                         <section className="bg-neutral-100 dark:bg-zinc-900 p-6 rounded-xl">
-                            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mt-0">Fair Use Disclaimer</h2>
+                            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-300 mt-0">Fair Use Disclaimer</h2>
                             <p className="text-zinc-600 dark:text-zinc-400 text-sm">
                                 This website is created for educational purposes as part of the FBLA Website Design competition.
                                 Content is used under the "Fair Use" doctrine for student learning and nonprofit educational use.
@@ -36,7 +36,7 @@ export default function Copyright() {
 
                         {/* Content Sources */}
                         <section>
-                            <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Content Sources & Credits</h2>
+                            <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-300 mb-4">Content Sources & Credits</h2>
                             <div className="grid gap-4">
                                 <SourceCard
                                     title="J Perm (Dylan Wang)"
@@ -58,7 +58,7 @@ export default function Copyright() {
 
                         {/* Icons & Libraries */}
                         <section>
-                            <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Technology Stack</h2>
+                            <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-300 mb-4">Technology Stack</h2>
                             <ul className="grid md:grid-cols-2 gap-2 text-zinc-600 dark:text-zinc-400">
                                 <li className="flex items-center gap-2"><Code className="w-4 h-4" /> React (Vite)</li>
                                 <li className="flex items-center gap-2"><Code className="w-4 h-4" /> Tailwind CSS</li>
@@ -89,7 +89,7 @@ function SourceCard({ title, description, link }) {
             className="flex items-start justify-between p-4 rounded-lg border border-zinc-200 dark:border-zinc-700 hover:border-blue-500 hover:bg-blue-50 dark:hover:border-blue-500 dark:hover:bg-blue-900/10 transition-all group"
         >
             <div>
-                <h3 className="font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 className="font-bold text-zinc-900 dark:text-zinc-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {title}
                 </h3>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400">{description}</p>

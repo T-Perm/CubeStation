@@ -39,7 +39,7 @@ export default function StackmatDisplay({ time, status, signalStrength, isActive
                         "text-6xl md:text-7xl font-mono font-bold tracking-tighter tabular-nums transition-all duration-300",
                         status === 'RUNNING' ? "text-rubik-green" :
                             status === 'STOPPED' ? "text-rubik-red" :
-                                "text-zinc-900 dark:text-zinc-100"
+                                "text-zinc-900 dark:text-zinc-300"
                     )}>
                         {time}
                     </h2>
@@ -48,7 +48,7 @@ export default function StackmatDisplay({ time, status, signalStrength, isActive
                             "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider",
                             status === 'RUNNING' ? "bg-rubik-green/10 text-rubik-green" :
                                 status === 'STOPPED' ? "bg-rubik-red/10 text-rubik-red" :
-                                    "bg-zinc-100 dark:bg-zinc-800 text-zinc-600"
+                                    "bg-zinc-300 dark:bg-zinc-800 text-zinc-600"
                         )}>
                             {status}
                         </span>
@@ -63,7 +63,7 @@ export default function StackmatDisplay({ time, status, signalStrength, isActive
                         </span>
                         <span>{signalPercent}%</span>
                     </div>
-                    <div className="h-1.5 w-full bg-zinc-100 dark:bg-zinc-900 rounded-full overflow-hidden">
+                    <div className="h-1.5 w-full bg-zinc-300 dark:bg-zinc-900 rounded-full overflow-hidden">
                         <div
                             className={cn(
                                 "h-full transition-all duration-300",
@@ -82,7 +82,7 @@ export default function StackmatDisplay({ time, status, signalStrength, isActive
                     className={cn(
                         "w-full h-14 rounded-2xl font-bold transition-all duration-300 group",
                         isActive
-                            ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 hover:bg-rubik-red/10 hover:text-rubik-red"
+                            ? "bg-zinc-300 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-300 hover:bg-rubik-red/10 hover:text-rubik-red"
                             : "bg-rubik-blue text-white shadow-lg shadow-rubik-blue/25 hover:shadow-xl hover:-translate-y-0.5"
                     )}
                 >

@@ -267,7 +267,7 @@ export default function Timer() {
                 <Card className="border-zinc-800 bg-zinc-950 border-t-4 border-t-rubik-blue shadow-none overflow-hidden relative">
                     <CardContent className="p-6 flex flex-col md:flex-row items-center justify-between gap-4">
                         <div className="flex-1 text-center md:text-left">
-                            <h2 className="text-2xl md:text-3xl font-mono font-medium tracking-wide text-zinc-100 leading-relaxed">
+                            <h2 className="text-2xl md:text-3xl font-mono font-medium tracking-wide text-zinc-300 leading-relaxed">
                                 {scramble}
                             </h2>
                             <div className="flex items-center justify-center md:justify-start gap-4 mt-2">
@@ -289,7 +289,7 @@ export default function Timer() {
                         </div>
                         <Button
                             onClick={() => setScramble(generateScramble())}
-                            className="bg-zinc-900 hover:bg-zinc-800 text-zinc-100 border-zinc-800 shrink-0 border"
+                            className="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-zinc-800 shrink-0 border"
                             size="icon"
                         >
                             <RotateCcw className="w-5 h-5" />

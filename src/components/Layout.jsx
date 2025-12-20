@@ -68,7 +68,7 @@ export default function Layout({ children }) {
                             <div className="w-8 h-8 bg-zinc-900 dark:bg-white rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
                                 <span className="text-white dark:text-zinc-900 font-bold text-lg">C</span>
                             </div>
-                            <span className="font-mono font-bold text-xl tracking-tight text-zinc-900 dark:text-zinc-100">CubeStation</span>
+                            <span className="font-mono font-bold text-xl tracking-tight text-zinc-900 dark:text-zinc-300">CubeStation</span>
                         </Link>
                     </div>
 
@@ -80,10 +80,10 @@ export default function Layout({ children }) {
                                     key={item.href}
                                     to={item.href}
                                     className={cn(
-                                        "flex items-center gap-2 px-3 py-2 text-sm font-semibold rounded-full transition-all hover:bg-zinc-100 dark:hover:bg-zinc-800",
+                                        "flex items-center gap-2 px-3 py-2 text-sm font-semibold rounded-full transition-all hover:bg-zinc-300 dark:hover:bg-zinc-800",
                                         location.pathname === item.href
-                                            ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-md"
-                                            : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
+                                            ? "bg-zinc-900 text-white dark:bg-zinc-300 dark:text-zinc-900 shadow-md"
+                                            : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-300"
                                     )}
                                 >
                                     <item.icon className={cn("w-4 h-4", location.pathname === item.href ? "text-current" : item.color)} />
@@ -94,14 +94,14 @@ export default function Layout({ children }) {
 
                         <button
                             onClick={() => setIsSearchOpen(true)}
-                            className="hidden lg:flex items-center gap-4 text-xs font-bold text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors uppercase tracking-widest"
+                            className="hidden lg:flex items-center gap-4 text-xs font-bold text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-300 transition-colors uppercase tracking-widest"
                         >
-                            <span>Search <kbd className="ml-2 px-1.5 py-0.5 rounded border border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 font-mono text-[10px] lowercase">k</kbd></span>
+                            <span>Search <kbd className="ml-2 px-1.5 py-0.5 rounded border border-zinc-300 dark:border-zinc-700 bg-zinc-300 dark:bg-zinc-800 font-mono text-[10px] lowercase">k</kbd></span>
                         </button>
 
                         <button
                             onClick={toggleTheme}
-                            className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all text-zinc-600 dark:text-zinc-400 hover:scale-110"
+                            className="p-2 rounded-full hover:bg-zinc-300 dark:hover:bg-zinc-800 transition-all text-zinc-600 dark:text-zinc-400 hover:scale-110"
                             aria-label="Toggle theme"
                         >
                             {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
@@ -133,7 +133,7 @@ export default function Layout({ children }) {
                                     className={cn(
                                         "flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-colors",
                                         location.pathname === item.href
-                                            ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
+                                            ? "bg-zinc-300 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-300"
                                             : "text-zinc-600 dark:text-zinc-400"
                                     )}
                                     onClick={() => setIsMobileMenuOpen(false)}
@@ -173,7 +173,7 @@ export default function Layout({ children }) {
                             </p>
                         </div>
                         <div>
-                            <h4 className="font-bold text-zinc-900 dark:text-zinc-100 mb-4 uppercase text-xs tracking-widest">Learn</h4>
+                            <h4 className="font-bold text-zinc-900 dark:text-zinc-300 mb-4 uppercase text-xs tracking-widest">Learn</h4>
                             <ul className="space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
                                 <li><Link to="/resources" className="hover:text-rubik-blue dark:text-zinc-300 dark:hover:text-rubik-blue transition-colors">Tutorials</Link></li>
                                 <li><Link to="/resources" className="hover:text-rubik-blue dark:text-zinc-300 dark:hover:text-rubik-blue transition-colors">Algorithms</Link></li>
@@ -182,7 +182,7 @@ export default function Layout({ children }) {
                             </ul>
                         </div>
                         <div>
-                            <h4 className="font-bold text-zinc-900 dark:text-zinc-100 mb-4 uppercase text-xs tracking-widest">About</h4>
+                            <h4 className="font-bold text-zinc-900 dark:text-zinc-300 mb-4 uppercase text-xs tracking-widest">About</h4>
                             <ul className="space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
                                 <li><Link to="/about" className="hover:text-rubik-blue dark:text-zinc-300 dark:hover:text-rubik-blue transition-colors">Our Mission</Link></li>
                                 <li><Link to="/contact" className="hover:text-rubik-blue dark:text-zinc-300 dark:hover:text-rubik-blue transition-colors">Contact Us</Link></li>

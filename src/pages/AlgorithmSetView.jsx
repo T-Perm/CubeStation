@@ -41,7 +41,7 @@ export default function AlgorithmSetView() {
                 </Button>
 
                 <div className="mb-8">
-                    <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">{algSet.title}</h1>
+                    <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-300 mb-2">{algSet.title}</h1>
                     <p className="text-zinc-600 dark:text-zinc-400">Total Algorithms: {algSet.count}</p>
                 </div>
 
@@ -50,7 +50,7 @@ export default function AlgorithmSetView() {
                         <div key={algCase.id} className="bg-white dark:bg-neutral-800 rounded-xl border border-zinc-200 dark:border-zinc-700 p-6 shadow-sm hover:shadow-md transition-shadow relative group flex flex-col">
                             <div className="flex justify-between items-start mb-4">
                                 <div>
-                                    <h3 className="font-bold text-lg text-zinc-800 dark:text-zinc-100">{algCase.name}</h3>
+                                    <h3 className="font-bold text-lg text-zinc-800 dark:text-zinc-300">{algCase.name}</h3>
                                     <span className="text-xs text-zinc-400 font-mono uppercase tracking-wide">{algCase.group}</span>
                                 </div>
                                 <div className="w-20 h-20 bg-transparent rounded-md flex items-center justify-center overflow-hidden">
@@ -63,7 +63,7 @@ export default function AlgorithmSetView() {
                                 </div>
                             </div>
 
-                            <div className="bg-zinc-50 dark:bg-zinc-900 p-3 rounded-lg font-mono text-sm text-zinc-700 dark:text-zinc-300 break-words mb-2 border border-zinc-100 dark:border-zinc-700 relative group-hover:bg-blue-50 dark:group-hover:bg-blue-900/10 transition-colors">
+                            <div className="bg-zinc-50 dark:bg-zinc-900 p-3 rounded-lg font-mono text-sm text-zinc-700 dark:text-zinc-300 break-words mb-2 border border-zinc-300 dark:border-zinc-700 relative group-hover:bg-blue-50 dark:group-hover:bg-blue-900/10 transition-colors">
                                 {algCase.alg}
                                 <Button
                                     variant="ghost"

@@ -17,7 +17,7 @@ export default function About() {
                 </Button>
 
                 <div className="bg-white dark:bg-zinc-800 rounded-2xl p-8 shadow-sm border border-zinc-200 dark:border-zinc-700">
-                    <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-6">
+                    <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-300 mb-6">
                         About CubeStation
                     </h1>
 
@@ -32,7 +32,7 @@ export default function About() {
                                 <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-4">
                                     <Target className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                                 </div>
-                                <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">Our Mission</h3>
+                                <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-300 mb-2">Our Mission</h3>
                                 <p className="text-zinc-600 dark:text-zinc-400">
                                     To provide a comprehensive, free, and high-quality resource for anyone wanting to master the Rubik's Cube,
                                     from their first solve to their first competition.
@@ -43,7 +43,7 @@ export default function About() {
                                 <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mb-4">
                                     <Users className="w-6 h-6 text-green-600 dark:text-green-400" />
                                 </div>
-                                <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">For Students, By Students</h3>
+                                <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-300 mb-2">For Students, By Students</h3>
                                 <p className="text-zinc-600 dark:text-zinc-400">
                                     We understand the learning curve because we've been there. Our curriculum is designed to break down
                                     complex algorithms into digestible, student-friendly lessons.
@@ -51,7 +51,7 @@ export default function About() {
                             </div>
                         </div>
 
-                        <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Why CubeStation?</h2>
+                        <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-300 mb-4">Why CubeStation?</h2>
                         <ul className="space-y-4 mb-8 text-zinc-600 dark:text-zinc-400">
                             <li className="flex gap-3">
                                 <Zap className="w-5 h-5 text-yellow-500 mt-1 flex-shrink-0" />

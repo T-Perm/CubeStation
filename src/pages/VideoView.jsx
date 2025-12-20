@@ -24,7 +24,7 @@ export default function VideoView() {
     if (!video) {
         return (
             <div className="flex flex-col items-center justify-center h-full p-8 text-center bg-zinc-50 dark:bg-zinc-900">
-                <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">Video Not Found</h2>
+                <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-300">Video Not Found</h2>
                 <Button onClick={() => navigate('/resources')} className="mt-4">
                     Back to Resources
                 </Button>
@@ -64,7 +64,7 @@ export default function VideoView() {
                                         {categoryLabel}
                                     </span>
                                 </div>
-                                <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
+                                <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-300 mb-4">
                                     {video.title}
                                 </h1>
                                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-lg">
@@ -73,7 +73,7 @@ export default function VideoView() {
                             </div>
 
                             {/* Creator Credit Card */}
-                            <div className="bg-zinc-50 dark:bg-zinc-700/50 rounded-xl p-5 border border-zinc-100 dark:border-zinc-700 min-w-[250px]">
+                            <div className="bg-zinc-50 dark:bg-zinc-700/50 rounded-xl p-5 border border-zinc-300 dark:border-zinc-700 min-w-[250px]">
                                 <h3 className="text-xs uppercase tracking-wider text-zinc-600 dark:text-zinc-400 font-semibold mb-3">
                                     Content Creator
                                 </h3>
@@ -82,7 +82,7 @@ export default function VideoView() {
                                         {video.creator.charAt(0)}
                                     </div>
                                     <div>
-                                        <p className="font-bold text-zinc-900 dark:text-zinc-100 text-lg">
+                                        <p className="font-bold text-zinc-900 dark:text-zinc-300 text-lg">
                                             {video.creator}
                                         </p>
                                         <p className="text-xs text-zinc-600 dark:text-zinc-400">

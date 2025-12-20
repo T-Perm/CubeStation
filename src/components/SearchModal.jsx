@@ -53,16 +53,16 @@ export default function SearchModal({ isOpen, onClose }) {
                     exit={{ opacity: 0, scale: 0.95, y: -20 }}
                     className="relative w-full max-w-lg bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden"
                 >
-                    <div className="flex items-center px-4 py-3 border-b border-zinc-100 dark:border-zinc-800">
+                    <div className="flex items-center px-4 py-3 border-b border-zinc-300 dark:border-zinc-800">
                         <Search className="w-5 h-5 text-zinc-400 mr-3" />
                         <input
                             autoFocus
                             placeholder="Search algorithms, tutorials, sessions..."
-                            className="flex-1 bg-transparent border-none outline-none text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 text-sm"
+                            className="flex-1 bg-transparent border-none outline-none text-zinc-900 dark:text-zinc-300 placeholder:text-zinc-400 text-sm"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                         />
-                        <button onClick={onClose} className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors">
+                        <button onClick={onClose} className="p-1 hover:bg-zinc-300 dark:hover:bg-zinc-800 rounded-lg transition-colors">
                             <X className="w-4 h-4 text-zinc-400" />
                         </button>
                     </div>
@@ -77,11 +77,11 @@ export default function SearchModal({ isOpen, onClose }) {
                                         className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all text-left group"
                                     >
                                         <div className="flex items-center gap-3">
-                                            <div className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg group-hover:bg-white dark:group-hover:bg-zinc-700 transition-colors">
+                                            <div className="p-2 bg-zinc-300 dark:bg-zinc-800 rounded-lg group-hover:bg-white dark:group-hover:bg-zinc-700 transition-colors">
                                                 <item.icon className="w-4 h-4 text-zinc-600" />
                                             </div>
                                             <div>
-                                                <div className="text-sm font-bold text-zinc-900 dark:text-zinc-100">{item.title}</div>
+                                                <div className="text-sm font-bold text-zinc-900 dark:text-zinc-300">{item.title}</div>
                                                 <div className="text-xs text-zinc-400">{item.category}</div>
                                             </div>
                                         </div>
@@ -99,7 +99,7 @@ export default function SearchModal({ isOpen, onClose }) {
                         )}
                     </div>
 
-                    <div className="px-4 py-3 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 flex justify-between items-center text-[10px] text-zinc-400 font-mono">
+                    <div className="px-4 py-3 border-t border-zinc-300 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 flex justify-between items-center text-[10px] text-zinc-400 font-mono">
                         <div className="flex gap-4">
                             <span><kbd className="px-1.5 py-0.5 rounded border bg-white dark:bg-zinc-800">↑↓</kbd> to navigate</span>
                             <span><kbd className="px-1.5 py-0.5 rounded border bg-white dark:bg-zinc-800">Enter</kbd> to select</span>

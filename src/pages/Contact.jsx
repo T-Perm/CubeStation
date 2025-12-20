@@ -21,7 +21,7 @@ export default function Contact() {
                     <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
                         <Send className="w-8 h-8 text-green-600 dark:text-green-400" />
                     </div>
-                    <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">Message Sent!</h2>
+                    <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-300 mb-2">Message Sent!</h2>
                     <p className="text-zinc-600 dark:text-zinc-400 mb-6">
                         Thanks for reaching out! A student moderator will get back to you shortly.
                     </p>
@@ -46,7 +46,7 @@ export default function Contact() {
 
                 <div className="bg-white dark:bg-zinc-800 rounded-2xl p-8 shadow-sm border border-zinc-200 dark:border-zinc-700">
                     <div className="mb-8">
-                        <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">
+                        <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-300 mb-2">
                             Contact Us
                         </h1>
                         <p className="text-zinc-600 dark:text-zinc-400">
@@ -56,7 +56,7 @@ export default function Contact() {
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                            <label className="text-sm font-medium text-zinc-900 dark:text-zinc-300 flex items-center gap-2">
                                 <User className="w-4 h-4" /> Name
                             </label>
                             <Input
@@ -68,7 +68,7 @@ export default function Contact() {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                            <label className="text-sm font-medium text-zinc-900 dark:text-zinc-300 flex items-center gap-2">
                                 <Mail className="w-4 h-4" /> Email
                             </label>
                             <Input
@@ -80,7 +80,7 @@ export default function Contact() {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                            <label className="text-sm font-medium text-zinc-900 dark:text-zinc-300 flex items-center gap-2">
                                 <MessageSquare className="w-4 h-4" /> Message
                             </label>
                             <textarea

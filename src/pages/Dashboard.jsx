@@ -128,15 +128,15 @@ export default function Dashboard() {
                             <CardTitle className="text-sm uppercase tracking-widest text-zinc-600 font-bold">Statistics</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                            <div className="flex justify-between items-center pb-2 border-b border-zinc-100">
+                            <div className="flex justify-between items-center pb-2 border-b border-zinc-300">
                                 <span className="text-sm text-zinc-600">Total Solves</span>
                                 <span className="font-mono font-bold text-zinc-900">{totalSolves}</span>
                             </div>
-                            <div className="flex justify-between items-center pb-2 border-b border-zinc-100">
+                            <div className="flex justify-between items-center pb-2 border-b border-zinc-300">
                                 <span className="text-sm text-zinc-600">Ao100</span>
                                 <span className="font-mono font-bold text-zinc-900">{getAo100()}</span>
                             </div>
-                            <div className="flex justify-between items-center pb-2 border-b border-zinc-100">
+                            <div className="flex justify-between items-center pb-2 border-b border-zinc-300">
                                 <span className="text-sm text-zinc-600">Best Ao5</span>
                                 <span className="font-mono font-bold text-zinc-900">--</span> {/* Not tracked in context yet */}
                             </div>

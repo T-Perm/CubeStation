@@ -82,7 +82,7 @@ export default function Schedule() {
                                 onSelect={setDate}
                                 className="rounded-md border shadow-sm"
                             />
-                            <div className="mt-4 w-full pt-4 border-t border-zinc-100">
+                            <div className="mt-4 w-full pt-4 border-t border-zinc-300">
                                 <h3 className="font-bold text-sm text-zinc-600 uppercase tracking-wider mb-3">Selected Date</h3>
                                 <div className="text-2xl font-mono font-bold text-zinc-900 mb-1">
                                     {date ? format(date, "MMMM d, yyyy") : "No date selected"}
