@@ -205,7 +205,7 @@ export default function Layout({ children }) {
             </main>
 
             {/* Footer */}
-            <footer className="border-t bg-white dark:bg-zinc-900 py-12 mt-12 mb-20 md:mb-0">
+            <footer className="border-t border-zinc-200 dark:border-zinc-800 py-12 bg-white dark:bg-zinc-950/80 backdrop-blur-sm relative z-10">
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-4 gap-8 mb-8">
                         <div className="col-span-1 md:col-span-2">

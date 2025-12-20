@@ -11,10 +11,10 @@ export default function Home() {
     const letters = headline.split("")
 
     const stats = [
-        { label: "5K+ Peers", icon: Users, color: "bg-rubik-blue text-white dark:bg-transparent dark:text-rubik-blue dark:ring-1 dark:ring-rubik-blue/50 dark:shadow-[0_0_20px_rgba(59,130,246,0.3)]", desc: "Active community" },
-        { label: "1M+ Algos", icon: BookOpen, color: "bg-rubik-green text-white dark:bg-transparent dark:text-rubik-green dark:ring-1 dark:ring-rubik-green/50 dark:shadow-[0_0_20px_rgba(34,197,94,0.3)]", desc: "Curated database" },
-        { label: "Join Session", icon: UserPlus, color: "bg-rubik-yellow text-black dark:bg-transparent dark:text-rubik-yellow dark:ring-1 dark:ring-rubik-yellow/50 dark:shadow-[0_0_20px_rgba(234,179,8,0.3)]", desc: "Live coaching" },
-        { label: "Track PBs", icon: Trophy, color: "bg-rubik-red text-white dark:bg-transparent dark:text-rubik-red dark:ring-1 dark:ring-rubik-red/50 dark:shadow-[0_0_20px_rgba(239,68,68,0.3)]", desc: "Advanced stats" },
+        { label: "5K+ Peers", icon: Users, color: "text-rubik-blue shadow-rubik-blue/20", glassBg: "bg-rubik-blue/10 dark:bg-rubik-blue/20", desc: "Active community", link: "https://discord.gg/cubestation", external: true },
+        { label: "1M+ Algos", icon: BookOpen, color: "text-rubik-green shadow-rubik-green/20", glassBg: "bg-rubik-green/10 dark:bg-rubik-green/20", desc: "Curated database", link: "/resources/algorithms/OLL" },
+        { label: "Join Session", icon: UserPlus, color: "text-rubik-yellow shadow-rubik-yellow/20", glassBg: "bg-rubik-yellow/10 dark:bg-rubik-yellow/20", desc: "Live coaching", link: "/schedule" },
+        { label: "Track PBs", icon: Trophy, color: "text-rubik-red shadow-rubik-red/20", glassBg: "bg-rubik-red/10 dark:bg-rubik-red/20", desc: "Advanced stats", link: "/dashboard" },
     ]
 
     return (
@@ -97,28 +97,50 @@ export default function Home() {
             <section className="py-12 bg-white/50 dark:bg-zinc-950/50 backdrop-blur-sm border-y border-zinc-100 dark:border-zinc-800 transition-colors">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {stats.map((stat, i) => (
-                            <LiquidGlassCard
-                                key={i}
-                                draggable={false}
-                                shadowIntensity="xs"
-                                glowIntensity="none"
-                                blurIntensity="xl"
-                                borderRadius="40px"
-                                className="group transition-all duration-300 bg-white/80 dark:bg-transparent hover:-translate-y-1 overflow-hidden"
-                            >
-                                <CardContent className="p-6 flex items-start justify-between relative z-10">
-                                    <div>
-                                        <div className="font-mono font-bold text-3xl text-zinc-900 dark:text-zinc-100 mb-1">{stat.label.split(' ')[0]}</div>
-                                        <div className="font-medium text-zinc-900 dark:text-zinc-200">{stat.label.split(' ').slice(1).join(' ')}</div>
-                                        <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 uppercase tracking-wider font-bold">{stat.desc}</div>
-                                    </div>
-                                    <div className={cn("p-3 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300 backdrop-blur-xl", stat.color)}>
-                                        <stat.icon className="w-5 h-5 md:w-6 h-6" />
-                                    </div>
-                                </CardContent>
-                            </LiquidGlassCard>
-                        ))}
+                        {stats.map((stat, i) => {
+                            const Wrapper = stat.external ? 'a' : Link;
+                            const wrapperProps = stat.external ? { href: stat.link, target: "_blank", rel: "noopener noreferrer" } : { to: stat.link };
+
+                            return (
+                                <Wrapper
+                                    key={i}
+                                    {...wrapperProps}
+                                    className="block group h-full"
+                                >
+                                    <LiquidGlassCard
+                                        draggable={false}
+                                        shadowIntensity="xs"
+                                        glowIntensity="none"
+                                        blurIntensity="xl"
+                                        borderRadius="40px"
+                                        className="h-full transition-all duration-300 bg-white/80 dark:bg-transparent hover:-translate-y-1 overflow-hidden"
+                                    >
+                                        <CardContent className="p-6 flex items-start justify-between relative z-10 h-full">
+                                            <div className="flex-1">
+                                                <div className="font-mono font-bold text-3xl text-zinc-900 dark:text-zinc-100 mb-1">{stat.label.split(' ')[0]}</div>
+                                                <div className="font-medium text-zinc-900 dark:text-zinc-200">{stat.label.split(' ').slice(1).join(' ')}</div>
+                                                <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 uppercase tracking-wider font-bold">{stat.desc}</div>
+                                            </div>
+
+                                            <div className="relative">
+                                                <LiquidGlassCard
+                                                    draggable={false}
+                                                    blurIntensity="md"
+                                                    borderRadius="16px"
+                                                    shadowIntensity="sm"
+                                                    className={cn(
+                                                        "p-3 group-hover:scale-110 transition-transform duration-300 ring-1 ring-inset ring-white/20",
+                                                        stat.glassBg
+                                                    )}
+                                                >
+                                                    <stat.icon className={cn("w-5 h-5 md:w-6 h-6 shrink-0", stat.color)} />
+                                                </LiquidGlassCard>
+                                            </div>
+                                        </CardContent>
+                                    </LiquidGlassCard>
+                                </Wrapper>
+                            )
+                        })}
                     </div>
                 </div>
             </section>
