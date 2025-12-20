@@ -9,6 +9,7 @@ import { Badge } from "../components/ui/badge"
 import { Progress } from "../components/ui/progress"
 import { cn } from "../lib/utils"
 import StackmatDisplay from "../components/StackmatDisplay"
+import { LiquidGlassCard } from "../components/ui/liquid-glass"
 
 // --- Helper Functions for Cube Logic ---
 
@@ -302,13 +303,21 @@ export default function Timer() {
 
                 {/* Main Timer Area */}
                 <div className="lg:col-span-2 space-y-6">
-                    <Card className="h-[400px] md:h-[500px] flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-300 bg-zinc-900 border-zinc-800"
+                    <LiquidGlassCard
+                        className="h-[400px] md:h-[500px] flex flex-col items-center justify-center relative overflow-hidden transition-all duration-500 bg-zinc-950 border-zinc-800/50"
+                        blurIntensity="xl"
+                        borderRadius="40px"
+                        shadowIntensity="2xl"
+                        glowIntensity="none"
+                        draggable={false}
                         onClick={() => {
                             // Touch support placeholder
                             if (window.innerWidth < 768 && timerState === 'idle') handleKeyDown({ code: 'Space', preventDefault: () => { } })
-                            // Simplified touch logic would go here
                         }}
                     >
+                        {/* Deep Glow Background */}
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05),transparent_70%)]" />
+                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-950/50 to-zinc-950" />
                         {/* Background Pulse for Inspection */}
                         {timerState === "inspection" && (
                             <div className={cn("absolute inset-0 opacity-10 animate-pulse",
@@ -363,7 +372,7 @@ export default function Timer() {
                                 </Button>
                             </div>
                         )}
-                    </Card>
+                    </LiquidGlassCard>
                 </div>
 
                 {/* Sidebar Stats */}
