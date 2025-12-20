@@ -63,7 +63,7 @@ export default function Schedule() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                 <div>
                     <h1 className="text-3xl font-bold font-mono">Schedule</h1>
-                    <p className="text-zinc-500">Live tutoring, student seminars, and competitions</p>
+                    <p className="text-zinc-600">Live tutoring, student seminars, and competitions</p>
                 </div>
                 <Button className="bg-rubik-red hover:bg-rubik-red/90 text-white rounded-full px-6 shadow-lg shadow-rubik-red/20 transition-all hover:scale-105">
                     <Plus className="w-4 h-4 mr-2" />
@@ -83,11 +83,11 @@ export default function Schedule() {
                                 className="rounded-md border shadow-sm"
                             />
                             <div className="mt-4 w-full pt-4 border-t border-zinc-100">
-                                <h3 className="font-bold text-sm text-zinc-500 uppercase tracking-wider mb-3">Selected Date</h3>
+                                <h3 className="font-bold text-sm text-zinc-600 uppercase tracking-wider mb-3">Selected Date</h3>
                                 <div className="text-2xl font-mono font-bold text-zinc-900 mb-1">
                                     {date ? format(date, "MMMM d, yyyy") : "No date selected"}
                                 </div>
-                                <div className="text-sm text-zinc-500">
+                                <div className="text-sm text-zinc-600">
                                     {selectedDateEvents.length} events scheduled
                                 </div>
                             </div>
@@ -155,7 +155,7 @@ function EventCard({ evt, featured, onClick }) {
                     <div className="flex items-start justify-between mb-2">
                         <div>
                             <h3 className="font-bold text-xl text-zinc-900 group-hover:text-rubik-blue transition-colors">{evt.title}</h3>
-                            <div className="text-sm font-medium text-zinc-500 flex items-center gap-2 mt-1">
+                            <div className="text-sm font-medium text-zinc-600 flex items-center gap-2 mt-1">
                                 <span>{evt.tutor}</span>
                                 <span className="w-1 h-1 rounded-full bg-zinc-300" />
                                 <Badge variant="secondary" className="text-xs h-5">{evt.type}</Badge>
@@ -172,7 +172,7 @@ function EventCard({ evt, featured, onClick }) {
                             Join Room
                         </Button>
                     </div>
-                    <p className="text-sm text-zinc-500 line-clamp-2">
+                    <p className="text-sm text-zinc-600 line-clamp-2">
                         {evt.desc}
                     </p>
                 </div>

@@ -78,7 +78,7 @@ export default function SearchModal({ isOpen, onClose }) {
                                     >
                                         <div className="flex items-center gap-3">
                                             <div className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg group-hover:bg-white dark:group-hover:bg-zinc-700 transition-colors">
-                                                <item.icon className="w-4 h-4 text-zinc-500" />
+                                                <item.icon className="w-4 h-4 text-zinc-600" />
                                             </div>
                                             <div>
                                                 <div className="text-sm font-bold text-zinc-900 dark:text-zinc-100">{item.title}</div>
@@ -94,7 +94,7 @@ export default function SearchModal({ isOpen, onClose }) {
                         ) : (
                             <div className="py-12 text-center">
                                 <Search className="w-8 h-8 text-zinc-200 mx-auto mb-3" />
-                                <p className="text-sm text-zinc-500">No results found for "{query}"</p>
+                                <p className="text-sm text-zinc-600">No results found for "{query}"</p>
                             </div>
                         )}
                     </div>

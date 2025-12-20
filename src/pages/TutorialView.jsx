@@ -10,7 +10,7 @@ export default function TutorialView() {
 
     if (!tutorial) {
         return (
-            <div className="flex flex-col items-center justify-center h-full p-8 text-center text-zinc-500">
+            <div className="flex flex-col items-center justify-center h-full p-8 text-center text-zinc-600">
                 <AlertCircle className="w-16 h-16 mb-4 text-rubik-red" />
                 <h2 className="text-2xl font-bold text-zinc-800">Tutorial Not Found</h2>
                 <p className="mb-6">The requested tutorial "{slug}" suggests it doesn't exist.</p>
@@ -25,7 +25,7 @@ export default function TutorialView() {
                 <Button
                     onClick={() => navigate('/resources')}
                     variant="ghost"
-                    className="mb-6 pl-0 hover:pl-2 transition-all gap-2 text-zinc-500 hover:text-rubik-blue"
+                    className="mb-6 pl-0 hover:pl-2 transition-all gap-2 text-zinc-600 hover:text-rubik-blue"
                 >
                     <ArrowLeft className="w-4 h-4" /> Back to Resources
                 </Button>

@@ -47,7 +47,7 @@ export default function Home() {
                                 </span>
                             ))}
                         </div>
-                        
+
                         {/* Second Line: Student Learning Hub */}
                         <div className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-2xl md:text-4xl text-zinc-600 dark:text-zinc-300">
                             {"Student Learning Hub".split(" ").map((word, wordIndex) => (
@@ -98,8 +98,8 @@ export default function Home() {
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {stats.map((stat, i) => (
-                            <LiquidGlassCard 
-                                key={i} 
+                            <LiquidGlassCard
+                                key={i}
                                 draggable={false}
                                 shadowIntensity="xs"
                                 glowIntensity="none"
@@ -111,7 +111,7 @@ export default function Home() {
                                     <div>
                                         <div className="font-mono font-bold text-3xl text-zinc-900 dark:text-zinc-100 mb-1">{stat.label.split(' ')[0]}</div>
                                         <div className="font-medium text-zinc-900 dark:text-zinc-200">{stat.label.split(' ').slice(1).join(' ')}</div>
-                                        <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 uppercase tracking-wider font-bold">{stat.desc}</div>
+                                        <div className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 uppercase tracking-wider font-bold">{stat.desc}</div>
                                     </div>
                                     <div className={cn("p-3 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300 backdrop-blur-xl", stat.color)}>
                                         <stat.icon className="w-5 h-5 md:w-6 h-6" />

@@ -94,7 +94,7 @@ export default function Layout({ children }) {
 
                         <button
                             onClick={() => setIsSearchOpen(true)}
-                            className="hidden lg:flex items-center gap-4 text-xs font-bold text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors uppercase tracking-widest"
+                            className="hidden lg:flex items-center gap-4 text-xs font-bold text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors uppercase tracking-widest"
                         >
                             <span>Search <kbd className="ml-2 px-1.5 py-0.5 rounded border border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 font-mono text-[10px] lowercase">k</kbd></span>
                         </button>
@@ -190,7 +190,7 @@ export default function Layout({ children }) {
                             </ul>
                         </div>
                     </div>
-                    <div className="border-t border-zinc-200 dark:border-zinc-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-zinc-500 dark:text-zinc-400">
+                    <div className="border-t border-zinc-200 dark:border-zinc-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-zinc-600 dark:text-zinc-400">
                         <p>© 2025-2026 CubeStation. All Rights Reserved.</p>
                         <div className="flex gap-4 mt-2 md:mt-0 font-medium">
                             <Link to="/copyright" className="hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white transition-colors">Privacy Policy</Link>

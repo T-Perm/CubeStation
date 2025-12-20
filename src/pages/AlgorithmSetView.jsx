@@ -16,7 +16,7 @@ export default function AlgorithmSetView() {
     // Normalize input set key (e.g. handle casing if needed, currently exact match)
     if (!algSet) {
         return (
-            <div className="flex flex-col items-center justify-center h-full p-8 text-center text-zinc-500">
+            <div className="flex flex-col items-center justify-center h-full p-8 text-center text-zinc-600">
                 <h2 className="text-2xl font-bold">Set Not Found</h2>
                 <Button onClick={() => navigate('/resources')} variant="outline" className="mt-4">Back to Resources</Button>
             </div>
@@ -35,14 +35,14 @@ export default function AlgorithmSetView() {
                 <Button
                     onClick={() => navigate('/resources')}
                     variant="ghost"
-                    className="mb-6 pl-0 hover:pl-2 transition-all gap-2 text-zinc-500 hover:text-rubik-blue"
+                    className="mb-6 pl-0 hover:pl-2 transition-all gap-2 text-zinc-600 hover:text-rubik-blue"
                 >
                     <ArrowLeft className="w-4 h-4" /> Back to Resources
                 </Button>
 
                 <div className="mb-8">
                     <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">{algSet.title}</h1>
-                    <p className="text-zinc-500 dark:text-zinc-400">Total Algorithms: {algSet.count}</p>
+                    <p className="text-zinc-600 dark:text-zinc-400">Total Algorithms: {algSet.count}</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

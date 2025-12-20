@@ -271,7 +271,7 @@ export default function Timer() {
                                 {scramble}
                             </h2>
                             <div className="flex items-center justify-center md:justify-start gap-4 mt-2">
-                                <p className="text-xs text-zinc-500 font-mono">
+                                <p className="text-xs text-zinc-600 font-mono">
                                     {stackmat.isActive ? "Hardware Timer Direct" : "Manual Mode • Space to Start"}
                                 </p>
                                 <div className="h-3 w-px bg-zinc-800" />
@@ -279,7 +279,7 @@ export default function Timer() {
                                     onClick={stackmat.toggleStackmat}
                                     className={cn(
                                         "flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider transition-colors",
-                                        stackmat.isActive ? "text-rubik-green" : "text-zinc-500 hover:text-zinc-300"
+                                        stackmat.isActive ? "text-rubik-green" : "text-zinc-600 hover:text-zinc-300"
                                     )}
                                 >
                                     <Mic className={cn("w-3.5 h-3.5", stackmat.isActive && "animate-pulse")} />
@@ -321,7 +321,7 @@ export default function Timer() {
                         </div>
 
                         {timerState === "idle" && (
-                            <p className="absolute bottom-12 text-zinc-500 animate-pulse font-mono text-sm">
+                            <p className="absolute bottom-12 text-zinc-600 animate-pulse font-mono text-sm">
                                 Press Spacebar to Start
                             </p>
                         )}
@@ -372,17 +372,17 @@ export default function Timer() {
                     <Card className="bg-zinc-950 border-zinc-800 shadow-none">
                         <CardHeader className="pb-2">
                             <div className="flex items-center justify-between">
-                                <CardTitle className="text-sm uppercase tracking-widest text-zinc-500 font-bold">Session Stats</CardTitle>
+                                <CardTitle className="text-sm uppercase tracking-widest text-zinc-600 font-bold">Session Stats</CardTitle>
                                 <Badge variant="outline" className="font-mono bg-zinc-900 border-zinc-800 text-zinc-400">{solves.length} Solves</Badge>
                             </div>
                         </CardHeader>
                         <CardContent className="grid grid-cols-2 gap-4">
                             <div className="bg-zinc-900 p-4 rounded-xl border border-zinc-800">
-                                <div className="text-xs text-zinc-500 font-medium mb-1">Best Single</div>
+                                <div className="text-xs text-zinc-600 font-medium mb-1">Best Single</div>
                                 <div className="text-2xl font-mono font-bold text-rubik-green">{getBestSingle()}</div>
                             </div>
                             <div className="bg-zinc-900 p-4 rounded-xl border border-zinc-800">
-                                <div className="text-xs text-zinc-500 font-medium mb-1">Current Ao5</div>
+                                <div className="text-xs text-zinc-600 font-medium mb-1">Current Ao5</div>
                                 <div className="text-2xl font-mono font-bold text-rubik-blue">{getAo5()}</div>
                             </div>
                         </CardContent>
@@ -392,7 +392,7 @@ export default function Timer() {
                     <Card className="bg-zinc-950 border-zinc-800 shadow-none flex-1 min-h-[300px]">
                         <CardHeader>
                             <div className="flex items-center justify-between">
-                                <CardTitle className="text-sm uppercase tracking-widest text-zinc-500 font-bold">History</CardTitle>
+                                <CardTitle className="text-sm uppercase tracking-widest text-zinc-600 font-bold">History</CardTitle>
                                 <Button variant="ghost" size="icon" className="h-6 w-6"><Settings className="w-4 h-4 text-zinc-600 hover:text-zinc-400" /></Button>
                             </div>
                         </CardHeader>

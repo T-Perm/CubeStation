@@ -64,7 +64,7 @@ export default function About() {
                         </ul>
 
                         <div className="border-t border-zinc-200 dark:border-zinc-700 pt-8 mt-8">
-                            <p className="text-sm text-zinc-500 dark:text-zinc-500 italic">
+                            <p className="text-sm text-zinc-600 dark:text-zinc-600 italic">
                                 Developed for the FBLA 2025-2026 Website Design competitive event.
                                 "Design to Learn: Build a Student Learning Hub".
                             </p>

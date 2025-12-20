@@ -39,7 +39,7 @@ export default function Dashboard() {
             <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
                 <div>
                     <h1 className="text-3xl font-bold font-mono">Dashboard</h1>
-                    <p className="text-zinc-500">Track your progress and analyze your solves.</p>
+                    <p className="text-zinc-600">Track your progress and analyze your solves.</p>
                 </div>
                 <div className="flex gap-2">
                     <Badge variant="outline" className="px-3 py-1 text-sm bg-white">
@@ -105,7 +105,7 @@ export default function Dashboard() {
                     {/* Time Distribution */}
                     <Card>
                         <CardHeader>
-                            <CardTitle className="text-sm uppercase tracking-widest text-zinc-500 font-bold">Time Distribution</CardTitle>
+                            <CardTitle className="text-sm uppercase tracking-widest text-zinc-600 font-bold">Time Distribution</CardTitle>
                         </CardHeader>
                         <CardContent className="h-[200px]">
                             {distData.length > 0 ? (
@@ -125,7 +125,7 @@ export default function Dashboard() {
                     {/* Solve Stats Grid */}
                     <Card>
                         <CardHeader>
-                            <CardTitle className="text-sm uppercase tracking-widest text-zinc-500 font-bold">Statistics</CardTitle>
+                            <CardTitle className="text-sm uppercase tracking-widest text-zinc-600 font-bold">Statistics</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="flex justify-between items-center pb-2 border-b border-zinc-100">
@@ -157,7 +157,7 @@ function StatCard({ title, value, color, icon: Icon, sub }) {
         <Card className="border-l-4 border-l-transparent hover:border-l-zinc-300 transition-all">
             <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-zinc-500">{title}</span>
+                    <span className="text-sm font-medium text-zinc-600">{title}</span>
                     <Icon className={`w-4 h-4 ${color.replace('text-', 'stroke-')}`} />
                 </div>
                 <div className={`text-2xl font-mono font-bold ${color}`}>{value}</div>

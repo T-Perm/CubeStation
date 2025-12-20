@@ -69,7 +69,7 @@ export default function Copyright() {
                         </section>
 
                         <div className="border-t border-zinc-200 dark:border-zinc-700 pt-8">
-                            <p className="text-xs text-zinc-500 text-center">
+                            <p className="text-xs text-zinc-600 text-center">
                                 CubeStation © 2025. All rights reserved.
                             </p>
                         </div>
@@ -92,7 +92,7 @@ function SourceCard({ title, description, link }) {
                 <h3 className="font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {title}
                 </h3>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400">{description}</p>
+                <p className="text-sm text-zinc-600 dark:text-zinc-400">{description}</p>
             </div>
             <ExternalLink className="w-4 h-4 text-zinc-400 group-hover:text-blue-500" />
         </a>

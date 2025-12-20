@@ -19,7 +19,7 @@ export default function StackmatDisplay({ time, status, signalStrength, isActive
         >
             <div className="p-8 flex flex-col items-center gap-6">
                 <div className="flex items-center justify-between w-full">
-                    <span className="text-xs font-bold uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
+                    <span className="text-xs font-bold uppercase tracking-widest text-zinc-600 dark:text-zinc-400">
                         Stackmat Mode
                     </span>
                     <div className="flex items-center gap-2">
@@ -48,7 +48,7 @@ export default function StackmatDisplay({ time, status, signalStrength, isActive
                             "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider",
                             status === 'RUNNING' ? "bg-rubik-green/10 text-rubik-green" :
                                 status === 'STOPPED' ? "bg-rubik-red/10 text-rubik-red" :
-                                    "bg-zinc-100 dark:bg-zinc-800 text-zinc-500"
+                                    "bg-zinc-100 dark:bg-zinc-800 text-zinc-600"
                         )}>
                             {status}
                         </span>
@@ -57,7 +57,7 @@ export default function StackmatDisplay({ time, status, signalStrength, isActive
 
                 {/* Signal Diagnostics */}
                 <div className="w-full space-y-3">
-                    <div className="flex items-center justify-between text-[10px] font-bold text-zinc-500">
+                    <div className="flex items-center justify-between text-[10px] font-bold text-zinc-600">
                         <span className="flex items-center gap-1 uppercase">
                             <Activity className="w-3 h-3" /> Signal Stability
                         </span>

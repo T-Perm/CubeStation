@@ -98,7 +98,7 @@ export default function QuizView() {
                         <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">
                             Quiz Complete!
                         </h1>
-                        <p className="text-zinc-500 dark:text-zinc-400 mb-6">{quiz.title}</p>
+                        <p className="text-zinc-600 dark:text-zinc-400 mb-6">{quiz.title}</p>
 
                         <div className="bg-gradient-to-r from-rubik-blue to-rubik-green rounded-xl p-6 mb-6">
                             <div className="text-6xl font-bold text-white mb-2">
@@ -175,7 +175,7 @@ export default function QuizView() {
                             {quiz.level}
                         </span>
                     </div>
-                    <p className="text-zinc-500 dark:text-zinc-400 text-sm mb-4">{quiz.description}</p>
+                    <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-4">{quiz.description}</p>
 
                     {/* Progress Bar */}
                     <div className="flex items-center gap-2">
@@ -185,7 +185,7 @@ export default function QuizView() {
                                 style={{ width: `${((currentQuestion + 1) / quiz.questions.length) * 100}%` }}
                             />
                         </div>
-                        <span className="text-sm text-zinc-500 dark:text-zinc-400 font-medium">
+                        <span className="text-sm text-zinc-600 dark:text-zinc-400 font-medium">
                             {currentQuestion + 1}/{quiz.questions.length}
                         </span>
                     </div>

@@ -74,7 +74,7 @@ export default function VideoView() {
 
                             {/* Creator Credit Card */}
                             <div className="bg-zinc-50 dark:bg-zinc-700/50 rounded-xl p-5 border border-zinc-100 dark:border-zinc-700 min-w-[250px]">
-                                <h3 className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-semibold mb-3">
+                                <h3 className="text-xs uppercase tracking-wider text-zinc-600 dark:text-zinc-400 font-semibold mb-3">
                                     Content Creator
                                 </h3>
                                 <div className="flex items-center gap-3">
@@ -85,13 +85,13 @@ export default function VideoView() {
                                         <p className="font-bold text-zinc-900 dark:text-zinc-100 text-lg">
                                             {video.creator}
                                         </p>
-                                        <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                                        <p className="text-xs text-zinc-600 dark:text-zinc-400">
                                             Video Author
                                         </p>
                                     </div>
                                 </div>
                                 <div className="mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-600">
-                                    <p className="text-xs text-zinc-500 italic">
+                                    <p className="text-xs text-zinc-600 italic">
                                         All rights belong to the original creator.
                                     </p>
                                 </div>
