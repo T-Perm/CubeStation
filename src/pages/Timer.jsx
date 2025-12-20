@@ -8,6 +8,7 @@ import { Button } from "../components/ui/button"
 import { Badge } from "../components/ui/badge"
 import { Progress } from "../components/ui/progress"
 import { cn } from "../lib/utils"
+import StackmatDisplay from "../components/StackmatDisplay"
 
 // --- Helper Functions for Cube Logic ---
 
@@ -58,6 +59,9 @@ export default function Timer() {
     const [timerState, setTimerState] = useState("idle") // idle, inspection, holding, ready, running, finished
     const [inspectionTime, setInspectionTime] = useState(15000) // 15s in ms
     const [penalty, setPenalty] = useState(0) // 0, 2000 (+2), or Infinity (DNF)
+
+    // Hardware Timer Hook
+    const stackmat = StackmatDisplay.useStackmat();
 
     // Note: isNewPB logic assumes context handles it or we calculate locally.
     // For simplicity, we'll calculate locally based on solves from context + new time.
@@ -190,6 +194,38 @@ export default function Timer() {
         }
     }, [handleKeyDown, handleKeyUp])
 
+    // --- Stackmat Auto-Save Logic ---
+    const lastStackmatStatus = useRef(stackmat.status);
+    useEffect(() => {
+        if (stackmat.status === 'STOPPED' && lastStackmatStatus.current === 'RUNNING') {
+            // Convert "0:00.00" string to ms
+            const [min, rest] = stackmat.time.split(':');
+            const [sec, hun] = rest.split('.');
+            const totalMs = (parseInt(min) * 60000) + (parseInt(sec) * 1000) + (parseInt(hun) * 10);
+
+            const newSolve = {
+                id: Date.now(),
+                time: totalMs,
+                scramble: scramble,
+                date: new Date().toISOString(),
+                penalty: 0
+            };
+
+            addSolve(newSolve);
+            setScramble(generateScramble()); // Get next scramble
+
+            // Check PB for confetti
+            const currentBest = solves.length > 0
+                ? Math.min(...solves.filter(s => s.penalty !== Infinity).map(s => s.time + s.penalty))
+                : Infinity;
+
+            if (totalMs < currentBest) {
+                setIsNewPB(true);
+                setTimeout(() => setIsNewPB(false), 5000);
+            }
+        }
+        lastStackmatStatus.current = stackmat.status;
+    }, [stackmat.status, stackmat.time, scramble, addSolve, solves]);
 
     // --- UI Helpers ---
     const getTimerColor = () => {
@@ -309,6 +345,16 @@ export default function Timer() {
 
                 {/* Sidebar Stats */}
                 <div className="space-y-6">
+                    {/* Stackmat Integration */}
+                    <StackmatDisplay
+                        time={stackmat.time}
+                        status={stackmat.status}
+                        signalStrength={stackmat.signalStrength}
+                        isActive={stackmat.isActive}
+                        error={stackmat.error}
+                        toggleStackmat={stackmat.toggleStackmat}
+                    />
+
                     {/* Session Summary */}
                     <Card>
                         <CardHeader className="pb-2">
