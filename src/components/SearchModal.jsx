@@ -10,6 +10,7 @@ const items = [
     { title: "OLL Algorithms", category: "Algorithms", icon: Hash, link: "/resources/algorithms/OLL" },
     { title: "PLL Algorithms", category: "Algorithms", icon: Hash, link: "/resources/algorithms/PLL" },
     { title: "F2L Algorithms", category: "Algorithms", icon: Hash, link: "/resources/algorithms/F2L" },
+    { title: "One-Handed Solving", category: "Tutorials", icon: BookOpen, link: "/resources/tutorial/oh-guide" },
     { title: "Quizzes", category: "Resources", icon: Puzzle, link: "/resources" },
     { title: "Video Guides", category: "Resources", icon: Video, link: "/resources" },
     { title: "Live Schedule", category: "Tutoring", icon: Search, link: "/schedule" },

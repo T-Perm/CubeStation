@@ -4,12 +4,22 @@ import { Button } from "./ui/button"
 import { Box, Calendar, LayoutDashboard, Library, Menu, X, MessageCircle, Clock, Sun, Moon } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Badge } from "./ui/badge"
+
 import SearchModal from "./SearchModal"
 import ScrollToTop from "./ScrollToTop"
+import LoginModal from "./LoginModal"
 
 export default function Layout({ children }) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const [isSearchOpen, setIsSearchOpen] = useState(false)
+    const [isLoginOpen, setIsLoginOpen] = useState(false)
+    const [user, setUser] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem('user');
+            return saved ? JSON.parse(saved) : null;
+        }
+        return null;
+    })
     const [theme, setTheme] = useState(() => {
         if (typeof window !== 'undefined') {
             return localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -52,6 +62,17 @@ export default function Layout({ children }) {
         window.addEventListener("keydown", handleKeyDown)
         return () => window.removeEventListener("keydown", handleKeyDown)
     }, [])
+
+    const handleLogin = (userData) => {
+        setUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
+        setIsLoginOpen(false);
+    };
+
+    const handleLogout = () => {
+        setUser(null);
+        localStorage.removeItem('user');
+    };
 
     const navItems = [
         { label: "Home", href: "/", icon: Box, color: "text-rubik-blue" },
@@ -115,9 +136,22 @@ export default function Layout({ children }) {
                         >
                             {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
                         </button>
-                        <Button className="bg-rubik-blue hover:bg-rubik-blue/90 text-white font-bold hidden md:inline-flex rounded-xl px-6">
-                            Login
-                        </Button>
+                        {user ? (
+                            <div className="hidden md:flex items-center gap-3 pl-4 border-l border-zinc-200 dark:border-zinc-800">
+                                <span className="text-sm font-bold text-zinc-700 dark:text-zinc-300">{user.name}</span>
+                                <button onClick={handleLogout} className="relative group">
+                                    <img src={user.avatar} alt="User" className="w-10 h-10 rounded-full border-2 border-white dark:border-zinc-800 shadow-sm transition-transform hover:scale-105" />
+                                    <div className="absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-zinc-900" />
+                                </button>
+                            </div>
+                        ) : (
+                            <Button
+                                onClick={() => setIsLoginOpen(true)}
+                                className="bg-rubik-blue hover:bg-rubik-blue/90 text-white font-bold hidden md:inline-flex rounded-xl px-6 transition-all hover:shadow-lg shadow-rubik-blue/20"
+                            >
+                                Login
+                            </Button>
+                        )}
 
                         {/* Mobile Toggle */}
                         <Button
@@ -152,7 +186,15 @@ export default function Layout({ children }) {
                                 </Link>
                             ))}
                         </nav>
-                        <Button className="w-full bg-rubik-blue font-bold rounded-xl">Login</Button>
+                        <Button
+                            className="w-full bg-rubik-blue font-bold rounded-xl"
+                            onClick={() => {
+                                setIsMobileMenuOpen(false);
+                                if (!user) setIsLoginOpen(true);
+                            }}
+                        >
+                            {user ? `Signed in as ${user.name}` : "Login"}
+                        </Button>
                     </div>
                 )}
             </header>
@@ -231,12 +273,14 @@ export default function Layout({ children }) {
 
             {/* Floating Action Button - Discord */}
             <Button
+                onClick={() => window.open("https://discord.gg/cubestation", "_blank")}
                 className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-rubik-blue shadow-lg hover:bg-rubik-blue/90 hover:scale-110 transition-all z-40 flex items-center justify-center p-0"
                 aria-label="Join Discord"
             >
                 <MessageCircle className="h-6 w-6 text-white" />
             </Button>
             <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+            <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} onLogin={handleLogin} />
             <ScrollToTop />
         </div>
     )
