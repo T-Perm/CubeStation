@@ -42,6 +42,8 @@
   --color-rubik-green: #22c55e;
   --color-rubik-yellow: #eab308;
 
+  --color-zinc-300: oklch(20.5% 0 0);
+
   --animate-enter-3d: enter-3d 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
   --animate-fade-in-up: fade-in-up 0.8s ease-out forwards;
 }
