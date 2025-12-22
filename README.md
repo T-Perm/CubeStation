@@ -34,13 +34,7 @@ Welcome to **CubeStation**, the ultimate collaborative platform for speedcubers 
    npm run dev
    ```
 
-## 🤝 Collaboration
 
-To collaborate with the team:
-1. Create a branch for your feature: `git checkout -b feature/your-feature-name`
-2. Commit your changes: `git commit -m "feat: add some amazing feature"`
-3. Push to the branch: `git push origin feature/your-feature-name`
-4. Open a Pull Request!
 
 ## 📄 License
 
