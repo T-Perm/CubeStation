@@ -138,9 +138,8 @@ export default function Timer() {
 
     const handleKeyUp = useCallback((e) => {
         if (e.code === "Space") {
-            if (timerState === "holding") {
+            if (timerState === "ready") {
                 // RELEASE TO START SOLVE
-                // Calculate penalty from inspection logic if needed
                 let currentPenalty = 0
                 if (inspectionTime <= 0 && inspectionTime > -2000) currentPenalty = 2000
                 else if (inspectionTime <= -2000) currentPenalty = Infinity
@@ -149,14 +148,13 @@ export default function Timer() {
 
                 if (currentPenalty === Infinity) {
                     setTimerState("finished")
-                    // In a more complex app, we'd save DNF here. For now, we only save on "stop" if running,
-                    // but for instant DNF we should probably save it immediately.
-                    // Let's keep it simple: Instant DNF transitions to finished, user must press space again to save/reset?
-                    // Or auto-save DNF? Let's just state transition for now.
                 } else {
                     setTimerState("running")
                     startTimeRef.current = Date.now()
                 }
+            } else if (timerState === "holding") {
+                // Released too early
+                setTimerState("inspection")
             }
         }
     }, [timerState, inspectionTime])
@@ -180,6 +178,17 @@ export default function Timer() {
         }
     }, [timerState])
 
+    // Holding to Ready Transition (Stackmat behavior)
+    useEffect(() => {
+        let timeout;
+        if (timerState === "holding") {
+            timeout = setTimeout(() => {
+                setTimerState("ready")
+            }, 500)
+        }
+        return () => clearTimeout(timeout)
+    }, [timerState])
+
     // Global Key Listeners
     useEffect(() => {
         window.addEventListener("keydown", handleKeyDown)
@@ -193,14 +202,14 @@ export default function Timer() {
 
     // --- UI Helpers ---
     const getTimerColor = () => {
-        if (timerState === "running") return "text-zinc-900"
+        if (timerState === "running") return "text-zinc-900 dark:text-white"
         if (timerState === "inspection") {
             if (inspectionTime <= 0) return "text-rubik-red"
             if (inspectionTime <= 8000) return "text-rubik-orange"
             return "text-rubik-yellow"
         }
-        if (timerState === "holding") return "text-rubik-green"
-        if (timerState === "finished") return "text-zinc-900"
+        if (timerState === "holding" || timerState === "ready") return "text-white"
+        if (timerState === "finished") return "text-zinc-900 dark:text-white"
         return "text-rubik-orange" // Idle color
     }
 
@@ -223,14 +232,14 @@ export default function Timer() {
                 <Card className="border-t-4 border-t-rubik-blue shadow-sm bg-white">
                     <CardContent className="p-6 flex flex-col md:flex-row items-center justify-between gap-4">
                         <div className="flex-1 text-center md:text-left">
-                            <h2 className="text-2xl md:text-3xl font-mono font-medium tracking-wide text-zinc-900 leading-relaxed">
+                            <h2 className="text-2xl md:text-3xl font-mono font-medium tracking-wide text-zinc-900 dark:text-white leading-relaxed">
                                 {scramble}
                             </h2>
                             <p className="text-xs text-zinc-400 mt-2 font-mono">WCA 3x3 Scramble • Hold Space to Start</p>
                         </div>
                         <Button
                             onClick={() => setScramble(generateScramble())}
-                            className="bg-zinc-100 hover:bg-zinc-200 text-zinc-900 shrink-0"
+                            className="bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white shrink-0"
                             size="icon"
                         >
                             <RotateCcw className="w-5 h-5" />
@@ -243,11 +252,16 @@ export default function Timer() {
 
                 {/* Main Timer Area */}
                 <div className="lg:col-span-2 space-y-6">
-                    <Card className="h-[400px] md:h-[500px] flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-300"
+                    <Card
+                        className={cn(
+                            "h-[400px] md:h-[500px] flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300",
+                            timerState === "holding" && "bg-rubik-red border-rubik-red shadow-2xl scale-[1.01]",
+                            timerState === "ready" && "bg-rubik-green border-rubik-green shadow-2xl scale-[1.02]",
+                            (timerState === "idle" || timerState === "finished" || timerState === "running" || timerState === "inspection") && "bg-white dark:bg-zinc-900 shadow-sm"
+                        )}
                         onClick={() => {
                             // Touch support placeholder
                             if (window.innerWidth < 768 && timerState === 'idle') handleKeyDown({ code: 'Space', preventDefault: () => { } })
-                            // Simplified touch logic would go here
                         }}
                     >
                         {/* Background Pulse for Inspection */}
@@ -351,7 +365,7 @@ export default function Timer() {
                                         {solves.map((solve, i) => (
                                             <tr key={solve.id} className="hover:bg-zinc-50/50 transition-colors group">
                                                 <td className="px-4 py-3 font-mono text-zinc-400 w-12">{solves.length - i}</td>
-                                                <td className="px-4 py-3 font-mono font-medium text-zinc-700">
+                                                <td className="px-4 py-3 font-mono font-medium text-zinc-700 dark:text-zinc-300">
                                                     {solve.penalty === Infinity ? <span className="text-rubik-red">DNF</span> :
                                                         solve.penalty === 2000 ? <span className="text-rubik-yellow">{formatTime(solve.time + 2000)}+</span> :
                                                             formatTime(solve.time)}

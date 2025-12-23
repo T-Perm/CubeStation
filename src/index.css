@@ -100,9 +100,7 @@ html.dark body {
 
 .dark .Card,
 .dark .card {
-  background-color: theme('colors.zinc.900') !important;
-  border-color: theme('colors.zinc.800') !important;
-  color: theme('colors.zinc.100') !important;
+  @apply bg-zinc-900 border-zinc-800 text-zinc-100;
 }
 
 /* Force dark mode text for specific elements that stick to light mode colors */
@@ -158,7 +156,7 @@ body::before {
 .dark .liquid-glass {
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 
+  box-shadow:
     inset 0 0 20px rgba(255, 255, 255, 0.02),
     0 8px 64px 0 rgba(0, 0, 0, 0.5);
 }
@@ -191,7 +189,13 @@ html {
 }
 
 @layer base {
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply uppercase tracking-tight;
   }
 }
