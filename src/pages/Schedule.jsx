@@ -62,8 +62,8 @@ export default function Schedule() {
         <div className="container mx-auto px-4 py-8 max-w-6xl">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold font-mono">Schedule</h1>
-                    <p className="text-zinc-600">Live tutoring, student seminars, and competitions</p>
+                    <h1 className="text-3xl font-bold font-mono text-zinc-900 dark:text-white">Schedule</h1>
+                    <p className="text-zinc-600 dark:text-zinc-400">Live tutoring, student seminars, and competitions</p>
                 </div>
                 <Button className="bg-rubik-red hover:bg-rubik-red/90 text-white rounded-full px-6 shadow-lg shadow-rubik-red/20 transition-all hover:scale-105">
                     <Plus className="w-4 h-4 mr-2" />
@@ -74,7 +74,7 @@ export default function Schedule() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 {/* Left Column: Calendar & Filter */}
                 <div className="lg:col-span-4 space-y-6">
-                    <Card className="border-none shadow-xl bg-white/80 backdrop-blur-sm sticky top-24">
+                    <Card className="border-none shadow-xl bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm sticky top-24">
                         <CardContent className="p-4 flex flex-col items-center">
                             <Calendar
                                 mode="single"
@@ -83,11 +83,11 @@ export default function Schedule() {
                                 className="rounded-md border shadow-sm"
                             />
                             <div className="mt-4 w-full pt-4 border-t border-zinc-300">
-                                <h3 className="font-bold text-sm text-zinc-600 uppercase tracking-wider mb-3">Selected Date</h3>
-                                <div className="text-2xl font-mono font-bold text-zinc-900 mb-1">
+                                <h3 className="font-bold text-sm text-zinc-600 dark:text-zinc-400 uppercase tracking-wider mb-3">Selected Date</h3>
+                                <div className="text-2xl font-mono font-bold text-zinc-900 dark:text-white mb-1">
                                     {date ? format(date, "MMMM d, yyyy") : "No date selected"}
                                 </div>
-                                <div className="text-sm text-zinc-600">
+                                <div className="text-sm text-zinc-600 dark:text-zinc-400">
                                     {selectedDateEvents.length} events scheduled
                                 </div>
                             </div>
@@ -100,7 +100,7 @@ export default function Schedule() {
                     {/* Show selected date events first if any */}
                     {selectedDateEvents.length > 0 && (
                         <div className="mb-8 animate-fade-in-up">
-                            <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+                            <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-zinc-900 dark:text-white">
                                 <Clock className="text-rubik-blue" />
                                 On {format(date, "MMMM d")}
                             </h2>
@@ -113,7 +113,7 @@ export default function Schedule() {
                     )}
 
                     <div>
-                        <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-zinc-400">
+                        <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
                             Upcoming
                         </h2>
                         <div className="space-y-4">
@@ -131,7 +131,7 @@ export default function Schedule() {
 function EventCard({ evt, featured, onClick }) {
     return (
         <Card
-            className={`group hover:border-zinc-300 transition-all cursor-pointer overflow-hidden ${featured ? 'border-rubik-blue/30 bg-rubik-blue/5' : ''}`}
+            className={`group hover:border-zinc-300 dark:hover:border-zinc-700 transition-all cursor-pointer overflow-hidden ${featured ? 'border-rubik-blue/30 bg-rubik-blue/5 dark:bg-rubik-blue/10' : 'bg-white/50 dark:bg-zinc-900/50'}`}
             onClick={onClick}
         >
             <CardContent className="p-0 flex flex-col sm:flex-row">
@@ -154,16 +154,16 @@ function EventCard({ evt, featured, onClick }) {
                 <div className="flex-1 p-6 flex flex-col justify-center">
                     <div className="flex items-start justify-between mb-2">
                         <div>
-                            <h3 className="font-bold text-xl text-zinc-900 group-hover:text-rubik-blue transition-colors">{evt.title}</h3>
-                            <div className="text-sm font-medium text-zinc-600 flex items-center gap-2 mt-1">
+                            <h3 className="font-bold text-xl text-zinc-900 dark:text-white group-hover:text-rubik-blue transition-colors">{evt.title}</h3>
+                            <div className="text-sm font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-2 mt-1">
                                 <span>{evt.tutor}</span>
-                                <span className="w-1 h-1 rounded-full bg-zinc-300" />
-                                <Badge variant="secondary" className="text-xs h-5">{evt.type}</Badge>
+                                <span className="w-1 h-1 rounded-full bg-zinc-300 dark:bg-zinc-700" />
+                                <Badge variant="secondary" className="text-xs h-5 dark:bg-zinc-800 dark:text-zinc-300 font-bold">{evt.type}</Badge>
                             </div>
                         </div>
                         <Button
                             variant={featured ? "default" : "outline"}
-                            className={`z-10 ${featured ? "bg-rubik-blue hover:bg-rubik-blue/90" : ""}`}
+                            className={`z-10 ${featured ? "bg-rubik-blue hover:bg-rubik-blue/90" : "dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"}`}
                             onClick={(e) => {
                                 e.stopPropagation();
                                 onClick();
@@ -172,7 +172,7 @@ function EventCard({ evt, featured, onClick }) {
                             Join Room
                         </Button>
                     </div>
-                    <p className="text-sm text-zinc-600 line-clamp-2">
+                    <p className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">
                         {evt.desc}
                     </p>
                 </div>
