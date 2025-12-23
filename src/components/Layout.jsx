@@ -86,7 +86,7 @@ export default function Layout({ children }) {
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-zinc-950 transition-colors duration-300">
             {/* Top Bar Countdown */}
-            <div className="bg-zinc-900 dark:bg-black text-white text-xs font-mono py-1.5 px-4 text-center border-b border-white/5">
+            <div className="bg-zinc-100 dark:bg-black text-zinc-600 dark:text-white text-xs font-mono py-1.5 px-4 text-center border-b border-zinc-200 dark:border-white/5">
                 <span className="opacity-70">Next Global Session: </span>
                 <span className="font-bold text-rubik-red ml-2 tracking-wider">2d 4h 12m</span>
             </div>
@@ -148,11 +148,13 @@ export default function Layout({ children }) {
                                     Sign In
                                 </Button>
                             )}
-                            <Button
-                                className="bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-bold hidden md:inline-flex rounded-xl px-6 hover:scale-105 transition-all shadow-xl shadow-black/5 dark:shadow-white/5 active:scale-95"
-                            >
-                                Get Started
-                            </Button>
+                            <Link to="/signup">
+                                <Button
+                                    className="bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-bold hidden md:inline-flex rounded-xl px-6 hover:scale-105 transition-all shadow-xl shadow-black/5 dark:shadow-white/5 active:scale-95"
+                                >
+                                    Sign Up
+                                </Button>
+                            </Link>
                         </div>
 
                         {/* Mobile Toggle */}
@@ -188,15 +190,37 @@ export default function Layout({ children }) {
                                 </Link>
                             ))}
                         </nav>
-                        <Button
-                            className="w-full bg-rubik-blue font-bold rounded-xl"
-                            onClick={() => {
-                                setIsMobileMenuOpen(false);
-                                if (!user) setIsLoginOpen(true);
-                            }}
-                        >
-                            {user ? `Signed in as ${user.name}` : "Login"}
-                        </Button>
+                        <div className="flex flex-col gap-2 pt-2">
+                            {user ? (
+                                <Button
+                                    className="w-full bg-rubik-blue font-bold rounded-xl"
+                                    onClick={() => {
+                                        setIsMobileMenuOpen(false);
+                                        handleLogout();
+                                    }}
+                                >
+                                    Sign Out
+                                </Button>
+                            ) : (
+                                <>
+                                    <Button
+                                        variant="outline"
+                                        className="w-full font-bold rounded-xl border-zinc-200 dark:border-zinc-800"
+                                        onClick={() => {
+                                            setIsMobileMenuOpen(false);
+                                            setIsLoginOpen(true);
+                                        }}
+                                    >
+                                        Sign In
+                                    </Button>
+                                    <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                                        <Button className="w-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-bold rounded-xl shadow-lg">
+                                            Sign Up
+                                        </Button>
+                                    </Link>
+                                </>
+                            )}
+                        </div>
                     </div>
                 )}
             </header>
