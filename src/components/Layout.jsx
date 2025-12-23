@@ -8,6 +8,7 @@ import { Badge } from "./ui/badge"
 import SearchModal from "./SearchModal"
 import ScrollToTop from "./ScrollToTop"
 import LoginModal from "./LoginModal"
+import RubikLogo from "./RubikLogo"
 
 export default function Layout({ children }) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -95,9 +96,7 @@ export default function Layout({ children }) {
                 <div className="container flex h-16 items-center justify-between mx-auto px-4 gap-4">
                     <div className="flex items-center gap-12">
                         <Link to="/" className="flex items-center gap-2 group">
-                            <div className="w-10 h-10 bg-zinc-900 dark:bg-white rounded-xl flex items-center justify-center group-hover:scale-105 transition-all duration-500 shadow-lg shadow-black/10 dark:shadow-white/10">
-                                <span className="text-white dark:text-zinc-900 font-bold text-xl">C</span>
-                            </div>
+                            <RubikLogo className="w-10 h-10" />
                             <span className="font-bold text-2xl tracking-tight text-zinc-900 dark:text-white group-hover:tracking-normal transition-all duration-500">CubeStation</span>
                         </Link>
                     </div>
@@ -214,9 +213,7 @@ export default function Layout({ children }) {
                         <div className="col-span-1 md:col-span-2">
                             <div className="flex items-center gap-2 mb-4">
                                 <Link to="/" className="flex items-center gap-2">
-                                    <div className="w-8 h-8 bg-black dark:bg-white rounded-lg flex items-center justify-center">
-                                        <span className="text-white dark:text-black font-bold text-lg">C</span>
-                                    </div>
+                                    <RubikLogo className="w-8 h-8" />
                                     <span className="font-mono font-bold text-xl tracking-tight text-black dark:text-white">CubeStation</span>
                                 </Link>
                             </div>

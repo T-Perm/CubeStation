@@ -2,6 +2,7 @@ import { Home, BookOpen, Trophy, Settings, Menu, X, Box } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { cn } from "../lib/utils";
+import RubikLogo from "./RubikLogo";
 
 export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -31,9 +32,7 @@ export default function Sidebar() {
                 )}
             >
                 <div className="mb-12">
-                    <div className="w-10 h-10 bg-black rounded-lg flex items-center justify-center">
-                        <span className="text-white font-bold text-xl">C</span>
-                    </div>
+                    <RubikLogo className="w-10 h-10" />
                 </div>
 
                 <nav className="flex-1 flex flex-col gap-6 w-full px-2">
