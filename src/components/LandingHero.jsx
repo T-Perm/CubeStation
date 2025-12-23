@@ -26,7 +26,7 @@ export default function LandingHero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 text-white/80 text-sm font-medium mb-8 shadow-2xl"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-zinc-900/5 dark:bg-white/5 backdrop-blur-md border border-zinc-200 dark:border-white/10 text-zinc-600 dark:text-white/80 text-sm font-medium mb-8 shadow-xl dark:shadow-2xl"
                 >
                     <span className="flex items-center gap-2">
                         <Sparkles className="w-4 h-4 text-rubik-yellow" />
@@ -64,11 +64,13 @@ export default function LandingHero() {
                     <LiquidGlassCard
                         blurIntensity="xl"
                         borderRadius="24px"
-                        shadowIntensity="sm"
+                        shadowIntensity="md"
                         glowIntensity="none"
-                        className="p-6 bg-white/40 dark:bg-zinc-900/40 border border-white/20 dark:border-white/5 backdrop-blur-2xl"
+                        className="p-6 bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 backdrop-blur-3xl shadow-2xl relative overflow-hidden group/card"
                     >
-                        <p className="text-lg md:text-xl text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                        {/* Subtle inner highlight for liquid look */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-none" />
+                        <p className="text-lg md:text-xl text-zinc-700 dark:text-zinc-200 leading-relaxed relative z-10 transition-colors duration-500 group-hover/card:text-zinc-900 dark:group-hover/card:text-white">
                             Cubestation is the ultimate student-led interactive learning platform designed to take your cubing skills to the next dimension through guided mastery and performance analytics.
                         </p>
                     </LiquidGlassCard>
@@ -102,13 +104,33 @@ export default function LandingHero() {
                 transition={{ delay: 1.5, duration: 1 }}
                 className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
             >
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500">Scroll to Explore</span>
-                <div className="w-[1px] h-12 bg-gradient-to-b from-zinc-300 dark:from-zinc-700 to-transparent relative overflow-hidden">
+                <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-zinc-500 dark:text-white/90 drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">Scroll to Explore</span>
+                
+                {/* Pure Liquid Glass Pill */}
+                <div className="relative w-3 h-14 bg-zinc-900/5 dark:bg-white/10 backdrop-blur-[4px] rounded-full border border-zinc-200 dark:border-white/30 shadow-[inset_0_1px_1px_rgba(0,0,0,0.05),0_10px_20px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_10px_20px_rgba(0,0,0,0.3)] overflow-hidden">
+                    {/* Top Specular Highlight */}
+                    <div className="absolute top-[2px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-white/40 blur-[1px] rounded-full" />
+                    
+                    {/* Animated Blue Neon Highlight Line */}
                     <motion.div
-                        animate={{ y: [0, 48] }}
-                        transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-                        className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent via-rubik-blue to-transparent"
+                        animate={{ 
+                            y: [-20, 70],
+                            opacity: [0, 1, 1, 0]
+                        }}
+                        transition={{ 
+                            repeat: Infinity, 
+                            duration: 2, 
+                            ease: [0.45, 0, 0.55, 1],
+                            times: [0, 0.2, 0.8, 1]
+                        }}
+                        className="absolute inset-x-0 h-4 bg-gradient-to-b from-transparent via-rubik-blue to-transparent z-10"
+                        style={{
+                            boxShadow: '0 0 12px 2px rgba(59, 130, 246, 0.6)'
+                        }}
                     />
+
+                    {/* Subtle Internal Reflection */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-transparent to-white/5 pointer-events-none" />
                 </div>
             </motion.div>
 
@@ -117,8 +139,9 @@ export default function LandingHero() {
                 style={{ y: y2 }}
                 className="absolute top-1/2 left-[5%] w-64 h-64 -translate-y-1/2 pointer-events-none opacity-20 md:opacity-100"
             >
-                <LiquidGlassCard className="w-full h-full flex items-center justify-center rotate-12" borderRadius="48px" blurIntensity="xl">
-                    <div className="w-20 h-20 bg-rubik-blue/30 rounded-full blur-2xl" />
+                <LiquidGlassCard className="w-full h-full flex items-center justify-center rotate-12 bg-white/5 dark:bg-white/5 border border-white/10 dark:border-white/10" borderRadius="48px" blurIntensity="xl" shadowIntensity="lg">
+                    <div className="w-20 h-20 bg-rubik-blue/20 rounded-full blur-3xl animate-pulse" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50" />
                 </LiquidGlassCard>
             </motion.div>
 
@@ -126,8 +149,9 @@ export default function LandingHero() {
                 style={{ y: y1 }}
                 className="absolute top-1/4 right-[5%] w-48 h-48 pointer-events-none opacity-20 md:opacity-100"
             >
-                <LiquidGlassCard className="w-full h-full flex items-center justify-center -rotate-12" borderRadius="32px" blurIntensity="lg">
-                    <div className="w-16 h-16 bg-rubik-red/30 rounded-full blur-2xl" />
+                <LiquidGlassCard className="w-full h-full flex items-center justify-center -rotate-12 bg-white/5 dark:bg-white/5 border border-white/10 dark:border-white/10" borderRadius="32px" blurIntensity="lg" shadowIntensity="lg">
+                    <div className="w-16 h-16 bg-rubik-red/20 rounded-full blur-3xl animate-pulse" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50" />
                 </LiquidGlassCard>
             </motion.div>
         </section>

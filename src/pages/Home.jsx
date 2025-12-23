@@ -1,18 +1,50 @@
 import { Link } from "react-router-dom"
-import { Button } from "../components/ui/button"
-import { CardContent } from "../components/ui/card"
-import { Users, BookOpen, UserPlus, Trophy } from "lucide-react"
+import { Users, BookOpen, UserPlus, Trophy, ArrowRight } from "lucide-react"
 import { cn } from "../lib/utils"
 import ThreeBackground from "../components/ThreeBackground"
-import { LiquidGlassCard } from "../components/ui/liquid-glass"
 import LandingHero from "../components/LandingHero"
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react"
+import { useRef } from "react"
 
 export default function Home() {
     const stats = [
-        { label: "5K+ Peers", icon: Users, color: "text-rubik-blue shadow-rubik-blue/20", glassBg: "bg-rubik-blue/10 dark:bg-rubik-blue/20", desc: "Active community", link: "https://discord.gg/cubestation", external: true },
-        { label: "1M+ Algos", icon: BookOpen, color: "text-rubik-green shadow-rubik-green/20", glassBg: "bg-rubik-green/10 dark:bg-rubik-green/20", desc: "Curated database", link: "/resources/algorithms/OLL" },
-        { label: "Join Session", icon: UserPlus, color: "text-rubik-yellow shadow-rubik-yellow/20", glassBg: "bg-rubik-yellow/10 dark:bg-rubik-yellow/20", desc: "Live coaching", link: "/schedule" },
-        { label: "Track PBs", icon: Trophy, color: "text-rubik-red shadow-rubik-red/20", glassBg: "bg-rubik-red/10 dark:bg-rubik-red/20", desc: "Advanced stats", link: "/dashboard" },
+        { 
+            label: "5K+ Peers", 
+            icon: Users, 
+            color: "text-rubik-blue", 
+            glow: "rgba(59, 130, 246, 0.4)",
+            desc: "Join our global student community. Share solves, learn new methods, and find rivals.", 
+            sub: "ACTIVE COMMUNITY",
+            link: "https://discord.gg/cubestation", 
+            external: true 
+        },
+        { 
+            label: "1M+ Algos", 
+            icon: BookOpen, 
+            color: "text-rubik-green", 
+            glow: "rgba(34, 197, 94, 0.4)",
+            desc: "The world's most comprehensive database. From OLL to ZBLL, we've got you covered.", 
+            sub: "CURATED DATABASE",
+            link: "/resources/algorithms/OLL" 
+        },
+        { 
+            label: "Join Session", 
+            icon: UserPlus, 
+            color: "text-rubik-yellow", 
+            glow: "rgba(234, 179, 8, 0.4)",
+            desc: "Attend live tutoring sessions. Get real-time feedback from the world's best student coaches.", 
+            sub: "LIVE COACHING",
+            link: "/schedule" 
+        },
+        { 
+            label: "Track PBs", 
+            icon: Trophy, 
+            color: "text-rubik-red", 
+            glow: "rgba(239, 68, 68, 0.4)",
+            desc: "Analyze every turn with performance metrics. Watch your progress unfold over time.", 
+            sub: "ADVANCED STATS",
+            link: "/dashboard" 
+        },
     ]
 
     return (
@@ -22,63 +54,20 @@ export default function Home() {
             <LandingHero />
 
             {/* Stats Interaction Grid */}
-            <section className="py-20 relative overflow-hidden">
-                <div className="container mx-auto px-4 max-w-6xl relative z-10">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {stats.map((stat, i) => {
-                            const Wrapper = stat.external ? 'a' : Link;
-                            const wrapperProps = stat.external ? { href: stat.link, target: "_blank", rel: "noopener noreferrer" } : { to: stat.link };
-
-                            return (
-                                <Wrapper
-                                    key={i}
-                                    {...wrapperProps}
-                                    className="block group h-full focus:outline-none focus:ring-2 focus:ring-rubik-blue/40 rounded-[2rem]"
-                                >
-                                    <LiquidGlassCard
-                                        draggable={false}
-                                        shadowIntensity="sm"
-                                        glowIntensity={i === 0 ? "xs" : "none"} // Subtle glow for primary action
-                                        blurIntensity="xl"
-                                        borderRadius="32px"
-                                        className={cn(
-                                            "h-full transition-all duration-500 border border-white/10 dark:border-white/5",
-                                            "bg-white/40 dark:bg-zinc-900/40 hover:bg-white/60 dark:hover:bg-zinc-900/60",
-                                            "hover:-translate-y-2 hover:shadow-2xl active:scale-[0.98]"
-                                        )}
-                                    >
-                                        <CardContent className="p-8 flex flex-col items-center text-center h-full gap-4">
-                                            <div className="relative mb-2">
-                                                <div className={cn(
-                                                    "absolute inset-0 blur-2xl opacity-20 group-hover:opacity-40 transition-opacity",
-                                                    stat.glassBg
-                                                )} />
-                                                <LiquidGlassCard
-                                                    draggable={false}
-                                                    blurIntensity="md"
-                                                    borderRadius="20px"
-                                                    shadowIntensity="sm"
-                                                    className={cn(
-                                                        "p-4 transition-all duration-500 ring-1 ring-inset ring-white/20",
-                                                        "bg-white/20 dark:bg-white/5 group-hover:rotate-6",
-                                                        stat.glassBg
-                                                    )}
-                                                >
-                                                    <stat.icon className={cn("w-7 h-7", stat.color)} />
-                                                </LiquidGlassCard>
-                                            </div>
-
-                                            <div className="space-y-1">
-                                                <div className="font-bold text-2xl tracking-tight text-zinc-900 dark:text-white">{stat.label}</div>
-                                                <div className="text-xs font-bold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 opacity-80 group-hover:opacity-100 transition-opacity">
-                                                    {stat.desc}
-                                                </div>
-                                            </div>
-                                        </CardContent>
-                                    </LiquidGlassCard>
-                                </Wrapper>
+            <section className="py-20 relative overflow-hidden pointer-events-none">
+                <div className="container mx-auto px-4 max-w-6xl relative z-10 pointer-events-auto">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {stats.map((stat, i) => (
+                            stat.external ? (
+                                <a key={i} href={stat.link} target="_blank" rel="noopener noreferrer" className="block h-full group outline-none">
+                                    <FeatureCard stat={stat} index={i} />
+                                </a>
+                            ) : (
+                                <Link key={i} to={stat.link} className="block h-full group outline-none">
+                                    <FeatureCard stat={stat} index={i} />
+                                </Link>
                             )
-                        })}
+                        ))}
                     </div>
                 </div>
                 
@@ -87,4 +76,111 @@ export default function Home() {
             </section>
         </div>
     )
+}
+
+function FeatureCard({ stat, index }) {
+    const cardRef = useRef(null);
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+
+    const mouseXSpring = useSpring(x);
+    const mouseYSpring = useSpring(y);
+
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+    
+    // Icon Parallax
+    const iconX = useTransform(mouseXSpring, [-0.5, 0.5], [-15, 15]);
+    const iconY = useTransform(mouseYSpring, [-0.5, 0.5], [-15, 15]);
+
+    const handleMouseMove = (e) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        const xPct = mouseX / width - 0.5;
+        const yPct = mouseY / height - 0.5;
+        x.set(xPct);
+        y.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
+
+    return (
+        <motion.div
+            style={{
+                perspective: "1000px",
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            viewport={{ once: true }}
+            className="h-full"
+        >
+            <motion.div
+                ref={cardRef}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                style={{
+                    rotateX,
+                    rotateY,
+                    transformStyle: "preserve-3d",
+                }}
+                className="relative h-full w-full rounded-[2.5rem] p-px transition-all duration-300 group overflow-hidden"
+            >
+                {/* Border Glow Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/5 dark:from-white/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2.5rem]" />
+                
+                {/* Main Card Body - Clear Liquid Glass Style */}
+                <div className="relative h-full w-full bg-white/10 dark:bg-white/5 backdrop-blur-[3px] rounded-[2.5rem] border border-white/30 dark:border-white/20 flex flex-col items-center justify-between p-8 shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden">
+                    
+                    {/* Interior Specular Reflections */}
+                    <div className="absolute top-0 left-0 w-full h-[60%] bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/10 to-transparent rotate-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none" />
+
+                    {/* Icon Container with Parallax */}
+                    <motion.div 
+                        style={{ x: iconX, y: iconY, translateZ: "60px" }}
+                        className="relative z-10 p-6 rounded-[2rem] bg-white/10 dark:bg-white/5 border border-white/30 dark:border-white/20 shadow-inner transition-all duration-500 group-hover:shadow-[0_0_40px_-10px] group-hover:shadow-[var(--glow-color)]"
+                        style={{ '--glow-color': stat.glow }}
+                    >
+                        <stat.icon className={cn("w-10 h-10 drop-shadow-xl transition-transform duration-500 group-hover:scale-125", stat.color)} />
+                    </motion.div>
+
+                    {/* Text Content with Depth */}
+                    <motion.div 
+                        style={{ translateZ: "40px" }}
+                        className="relative z-10 text-center space-y-4 mt-8 flex-1 flex flex-col justify-center"
+                    >
+                        <div className="space-y-1">
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500 dark:text-zinc-400 opacity-60 group-hover:opacity-100 transition-all group-hover:tracking-[0.5em] duration-500">
+                                {stat.sub}
+                            </h3>
+                            <h2 className="text-3xl font-bold text-zinc-900 dark:text-white tracking-tight drop-shadow-sm">
+                                {stat.label}
+                            </h2>
+                        </div>
+                        <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed max-w-[200px] mx-auto transition-colors group-hover:text-zinc-900 dark:group-hover:text-white">
+                            {stat.desc}
+                        </p>
+                    </motion.div>
+
+                    {/* CTA "Liquid" indicator */}
+                    <div className="mt-8 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 relative z-10">
+                        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-500 dark:text-white/60">
+                            Explore <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                    </div>
+
+                    {/* Glass Shine Follower */}
+                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-white/10 to-transparent pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity" />
+                </div>
+            </motion.div>
+        </motion.div>
+    );
 }

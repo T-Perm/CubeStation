@@ -46,14 +46,13 @@ export const LiquidGlassCard = ({
   };
 
   const glowStyles = {
-    none: '0 4px 12px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02)',
-    xs: '0 4px 12px rgba(0, 0, 0, 0.08), 0 0 1px rgba(0, 0, 0, 0.1)',
-    sm: '0 8px 24px rgba(0, 0, 0, 0.1), 0 0 2px rgba(0, 0, 0, 0.12)',
-    md: '0 12px 32px rgba(0, 0, 0, 0.12), 0 0 4px rgba(0, 0, 0, 0.15)',
-    lg: '0 16px 48px rgba(0, 0, 0, 0.15), 0 0 6px rgba(0, 0, 0, 0.18)',
-    xl: '0 24px 64px rgba(0, 0, 0, 0.18), 0 0 8px rgba(0, 0, 0, 0.2)',
-    '2xl':
-      '0 32px 80px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.25)',
+    none: '0 8px 32px 0 rgba(0, 0, 0, 0.05)',
+    xs: '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+    sm: '0 8px 32px 0 rgba(31, 38, 135, 0.1), 0 0 1px 0 rgba(255, 255, 255, 0.1)',
+    md: '0 12px 40px 0 rgba(0, 0, 0, 0.15), 0 0 2px 0 rgba(255, 255, 255, 0.2)',
+    lg: '0 16px 48px 0 rgba(0, 0, 0, 0.2), 0 0 4px 0 rgba(255, 255, 255, 0.25)',
+    xl: '0 24px 64px 0 rgba(0, 0, 0, 0.25), 0 0 8px 0 rgba(255, 255, 255, 0.3)',
+    '2xl': '0 32px 80px 0 rgba(0, 0, 0, 0.3), 0 0 12px 0 rgba(255, 255, 255, 0.4)',
   };
 
   const containerVariants = expandable
@@ -129,7 +128,7 @@ export const LiquidGlassCard = ({
             <feDisplacementMap
               in='SourceGraphic'
               in2='turbulence'
-              scale='200'
+              scale='15'
               xChannelSelector='R'
               yChannelSelector='G'
             />
