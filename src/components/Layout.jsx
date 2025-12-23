@@ -93,74 +93,77 @@ export default function Layout({ children }) {
             {/* Sticky Top Nav */}
             <header className="sticky top-0 z-50 w-full border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md shadow-sm transition-all">
                 <div className="container flex h-16 items-center justify-between mx-auto px-4 gap-4">
-                    <div className="flex items-center gap-8">
+                    <div className="flex items-center gap-12">
                         <Link to="/" className="flex items-center gap-2 group">
-                            <div className="w-8 h-8 bg-zinc-900 dark:bg-white rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
-                                <span className="text-white dark:text-zinc-900 font-bold text-lg">C</span>
+                            <div className="w-10 h-10 bg-zinc-900 dark:bg-white rounded-xl flex items-center justify-center group-hover:scale-105 transition-all duration-500 shadow-lg shadow-black/10 dark:shadow-white/10">
+                                <span className="text-white dark:text-zinc-900 font-bold text-xl">C</span>
                             </div>
-                            <span className="font-mono font-bold text-xl tracking-tight text-zinc-900 dark:text-zinc-300">CubeStation</span>
+                            <span className="font-bold text-2xl tracking-tight text-zinc-900 dark:text-white group-hover:tracking-normal transition-all duration-500">CubeStation</span>
                         </Link>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        {/* Desktop Nav - Moved to Right */}
-                        <nav className="hidden md:flex items-center gap-1 mr-4">
+                    <div className="flex items-center gap-6">
+                        {/* Desktop Nav - Clean & Modern */}
+                        <nav className="hidden lg:flex items-center gap-8">
                             {navItems.map((item) => (
                                 <Link
                                     key={item.href}
                                     to={item.href}
                                     className={cn(
-                                        "flex items-center gap-2 px-3 py-2 text-sm font-semibold rounded-full transition-all hover:bg-zinc-300 dark:hover:bg-zinc-800",
+                                        "text-sm font-semibold transition-all duration-300 relative group py-2",
                                         location.pathname === item.href
-                                            ? "bg-zinc-900 text-white dark:bg-zinc-300 dark:text-zinc-900 shadow-md"
-                                            : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-300"
+                                            ? "text-zinc-900 dark:text-white"
+                                            : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
                                     )}
                                 >
-                                    <item.icon className={cn("w-4 h-4", location.pathname === item.href ? "text-current" : item.color)} />
                                     {item.label}
+                                    <span className={cn(
+                                        "absolute bottom-0 left-0 w-full h-0.5 bg-rubik-blue transform origin-left transition-transform duration-300",
+                                        location.pathname === item.href ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                                    )} />
                                 </Link>
                             ))}
                         </nav>
 
-                        <button
-                            onClick={() => setIsSearchOpen(true)}
-                            className="hidden lg:flex items-center gap-4 text-xs font-bold text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-300 transition-colors uppercase tracking-widest"
-                        >
-                            <span>Search <kbd className="ml-2 px-1.5 py-0.5 rounded border border-zinc-300 dark:border-zinc-700 bg-zinc-300 dark:bg-zinc-800 font-mono text-[10px] lowercase">k</kbd></span>
-                        </button>
-
-                        <button
-                            onClick={toggleTheme}
-                            className="p-2 rounded-full hover:bg-zinc-300 dark:hover:bg-zinc-800 transition-all text-zinc-600 dark:text-zinc-400 hover:scale-110"
-                            aria-label="Toggle theme"
-                        >
-                            {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
-                        </button>
-                        {user ? (
-                            <div className="hidden md:flex items-center gap-3 pl-4 border-l border-zinc-200 dark:border-zinc-800">
-                                <span className="text-sm font-bold text-zinc-700 dark:text-zinc-300">{user.name}</span>
-                                <button onClick={handleLogout} className="relative group">
-                                    <img src={user.avatar} alt="User" className="w-10 h-10 rounded-full border-2 border-white dark:border-zinc-800 shadow-sm transition-transform hover:scale-105" />
-                                    <div className="absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-zinc-900" />
-                                </button>
-                            </div>
-                        ) : (
-                            <Button
-                                onClick={() => setIsLoginOpen(true)}
-                                className="bg-rubik-blue hover:bg-rubik-blue/90 text-white font-bold hidden md:inline-flex rounded-xl px-6 transition-all hover:shadow-lg shadow-rubik-blue/20"
+                        <div className="flex items-center gap-3 pl-6 border-l border-zinc-200 dark:border-zinc-800">
+                            <button
+                                onClick={toggleTheme}
+                                className="p-2.5 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all text-zinc-600 dark:text-zinc-400 hover:scale-110 active:scale-95"
+                                aria-label="Toggle theme"
                             >
-                                Login
+                                {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+                            </button>
+                            {user ? (
+                                <div className="flex items-center gap-3">
+                                    <button onClick={handleLogout} className="relative group">
+                                        <img src={user.avatar} alt="User" className="w-10 h-10 rounded-full border-2 border-white dark:border-zinc-800 shadow-sm transition-transform hover:scale-110" />
+                                        <div className="absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-zinc-900" />
+                                    </button>
+                                </div>
+                            ) : (
+                                <Button
+                                    onClick={() => setIsLoginOpen(true)}
+                                    variant="ghost"
+                                    className="font-bold text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800 px-6 rounded-xl transition-all"
+                                >
+                                    Sign In
+                                </Button>
+                            )}
+                            <Button
+                                className="bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-bold hidden md:inline-flex rounded-xl px-6 hover:scale-105 transition-all shadow-xl shadow-black/5 dark:shadow-white/5 active:scale-95"
+                            >
+                                Get Started
                             </Button>
-                        )}
+                        </div>
 
                         {/* Mobile Toggle */}
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="md:hidden text-zinc-600 dark:text-zinc-400"
+                            className="lg:hidden text-zinc-600 dark:text-zinc-400"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         >
-                            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                         </Button>
                     </div>
                 </div>
