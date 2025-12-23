@@ -79,12 +79,14 @@ export default function Home() {
 }
 
 function FeatureCard({ stat, index }) {
+    const { icon: Icon } = stat;
     const cardRef = useRef(null);
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
-    const mouseXSpring = useSpring(x);
-    const mouseYSpring = useSpring(y);
+    const springConfig = { damping: 20, stiffness: 100, mass: 0.5 };
+    const mouseXSpring = useSpring(x, springConfig);
+    const mouseYSpring = useSpring(y, springConfig);
 
     const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
     const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
@@ -131,25 +133,29 @@ function FeatureCard({ stat, index }) {
                     rotateY,
                     transformStyle: "preserve-3d",
                 }}
-                className="relative h-full w-full rounded-[2.5rem] p-px transition-all duration-300 group overflow-hidden"
+                className="relative h-full w-full rounded-[2.5rem] p-px transition-all duration-300 group overflow-hidden will-change-transform"
             >
                 {/* Border Glow Gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/5 dark:from-white/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2.5rem]" />
                 
                 {/* Main Card Body - Clear Liquid Glass Style */}
-                <div className="relative h-full w-full bg-white/10 dark:bg-white/5 backdrop-blur-[3px] rounded-[2.5rem] border border-white/30 dark:border-white/20 flex flex-col items-center justify-between p-8 shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden">
+                <div className="relative h-full w-full bg-white/10 dark:bg-white/5 backdrop-blur-[3px] rounded-[2.5rem] border border-white/30 dark:border-white/20 flex flex-col items-center justify-between p-8 shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden transform-gpu">
                     
-                    {/* Interior Specular Reflections */}
-                    <div className="absolute top-0 left-0 w-full h-[60%] bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute -inset-[100%] bg-gradient-to-tr from-transparent via-white/10 to-transparent rotate-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none" />
+                    {/* Interior Specular Reflections - Simplified */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-white/5 via-transparent to-transparent pointer-events-none" />
 
                     {/* Icon Container with Parallax */}
                     <motion.div 
-                        style={{ x: iconX, y: iconY, translateZ: "60px" }}
-                        className="relative z-10 p-6 rounded-[2rem] bg-white/10 dark:bg-white/5 border border-white/30 dark:border-white/20 shadow-inner transition-all duration-500 group-hover:shadow-[0_0_40px_-10px] group-hover:shadow-[var(--glow-color)]"
-                        style={{ '--glow-color': stat.glow }}
+                        style={{ 
+                            x: iconX, 
+                            y: iconY, 
+                            translateZ: "60px",
+                            '--glow-color': stat.glow 
+                        }}
+                        className="relative z-10 p-6 rounded-[2rem] bg-white/10 dark:bg-white/5 border border-white/30 dark:border-white/20 shadow-inner transition-all duration-500 group-hover:shadow-[0_0_40px_-10px] group-hover:shadow-[var(--glow-color)] transform-gpu"
                     >
-                        <stat.icon className={cn("w-10 h-10 drop-shadow-xl transition-transform duration-500 group-hover:scale-125", stat.color)} />
+                        <Icon className={cn("w-10 h-10 drop-shadow-xl transition-transform duration-500 group-hover:scale-125", stat.color)} />
                     </motion.div>
 
                     {/* Text Content with Depth */}

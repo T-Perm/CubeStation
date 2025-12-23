@@ -13,6 +13,8 @@ import VideoView from "./pages/VideoView"
 import About from "./pages/About"
 import Contact from "./pages/Contact"
 import Copyright from "./pages/Copyright"
+import Profile from "./pages/Profile"
+import Leaderboard from "./pages/Leaderboard"
 import { SolveProvider } from "./contexts/SolveContext"
 
 function App() {
@@ -34,6 +36,9 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/copyright" element={<Copyright />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:username" element={<Profile />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
           </Routes>
         </Layout>
       </SolveProvider>
