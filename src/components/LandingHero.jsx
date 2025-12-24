@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Button } from "./ui/button";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { Play, ArrowRight } from "lucide-react";
 import { LiquidGlassCard } from "./ui/liquid-glass";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useNavigate } from "react-router-dom";
@@ -21,19 +21,6 @@ export default function LandingHero() {
                 style={{ y: y1, opacity }}
                 className="container relative z-10 max-w-6xl mx-auto text-center pointer-events-auto"
             >
-                {/* Floating Badge */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-zinc-900/5 dark:bg-white/5 backdrop-blur-md border border-zinc-200 dark:border-white/10 text-zinc-600 dark:text-white/80 text-sm font-medium mb-8 shadow-xl dark:shadow-2xl"
-                >
-                    <span className="flex items-center gap-2">
-                        <Sparkles className="w-4 h-4 text-rubik-yellow" />
-                        <span className="bg-gradient-to-r from-rubik-blue to-rubik-green bg-clip-text text-transparent font-bold">New:</span>
-                        Interactive 3D Masterclasses
-                    </span>
-                </motion.div>
 
                 {/* Main Headline */}
                 <motion.h1
@@ -94,6 +81,13 @@ export default function LandingHero() {
                         </span>
                         <div className="absolute inset-0 bg-gradient-to-r from-rubik-blue via-rubik-red to-rubik-yellow opacity-0 group-hover:opacity-20 transition-opacity" />
                     </Button>
+
+                    <Button size="xl" variant="outline" className="h-16 px-10 rounded-2xl font-bold border-2 border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-zinc-900 dark:bg-white flex items-center justify-center">
+                            <Play className="w-4 h-4 text-white dark:text-zinc-900 fill-current ml-0.5" />
+                        </div>
+                        Watch Demo
+                    </Button>
                 </motion.div>
             </motion.div>
 
@@ -105,21 +99,21 @@ export default function LandingHero() {
                 className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
             >
                 <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-zinc-500 dark:text-white/90 drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">Scroll to Explore</span>
-                
+
                 {/* Pure Liquid Glass Pill */}
                 <div className="relative w-3 h-14 bg-zinc-900/5 dark:bg-white/10 backdrop-blur-[4px] rounded-full border border-zinc-200 dark:border-white/30 shadow-[inset_0_1px_1px_rgba(0,0,0,0.05),0_10px_20px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_10px_20px_rgba(0,0,0,0.3)] overflow-hidden">
                     {/* Top Specular Highlight */}
                     <div className="absolute top-[2px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-white/40 blur-[1px] rounded-full" />
-                    
+
                     {/* Animated Blue Neon Highlight Line */}
                     <motion.div
-                        animate={{ 
+                        animate={{
                             y: [-20, 70],
                             opacity: [0, 1, 1, 0]
                         }}
-                        transition={{ 
-                            repeat: Infinity, 
-                            duration: 2, 
+                        transition={{
+                            repeat: Infinity,
+                            duration: 2,
                             ease: [0.45, 0, 0.55, 1],
                             times: [0, 0.2, 0.8, 1]
                         }}
