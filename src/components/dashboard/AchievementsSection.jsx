@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Search, Filter, ArrowUpDown, Award, Trophy, Info } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import { AchievementCard } from "./AchievementCard";
 import { AchievementDetailsModal } from "./AchievementDetailsModal";
 import { useAchievements } from "../../hooks/useAchievements";
@@ -25,11 +26,41 @@ const RARITY_WEIGHT = {
 
 export function AchievementsSection() {
     const { achievements, loading, stats } = useAchievements();
+    const [searchParams] = useSearchParams();
     const [search, setSearch] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [selectedStatus, setSelectedStatus] = useState("All");
     const [sortBy, setSortBy] = useState("newest");
     const [selectedAchievement, setSelectedAchievement] = useState(null);
+    const [highlightedBadgeId, setHighlightedBadgeId] = useState(null);
+
+    useEffect(() => {
+        const badgeId = searchParams.get("badge");
+        if (badgeId && !loading) {
+            // Find the achievement to ensure it exists and maybe switch category/filters to show it
+            const target = achievements.find(a => a.id === badgeId);
+            if (target) {
+                // Adjust filters to make sure the target is visible
+                setSelectedCategory("All");
+                setSelectedStatus("All");
+                setSearch("");
+
+                // Small delay to allow filters to apply and element to be in DOM
+                setTimeout(() => {
+                    const element = document.getElementById(`badge-${badgeId}`);
+                    if (element) {
+                        element.scrollIntoView({ behavior: "smooth", block: "center" });
+                        setHighlightedBadgeId(badgeId);
+
+                        // Clear highlight after 2 seconds
+                        setTimeout(() => {
+                            setHighlightedBadgeId(null);
+                        }, 2000);
+                    }
+                }, 300);
+            }
+        }
+    }, [searchParams, loading, achievements]);
 
     const filteredAchievements = useMemo(() => {
         let result = [...achievements];
@@ -90,60 +121,78 @@ export function AchievementsSection() {
     return (
         <div className="mt-12 space-y-8">
             {/* Header & Stats Overview */}
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-                <div>
-                    <h2 className="text-3xl font-black text-zinc-900 dark:text-white font-mono flex items-center gap-3">
-                        <Trophy className="w-8 h-8 text-rubik-yellow" />
-                        Badges & Achievements
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+                <div className="space-y-2">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rubik-yellow/10 border border-rubik-yellow/20 text-rubik-yellow text-[10px] font-black uppercase tracking-widest">
+                        <Award className="w-3 h-3" />
+                        Reputation System
+                    </div>
+                    <h2 className="text-5xl font-black text-zinc-900 dark:text-white font-mono flex items-center gap-4 tracking-tighter">
+                        Badges & <span className="text-rubik-blue">Achievements</span>
                     </h2>
-                    <p className="text-zinc-500 dark:text-zinc-400 mt-1">
-                        Track your milestones, consistency, and skill levels.
+                    <p className="text-zinc-500 dark:text-zinc-400 max-w-md font-medium">
+                        Proof of your dedication to the craft. Complete challenges to unlock exclusive badges.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <Card className="bg-zinc-50 dark:bg-zinc-900 border-none shadow-sm">
-                        <CardContent className="p-4 flex flex-col items-center text-center">
-                            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Total Unlocked</span>
-                            <span className="text-2xl font-black font-mono text-zinc-900 dark:text-white">{stats.unlocked}</span>
-                            <span className="text-xs text-zinc-500">of {stats.total} badges</span>
-                        </CardContent>
-                    </Card>
-                    <Card className="bg-zinc-50 dark:bg-zinc-900 border-none shadow-sm">
-                        <CardContent className="p-4 flex flex-col items-center text-center">
-                            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Completion</span>
-                            <span className="text-2xl font-black font-mono text-zinc-900 dark:text-white">{stats.percentage}%</span>
-                            <div className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-full mt-2 overflow-hidden">
-                                <div className="h-full bg-rubik-green" style={{ width: `${stats.percentage}%` }} />
-                            </div>
-                        </CardContent>
-                    </Card>
-                    <Card className="hidden md:flex bg-zinc-50 dark:bg-zinc-900 border-none shadow-sm">
-                        <CardContent className="p-4 flex flex-col items-center text-center justify-center">
-                            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Next Rank</span>
-                            <Badge variant="outline" className="font-mono bg-white dark:bg-zinc-950">Expert Solver</Badge>
-                        </CardContent>
-                    </Card>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                    <div className="relative group">
+                        <div className="absolute inset-0 bg-rubik-blue/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <Card className="relative bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 shadow-sm rounded-3xl overflow-hidden">
+                            <CardContent className="p-6 flex flex-col items-center text-center">
+                                <span className="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.2em] mb-2">Unlocked</span>
+                                <span className="text-4xl font-black font-mono text-zinc-900 dark:text-white leading-none">{stats.unlocked}</span>
+                                <span className="text-[11px] font-bold text-zinc-500 mt-2">of {stats.total} total</span>
+                            </CardContent>
+                        </Card>
+                    </div>
+
+                    <div className="relative group">
+                        <div className="absolute inset-0 bg-rubik-green/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <Card className="relative bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 shadow-sm rounded-3xl overflow-hidden">
+                            <CardContent className="p-6 flex flex-col items-center text-center">
+                                <span className="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.2em] mb-2">Progress</span>
+                                <span className="text-4xl font-black font-mono text-zinc-900 dark:text-white leading-none">{stats.percentage}%</span>
+                                <div className="w-full h-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-full mt-4 overflow-hidden">
+                                    <div className="h-full bg-rubik-green shadow-[0_0_10px_rgba(34,197,94,0.5)] transition-all duration-1000" style={{ width: `${stats.percentage}%` }} />
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+
+                    <div className="relative group hidden md:block">
+                        <div className="absolute inset-0 bg-rubik-orange/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <Card className="relative bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 shadow-sm rounded-3xl overflow-hidden h-full">
+                            <CardContent className="p-6 flex flex-col items-center text-center justify-center h-full">
+                                <span className="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.2em] mb-2">Current Title</span>
+                                <Badge variant="outline" className="font-black text-xs bg-rubik-orange/5 text-rubik-orange border-rubik-orange/20 py-1.5 px-4 rounded-xl">
+                                    SILVER SOLVER
+                                </Badge>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </div>
             </div>
 
             {/* Filters & Search Row */}
-            <Card className="border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md">
-                <CardContent className="p-4 space-y-4">
-                    <div className="flex flex-col md:flex-row gap-4">
-                        <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+            <Card className="border-zinc-200 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-xl rounded-[2rem] shadow-sm overflow-hidden">
+                <CardContent className="p-6 space-y-6">
+                    <div className="flex flex-col md:flex-row gap-6">
+                        <div className="relative flex-1 group">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 transition-colors group-focus-within:text-rubik-blue" />
                             <Input
                                 placeholder="Search achievements..."
-                                className="pl-10 h-10 bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800"
+                                className="pl-12 h-12 bg-white/50 dark:bg-zinc-950/50 border-zinc-200 dark:border-zinc-800 rounded-2xl text-base ring-offset-0 focus:ring-2 focus:ring-rubik-blue/20 focus:border-rubik-blue/50 transition-all font-medium"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                             />
                         </div>
-                        <div className="flex items-center gap-2">
-                            <ArrowUpDown className="w-4 h-4 text-zinc-400" />
+                        <div className="flex items-center gap-3">
+                            <div className="p-2.5 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
+                                <ArrowUpDown className="w-5 h-5 text-zinc-500" />
+                            </div>
                             <select
-                                className="h-10 px-3 pr-8 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-sm focus:outline-none focus:ring-2 focus:ring-rubik-blue"
+                                className="h-12 px-4 pr-10 rounded-2xl border-2 border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-sm font-bold focus:outline-none focus:ring-4 focus:ring-rubik-blue/10 focus:border-rubik-blue transition-all appearance-none cursor-pointer"
                                 value={sortBy}
                                 onChange={(e) => setSortBy(e.target.value)}
                             >
@@ -154,42 +203,48 @@ export function AchievementsSection() {
                         </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-2 pt-2 border-t border-zinc-100 dark:border-zinc-800">
-                        <div className="flex items-center gap-2 mr-4">
-                            <Filter className="w-3 h-3 text-zinc-400" />
-                            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Category</span>
+                    <div className="flex flex-col gap-4">
+                        <div className="flex flex-wrap items-center gap-2">
+                            <div className="flex items-center gap-2 mr-4 px-3 py-1 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+                                <Filter className="w-3.5 h-3.5 text-zinc-500" />
+                                <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Category</span>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                                {CATEGORIES.map(cat => (
+                                    <button
+                                        key={cat}
+                                        onClick={() => setSelectedCategory(cat)}
+                                        className={`px-5 py-2 rounded-xl text-xs font-black transition-all duration-300 ${selectedCategory === cat
+                                            ? "bg-rubik-blue text-white shadow-lg shadow-rubik-blue/30 scale-105"
+                                            : "bg-white dark:bg-zinc-800/50 text-zinc-500 dark:text-zinc-400 border border-zinc-100 dark:border-zinc-800 hover:border-rubik-blue/30 hover:text-rubik-blue"
+                                            }`}
+                                    >
+                                        {cat}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
-                        {CATEGORIES.map(cat => (
-                            <button
-                                key={cat}
-                                onClick={() => setSelectedCategory(cat)}
-                                className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${selectedCategory === cat
-                                        ? "bg-rubik-blue text-white shadow-md shadow-rubik-blue/20"
-                                        : "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700"
-                                    }`}
-                            >
-                                {cat}
-                            </button>
-                        ))}
-                    </div>
 
-                    <div className="flex flex-wrap gap-2">
-                        <div className="flex items-center gap-2 mr-4">
-                            <Award className="w-3 h-3 text-zinc-400" />
-                            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Status</span>
+                        <div className="flex flex-wrap items-center gap-2">
+                            <div className="flex items-center gap-2 mr-4 px-3 py-1 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+                                <Award className="w-3.5 h-3.5 text-zinc-500" />
+                                <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Status</span>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                                {STATUS_FILTERS.map(status => (
+                                    <button
+                                        key={status}
+                                        onClick={() => setSelectedStatus(status)}
+                                        className={`px-5 py-2 rounded-xl text-xs font-black transition-all duration-300 ${selectedStatus === status
+                                            ? "bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 shadow-lg shadow-black/10 scale-105"
+                                            : "bg-white dark:bg-zinc-800/50 text-zinc-500 dark:text-zinc-400 border border-zinc-100 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-500"
+                                            }`}
+                                    >
+                                        {status}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
-                        {STATUS_FILTERS.map(status => (
-                            <button
-                                key={status}
-                                onClick={() => setSelectedStatus(status)}
-                                className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${selectedStatus === status
-                                        ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900"
-                                        : "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700"
-                                    }`}
-                            >
-                                {status}
-                            </button>
-                        ))}
                     </div>
                 </CardContent>
             </Card>
@@ -202,6 +257,7 @@ export function AchievementsSection() {
                             key={achievement.id}
                             achievement={achievement}
                             onClick={(a) => setSelectedAchievement(a)}
+                            isHighlighted={highlightedBadgeId === achievement.id}
                         />
                     ))}
                 </div>

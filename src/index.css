@@ -72,6 +72,11 @@
   }
 }
 
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
 html.dark body {
   @apply bg-zinc-950 text-zinc-100;
 }

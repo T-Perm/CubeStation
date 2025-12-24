@@ -391,6 +391,42 @@ export const ACHIEVEMENTS_DATA = [
         progress: 0,
         progressLabel: "0/1",
         icon: "Zap"
+    },
+    {
+        id: "sub-15-club",
+        title: "Sub-15 Club",
+        description: "Get a solve under 15 seconds.",
+        category: "Timer",
+        rarity: "Legendary",
+        unlocked: false,
+        unlockedAt: null,
+        progress: 45,
+        progressLabel: "18.25s PB",
+        icon: "Clock"
+    },
+    {
+        id: "sub-10-club",
+        title: "Sub-10 Club",
+        description: "Get a solve under 10 seconds.",
+        category: "Timer",
+        rarity: "Legendary",
+        unlocked: false,
+        unlockedAt: null,
+        progress: 20,
+        progressLabel: "18.25s PB",
+        icon: "Clock"
+    },
+    {
+        id: "10k-solves",
+        title: "10K Solver",
+        description: "Record 10,000 total solves.",
+        category: "Milestones",
+        rarity: "Legendary",
+        unlocked: false,
+        unlockedAt: null,
+        progress: 5,
+        progressLabel: "542/10000",
+        icon: "Trophy"
     }
 ];
 
