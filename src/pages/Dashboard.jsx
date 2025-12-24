@@ -3,6 +3,7 @@ import { Badge } from "../components/ui/badge"
 import { Clock, Trophy, Target, Hash, Activity, TrendingUp, Calendar } from "lucide-react"
 import { useSolves } from "../contexts/SolveContext"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts'
+import { AchievementsSection } from "../components/dashboard/AchievementsSection"
 
 export default function Dashboard() {
     const { solves, getBestSingle, getAo5, getAo12, getAo100, getSolvesThisWeek } = useSolves()
@@ -148,6 +149,9 @@ export default function Dashboard() {
                     </Card>
                 </div>
             </div>
+
+            {/* Achievements Section */}
+            <AchievementsSection />
         </div>
     )
 }
