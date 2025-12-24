@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom"
 import { cn } from "../lib/utils"
 import { Button } from "./ui/button"
-import { Box, Calendar, LayoutDashboard, Library, Menu, X, MessageCircle, Clock, Sun, Moon } from "lucide-react"
+import { Box, Calendar, LayoutDashboard, Library, Menu, X, MessageCircle, Clock, Sun, Moon, Trophy } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Badge } from "./ui/badge"
 
@@ -80,6 +80,7 @@ export default function Layout({ children }) {
         { label: "Timer", href: "/timer", icon: Clock, color: "text-rubik-orange" },
         { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard, color: "text-rubik-green" },
         { label: "Schedule", href: "/schedule", icon: Calendar, color: "text-rubik-red" },
+        { label: "Leaderboard", href: "/leaderboard", icon: Trophy, color: "text-rubik-yellow" },
         { label: "Resources", href: "/resources", icon: Library, color: "text-yellow-600 dark:text-rubik-yellow" },
     ]
 
@@ -134,10 +135,10 @@ export default function Layout({ children }) {
                             </button>
                             {user ? (
                                 <div className="flex items-center gap-3">
-                                    <button onClick={handleLogout} className="relative group">
+                                    <Link to="/profile" className="relative group">
                                         <img src={user.avatar} alt="User" className="w-10 h-10 rounded-full border-2 border-white dark:border-zinc-800 shadow-sm transition-transform hover:scale-110" />
                                         <div className="absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-zinc-900" />
-                                    </button>
+                                    </Link>
                                 </div>
                             ) : (
                                 <Button

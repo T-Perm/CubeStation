@@ -39,11 +39,11 @@ export default function Dashboard() {
         <div className="container mx-auto px-4 py-8 max-w-7xl">
             <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold font-mono">Dashboard</h1>
-                    <p className="text-zinc-600">Track your progress and analyze your solves.</p>
+                    <h1 className="text-3xl font-bold font-mono text-zinc-900 dark:text-white">Dashboard</h1>
+                    <p className="text-zinc-600 dark:text-zinc-400">Track your progress and analyze your solves.</p>
                 </div>
                 <div className="flex gap-2">
-                    <Badge variant="outline" className="px-3 py-1 text-sm bg-white">
+                     <Badge variant="outline" className="px-3 py-1 text-sm bg-white dark:bg-zinc-800 dark:text-zinc-200 border-zinc-200 dark:border-zinc-700">
                         <span className="w-2 h-2 rounded-full bg-green-500 mr-2 online-indicator"></span>
                         Active Session
                     </Badge>
@@ -62,22 +62,22 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                 {/* Main Graph: Solve Trend */}
-                <Card className="lg:col-span-2 border-zinc-200">
+                 <Card className="lg:col-span-2 border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm">
                     <CardHeader>
-                        <CardTitle className="flex justify-between items-center">
+                        <CardTitle className="flex justify-between items-center text-zinc-900 dark:text-white">
                             <span className="flex items-center gap-2"><TrendingUp className="w-5 h-5" /> Recent Progress</span>
-                            <Badge variant="secondary" className="text-xs">Last 50 Solves</Badge>
+                            <Badge variant="secondary" className="text-xs dark:bg-zinc-800 dark:text-zinc-300">Last 50 Solves</Badge>
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="h-[400px]">
                         {chartData.length > 0 ? (
                             <ResponsiveContainer width="100%" height="100%">
                                 <LineChart data={chartData}>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={window.matchMedia('(prefers-color-scheme: dark)').matches ? "#374151" : "#E5E7EB"} />
                                     <XAxis dataKey="index" hide />
                                     <YAxis domain={['auto', 'auto']} width={40} tick={{ fontSize: 12, fill: '#6B7280' }} />
                                     <Tooltip
-                                        contentStyle={{ backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #e5e7eb', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                        contentStyle={{ backgroundColor: 'var(--tooltip-bg, #fff)', borderRadius: '8px', border: '1px solid var(--tooltip-border, #e5e7eb)', color: 'var(--tooltip-text, #111827)' }}
                                         labelStyle={{ display: 'none' }}
                                         formatter={(value) => [`${value}s`, 'Time']}
                                     />
@@ -92,7 +92,7 @@ export default function Dashboard() {
                                 </LineChart>
                             </ResponsiveContainer>
                         ) : (
-                            <div className="h-full flex flex-col items-center justify-center text-zinc-400">
+                            <div className="h-full flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500">
                                 <Activity className="w-12 h-12 mb-2 opacity-20" />
                                 <p>No solve data available</p>
                                 <p className="text-xs">Start using the Timer to see your stats!</p>
@@ -105,8 +105,8 @@ export default function Dashboard() {
                 <div className="space-y-6">
                     {/* Time Distribution */}
                     <Card>
-                        <CardHeader>
-                            <CardTitle className="text-sm uppercase tracking-widest text-zinc-600 font-bold">Time Distribution</CardTitle>
+                         <CardHeader>
+                            <CardTitle className="text-sm uppercase tracking-widest text-zinc-600 dark:text-zinc-400 font-bold">Time Distribution</CardTitle>
                         </CardHeader>
                         <CardContent className="h-[200px]">
                             {distData.length > 0 ? (
@@ -125,25 +125,25 @@ export default function Dashboard() {
 
                     {/* Solve Stats Grid */}
                     <Card>
-                        <CardHeader>
-                            <CardTitle className="text-sm uppercase tracking-widest text-zinc-600 font-bold">Statistics</CardTitle>
+                         <CardHeader>
+                            <CardTitle className="text-sm uppercase tracking-widest text-zinc-600 dark:text-zinc-400 font-bold">Statistics</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                            <div className="flex justify-between items-center pb-2 border-b border-zinc-300">
-                                <span className="text-sm text-zinc-600">Total Solves</span>
-                                <span className="font-mono font-bold text-zinc-900">{totalSolves}</span>
+                             <div className="flex justify-between items-center pb-2 border-b border-zinc-200 dark:border-zinc-800">
+                                <span className="text-sm text-zinc-600 dark:text-zinc-400">Total Solves</span>
+                                <span className="font-mono font-bold text-zinc-900 dark:text-white">{totalSolves}</span>
                             </div>
-                            <div className="flex justify-between items-center pb-2 border-b border-zinc-300">
-                                <span className="text-sm text-zinc-600">Ao100</span>
-                                <span className="font-mono font-bold text-zinc-900">{getAo100()}</span>
+                            <div className="flex justify-between items-center pb-2 border-b border-zinc-200 dark:border-zinc-800">
+                                <span className="text-sm text-zinc-600 dark:text-zinc-400">Ao100</span>
+                                <span className="font-mono font-bold text-zinc-900 dark:text-white">{getAo100()}</span>
                             </div>
-                            <div className="flex justify-between items-center pb-2 border-b border-zinc-300">
-                                <span className="text-sm text-zinc-600">Best Ao5</span>
-                                <span className="font-mono font-bold text-zinc-900">--</span> {/* Not tracked in context yet */}
+                            <div className="flex justify-between items-center pb-2 border-b border-zinc-200 dark:border-zinc-800">
+                                <span className="text-sm text-zinc-600 dark:text-zinc-400">Best Ao5</span>
+                                <span className="font-mono font-bold text-zinc-900 dark:text-white">--</span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-sm text-zinc-600">Deviation</span>
-                                <span className="font-mono font-bold text-zinc-900">--</span>
+                                <span className="text-sm text-zinc-600 dark:text-zinc-400">Deviation</span>
+                                <span className="font-mono font-bold text-zinc-900 dark:text-white">--</span>
                             </div>
                         </CardContent>
                     </Card>
@@ -158,14 +158,14 @@ export default function Dashboard() {
 
 function StatCard({ title, value, color, icon: Icon, sub }) {
     return (
-        <Card className="border-l-4 border-l-transparent hover:border-l-zinc-300 transition-all">
+         <Card className="border-l-4 border-l-transparent hover:border-l-zinc-300 dark:hover:border-l-zinc-700 transition-all bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm">
             <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-zinc-600">{title}</span>
+                    <span className="text-sm font-medium text-zinc-600 dark:text-zinc-400">{title}</span>
                     <Icon className={`w-4 h-4 ${color.replace('text-', 'stroke-')}`} />
                 </div>
                 <div className={`text-2xl font-mono font-bold ${color}`}>{value}</div>
-                <div className="text-xs text-zinc-400 mt-1">{sub}</div>
+                <div className="text-xs text-zinc-500 dark:text-zinc-500 mt-1">{sub}</div>
             </CardContent>
         </Card>
     )
