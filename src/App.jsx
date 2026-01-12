@@ -15,6 +15,7 @@ import Contact from "./pages/Contact"
 import Copyright from "./pages/Copyright"
 import Profile from "./pages/Profile"
 import Leaderboard from "./pages/Leaderboard"
+import VersusArena from "./pages/VersusArena"
 import { SolveProvider } from "./contexts/SolveContext"
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/:username" element={<Profile />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/versus-arena" element={<VersusArena />} />
           </Routes>
         </Layout>
       </SolveProvider>

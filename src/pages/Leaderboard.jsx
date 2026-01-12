@@ -1,10 +1,12 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "motion/react"
-import { Trophy, Globe, MapPin, TrendingUp, History, Info } from "lucide-react"
+import { Trophy, Globe, MapPin, TrendingUp, History, Info, Swords, Zap, UserPlus, UserCheck, MessageSquare, Users } from "lucide-react"
 import { cn } from "../lib/utils"
 import { Badge } from "../components/ui/badge"
+import { Button } from "../components/ui/button"
 import { RANKS, getRankForLevel } from "../lib/ranks"
 import ThreeBackground from "../components/ThreeBackground"
+import CompetitiveModal from "../components/CompetitiveModal"
 
 const MOCK_LEADERBOARD = [
     { id: 1, name: "Max Park", handle: "@maxpark", level: 95, xp: 4500, country: "US", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Max" },
@@ -19,20 +21,37 @@ const MOCK_LEADERBOARD = [
 
 export default function Leaderboard() {
     const [mainTab, setMainTab] = useState("season") // "season" | "all-time"
-    const [subTab, setSubTab] = useState("global") // "global" | "local"
-    
+    const [subTab, setSubTab] = useState("global") // "global" | "local" | "friends"
+    const [isVersusOpen, setIsVersusOpen] = useState(false)
+    const [challengeUser, setChallengeUser] = useState(null)
+    const [friends, setFriends] = useState([2, 5]) // Initial mock friends IDs (Yiheng and Feliks)
+
     // In a real app, these would come from the user's data
     const myPosition = { rank: 42, level: 18, xp: 450, change: "+3" }
 
     const filteredData = MOCK_LEADERBOARD.filter(user => {
         if (subTab === "local") return user.country === "US"
+        if (subTab === "friends") return friends.includes(user.id)
         return true
     }).sort((a, b) => b.level - a.level)
+
+    const toggleFriend = (id, e) => {
+        e.stopPropagation()
+        setFriends(prev =>
+            prev.includes(id) ? prev.filter(fid => fid !== id) : [...prev, id]
+        )
+    }
+
+    const openChallenge = (user, e) => {
+        e.stopPropagation()
+        setChallengeUser(user)
+        setIsVersusOpen(true)
+    }
 
     return (
         <div className="relative min-h-screen">
             <ThreeBackground />
-            
+
             <div className="container mx-auto px-4 py-32 max-w-5xl relative z-10">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-6">
@@ -44,14 +63,14 @@ export default function Leaderboard() {
                     <div className="flex flex-col gap-3">
                         {/* Main Toggle */}
                         <div className="flex p-1 bg-zinc-900/10 dark:bg-white/5 backdrop-blur-xl rounded-2xl border border-zinc-200 dark:border-white/10 relative overflow-hidden">
-                            <motion.div 
+                            <motion.div
                                 className="absolute inset-y-1 bg-white dark:bg-zinc-800 rounded-xl shadow-lg"
                                 initial={false}
                                 animate={{ x: mainTab === "season" ? 0 : "100%" }}
                                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                                 style={{ width: "calc(50% - 4px)" }}
                             />
-                            <button 
+                            <button
                                 onClick={() => setMainTab("season")}
                                 className={cn(
                                     "relative z-10 flex-1 px-6 py-2.5 text-sm font-bold transition-colors",
@@ -60,7 +79,7 @@ export default function Leaderboard() {
                             >
                                 Season
                             </button>
-                            <button 
+                            <button
                                 onClick={() => setMainTab("all-time")}
                                 className={cn(
                                     "relative z-10 flex-1 px-6 py-2.5 text-sm font-bold transition-colors",
@@ -73,7 +92,7 @@ export default function Leaderboard() {
 
                         {/* Sub Toggle */}
                         <div className="flex p-1 bg-zinc-900/5 dark:bg-white/5 backdrop-blur-xl rounded-xl border border-zinc-200 dark:border-white/10">
-                            <button 
+                            <button
                                 onClick={() => setSubTab("global")}
                                 className={cn(
                                     "flex items-center gap-2 px-4 py-1.5 text-xs font-bold rounded-lg transition-all",
@@ -82,7 +101,7 @@ export default function Leaderboard() {
                             >
                                 <Globe size={14} /> Global
                             </button>
-                            <button 
+                            <button
                                 onClick={() => setSubTab("local")}
                                 className={cn(
                                     "flex items-center gap-2 px-4 py-1.5 text-xs font-bold rounded-lg transition-all",
@@ -90,6 +109,15 @@ export default function Leaderboard() {
                                 )}
                             >
                                 <MapPin size={14} /> United States
+                            </button>
+                            <button
+                                onClick={() => setSubTab("friends")}
+                                className={cn(
+                                    "flex items-center gap-2 px-4 py-1.5 text-xs font-bold rounded-lg transition-all",
+                                    subTab === "friends" ? "bg-rubik-green text-white shadow-lg shadow-rubik-green/20" : "text-zinc-500"
+                                )}
+                            >
+                                <Users size={14} /> Friends
                             </button>
                         </div>
                     </div>
@@ -100,7 +128,7 @@ export default function Leaderboard() {
                     <div className="lg:col-span-8 space-y-4">
                         {/* Season Banner (only for season view) */}
                         {mainTab === "season" && (
-                            <motion.div 
+                            <motion.div
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 className="p-4 bg-purple-500/10 border border-purple-500/20 backdrop-blur-md rounded-2xl flex items-center justify-between gap-4 overflow-hidden relative group"
@@ -121,7 +149,7 @@ export default function Leaderboard() {
 
                         {/* List Container */}
                         <div className="bg-white/5 dark:bg-black/20 backdrop-blur-[6px] rounded-[2.5rem] border border-zinc-200/50 dark:border-white/10 shadow-2xl overflow-hidden p-2">
-                             <div className="overflow-x-auto">
+                            <div className="overflow-x-auto">
                                 <table className="w-full text-left">
                                     <thead className="text-[10px] font-black uppercase tracking-widest text-zinc-400 dark:text-zinc-500 border-b border-zinc-200/50 dark:border-white/5">
                                         <tr>
@@ -129,6 +157,7 @@ export default function Leaderboard() {
                                             <th className="px-6 py-4 font-black">Cuber</th>
                                             <th className="px-6 py-4 font-black">Level</th>
                                             <th className="px-6 py-4 font-black text-right">XP</th>
+                                            <th className="px-6 py-4 font-black text-center">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-zinc-200/50 dark:divide-white/5">
@@ -137,7 +166,7 @@ export default function Leaderboard() {
                                                 const rank = getRankForLevel(user.level);
                                                 const isTop3 = i < 3;
                                                 return (
-                                                    <motion.tr 
+                                                    <motion.tr
                                                         key={user.handle}
                                                         layout
                                                         initial={{ opacity: 0, x: -10 }}
@@ -151,8 +180,8 @@ export default function Leaderboard() {
                                                                 "w-10 h-10 flex items-center justify-center font-mono font-bold text-lg rounded-full transition-all group-hover:scale-110",
                                                                 isTop3 ? (
                                                                     i === 0 ? "bg-yellow-400/20 text-yellow-500 ring-2 ring-yellow-400/30 shadow-[0_0_15px_rgba(250,204,21,0.2)]" :
-                                                                    i === 1 ? "bg-slate-300/20 text-slate-400 ring-2 ring-slate-300/30" :
-                                                                    "bg-amber-600/20 text-amber-700 ring-2 ring-amber-600/30"
+                                                                        i === 1 ? "bg-slate-300/20 text-slate-400 ring-2 ring-slate-300/30" :
+                                                                            "bg-amber-600/20 text-amber-700 ring-2 ring-amber-600/30"
                                                                 ) : "text-zinc-400 dark:text-white/20"
                                                             )}>
                                                                 {i + 1}
@@ -182,13 +211,38 @@ export default function Leaderboard() {
                                                             <div className="font-mono font-bold text-zinc-900 dark:text-white">{user.xp.toLocaleString()} XP</div>
                                                             <div className="text-[10px] text-green-500 font-bold">+120 this week</div>
                                                         </td>
+                                                        <td className="px-6 py-5 whitespace-nowrap">
+                                                            <div className="flex items-center justify-center gap-2">
+                                                                <Button
+                                                                    size="icon"
+                                                                    variant="ghost"
+                                                                    className={cn(
+                                                                        "h-8 w-8 rounded-lg transition-all",
+                                                                        friends.includes(user.id) ? "text-rubik-green bg-rubik-green/10" : "text-zinc-400 hover:text-rubik-blue hover:bg-rubik-blue/10"
+                                                                    )}
+                                                                    onClick={(e) => toggleFriend(user.id, e)}
+                                                                    title={friends.includes(user.id) ? "Remove Friend" : "Add Friend"}
+                                                                >
+                                                                    {friends.includes(user.id) ? <UserCheck size={16} /> : <UserPlus size={16} />}
+                                                                </Button>
+                                                                <Button
+                                                                    size="icon"
+                                                                    variant="ghost"
+                                                                    className="h-8 w-8 rounded-lg text-zinc-400 hover:text-rubik-red hover:bg-rubik-red/10 transition-all"
+                                                                    onClick={(e) => openChallenge(user, e)}
+                                                                    title="Challenge 1v1"
+                                                                >
+                                                                    <Swords size={16} />
+                                                                </Button>
+                                                            </div>
+                                                        </td>
                                                     </motion.tr>
                                                 )
                                             })}
                                         </AnimatePresence>
                                     </tbody>
                                 </table>
-                             </div>
+                            </div>
                         </div>
                     </div>
 
@@ -202,10 +256,10 @@ export default function Leaderboard() {
                                     {/* Rank Color Liquid Glow */}
                                     <div className={cn("absolute -top-24 -right-24 w-64 h-64 blur-[80px] opacity-30 transition-all duration-1000 group-hover:opacity-50", myRank.bg)} />
                                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none" />
-                                    
+
                                     <div className="relative z-10">
                                         <h3 className="text-[10px] font-black uppercase tracking-[0.3em] mb-6 text-zinc-500 dark:text-zinc-400">Your Current Position</h3>
-                                        
+
                                         <div className="flex items-end justify-between mb-8">
                                             <div className="flex flex-col">
                                                 <div className="text-6xl font-black font-mono text-zinc-900 dark:text-white tracking-tighter">
@@ -232,7 +286,7 @@ export default function Leaderboard() {
                                                     <span>{myPosition.xp} / 1200</span>
                                                 </div>
                                                 <div className="h-2 w-full bg-zinc-200 dark:bg-white/5 rounded-full overflow-hidden border border-zinc-300/50 dark:border-transparent">
-                                                    <motion.div 
+                                                    <motion.div
                                                         className={cn("h-full shadow-[0_0_15px] transition-all", myRank.bg.replace('/20', ''), `shadow-${myRank.color.split('-')[1]}-500/20`)}
                                                         initial={{ width: 0 }}
                                                         animate={{ width: "40%" }}
@@ -249,6 +303,28 @@ export default function Leaderboard() {
                                 </div>
                             );
                         })()}
+
+                        {/* Competitive 1v1 CTA */}
+                        <div className="bg-gradient-to-br from-rubik-red/20 via-rubik-orange/20 to-rubik-yellow/20 backdrop-blur-xl rounded-[2.5rem] p-8 border border-white/20 dark:border-white/10 shadow-2xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 group-hover:rotate-12 transition-all duration-700">
+                                <Swords size={120} className="text-white" />
+                            </div>
+
+                            <div className="relative z-10">
+                                <h3 className="text-[10px] font-black uppercase tracking-[0.3em] mb-2 text-zinc-500 dark:text-zinc-400">Competitive Mode</h3>
+                                <h2 className="text-3xl font-black text-zinc-900 dark:text-white mb-4">Versus 1v1</h2>
+                                <p className="text-sm text-zinc-600 dark:text-zinc-300 mb-6 leading-relaxed">
+                                    Queue up against other cubers in real-time. Gain Elo and climb the competitive ranks.
+                                </p>
+                                <Button
+                                    onClick={() => setIsVersusOpen(true)}
+                                    className="w-full h-14 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-black uppercase tracking-widest rounded-2xl hover:scale-105 transition-all shadow-xl flex items-center justify-center gap-3"
+                                >
+                                    <Zap size={18} fill="currentColor" />
+                                    Launch Match
+                                </Button>
+                            </div>
+                        </div>
 
                         {/* Recent Archives */}
                         <div className="bg-white/5 dark:bg-white/5 backdrop-blur-md border border-zinc-200 dark:border-white/10 p-6 rounded-[2rem]">
@@ -277,6 +353,14 @@ export default function Leaderboard() {
                     </div>
                 </div>
             </div>
+            <CompetitiveModal
+                isOpen={isVersusOpen}
+                onClose={() => {
+                    setIsVersusOpen(false)
+                    setChallengeUser(null)
+                }}
+                opponent={challengeUser}
+            />
         </div>
     )
 }
