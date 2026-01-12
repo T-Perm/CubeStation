@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
-import { Button } from "./ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { LiquidGlassCard } from "./ui/liquid-glass";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useNavigate } from "react-router-dom";
+import { Typewriter } from "./ui/typewriter-text";
+import { LiquidButton } from "./ui/liquid-glass-button";
 
 export default function LandingHero() {
     const containerRef = useRef(null);
@@ -43,16 +44,14 @@ export default function LandingHero() {
                     className="text-4xl md:text-7xl font-bold tracking-tight text-zinc-900 dark:text-white mb-6 leading-[1.1]"
                 >
                     Master the Cube. <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-br from-zinc-700 via-zinc-400 to-zinc-700 dark:from-white dark:via-zinc-300 dark:to-zinc-500">
-                        Learn Faster.
-                    </span>
-                    <span className="relative whitespace-nowrap">
-                        {" "}Play Smarter.
-                        <svg className="absolute -bottom-1 left-0 w-full h-2 text-rubik-blue/40" viewBox="0 0 300 12" fill="none" preserveAspectRatio="none">
-                            <path d="M1 11C40 3 150 1 299 11" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-                        </svg>
-                    </span>
+                    <Typewriter
+                        text={["Learn Faster.", "Play Smarter.", "Master Every Case.", "Track Progress."]}
+                        speed={100}
+                        loop={true}
+                        className="text-transparent bg-clip-text bg-gradient-to-br from-rubik-blue via-rubik-red to-rubik-yellow"
+                    />
                 </motion.h1>
+
 
                 {/* Subheadline Card */}
                 <motion.div
@@ -66,11 +65,9 @@ export default function LandingHero() {
                         borderRadius="24px"
                         shadowIntensity="md"
                         glowIntensity="none"
-                        className="p-6 bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 backdrop-blur-3xl shadow-2xl relative overflow-hidden group/card"
+                        className="p-6 border border-white/10 dark:border-white/5 shadow-2xl relative overflow-hidden group/card"
                     >
-                        {/* Subtle inner highlight for liquid look */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-none" />
-                        <p className="text-lg md:text-xl text-zinc-700 dark:text-zinc-200 leading-relaxed relative z-10 transition-colors duration-500 group-hover/card:text-zinc-900 dark:group-hover/card:text-white">
+                        <p className="text-lg md:text-xl text-zinc-700 dark:text-zinc-200 leading-relaxed relative z-10 transition-colors duration-500 group-hover/card:text-zinc-900 dark:group-hover/card:text-white text-glow">
                             Cubestation is the ultimate student-led interactive learning platform designed to take your cubing skills to the next dimension through guided mastery and performance analytics.
                         </p>
                     </LiquidGlassCard>
@@ -83,17 +80,16 @@ export default function LandingHero() {
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="flex items-center justify-center gap-6"
                 >
-                    <Button
+                    <LiquidButton
                         size="xl"
                         onClick={() => navigate('/timer')}
-                        className="group relative overflow-hidden bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-bold px-10 h-16 rounded-2xl shadow-2xl hover:scale-105 transition-all"
+                        className="font-bold relative z-20"
                     >
                         <span className="relative z-10 flex items-center">
                             Get Started
                             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </span>
-                        <div className="absolute inset-0 bg-gradient-to-r from-rubik-blue via-rubik-red to-rubik-yellow opacity-0 group-hover:opacity-20 transition-opacity" />
-                    </Button>
+                    </LiquidButton>
                 </motion.div>
             </motion.div>
 
@@ -133,27 +129,7 @@ export default function LandingHero() {
                     <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-transparent to-white/5 pointer-events-none" />
                 </div>
             </motion.div>
-
-            {/* Decorative Liquid Glass Elements floating in background */}
-            <motion.div
-                style={{ y: y2 }}
-                className="absolute top-1/2 left-[5%] w-64 h-64 -translate-y-1/2 pointer-events-none opacity-20 md:opacity-100"
-            >
-                <LiquidGlassCard className="w-full h-full flex items-center justify-center rotate-12 bg-white/5 dark:bg-white/5 border border-white/10 dark:border-white/10" borderRadius="48px" blurIntensity="xl" shadowIntensity="lg">
-                    <div className="w-20 h-20 bg-rubik-blue/20 rounded-full blur-3xl animate-pulse" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50" />
-                </LiquidGlassCard>
-            </motion.div>
-
-            <motion.div
-                style={{ y: y1 }}
-                className="absolute top-1/4 right-[5%] w-48 h-48 pointer-events-none opacity-20 md:opacity-100"
-            >
-                <LiquidGlassCard className="w-full h-full flex items-center justify-center -rotate-12 bg-white/5 dark:bg-white/5 border border-white/10 dark:border-white/10" borderRadius="32px" blurIntensity="lg" shadowIntensity="lg">
-                    <div className="w-16 h-16 bg-rubik-red/20 rounded-full blur-3xl animate-pulse" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50" />
-                </LiquidGlassCard>
-            </motion.div>
         </section>
+
     );
 }

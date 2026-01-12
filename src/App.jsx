@@ -17,10 +17,13 @@ import Profile from "./pages/Profile"
 import Leaderboard from "./pages/Leaderboard"
 import { SolveProvider } from "./contexts/SolveContext"
 
+import { GlassFilter } from "./components/ui/liquid-glass"
+
 function App() {
   return (
     <Router>
       <SolveProvider>
+        <GlassFilter />
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
