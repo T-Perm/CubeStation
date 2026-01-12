@@ -72,6 +72,11 @@
   }
 }
 
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
 html.dark body {
   @apply bg-zinc-950 text-zinc-100;
 }
@@ -103,22 +108,10 @@ html.dark body {
   @apply bg-zinc-900 border-zinc-800 text-zinc-100;
 }
 
-/* Force dark mode text for specific elements that stick to light mode colors */
-.dark h1 span {
-  color: theme('colors.zinc.100');
-}
-
-.dark h1 span.text-rubik-blue {
-  color: theme('colors.blue.400');
-}
-
-.dark h1 span.text-rubik-red {
-  color: theme('colors.red.400');
-}
-
-.dark footer span.font-mono,
-.dark header span.font-mono {
-  color: theme('colors.zinc.100') !important;
+/* Force dark mode behavior for specific components if needed, but avoid broad tag overrides */
+.dark .Card,
+.dark .card {
+  @apply bg-zinc-900 border-zinc-800 text-zinc-100;
 }
 
 .dark footer a {
@@ -200,5 +193,14 @@ html {
   h5,
   h6 {
     @apply uppercase tracking-tight;
+  }
+}
+
+@keyframes moveBackground {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 0% -1000%;
   }
 }

@@ -5,6 +5,7 @@ import ThreeBackground from "../components/ThreeBackground"
 import LandingHero from "../components/LandingHero"
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react"
 import { useRef } from "react"
+import { LiquidGlassCard } from "../components/ui/liquid-glass"
 
 export default function Home() {
     const stats = [
@@ -78,6 +79,8 @@ export default function Home() {
     )
 }
 
+
+
 function FeatureCard({ stat, index }) {
     const { icon: Icon } = stat;
     const cardRef = useRef(null);
@@ -88,12 +91,12 @@ function FeatureCard({ stat, index }) {
     const mouseXSpring = useSpring(x, springConfig);
     const mouseYSpring = useSpring(y, springConfig);
 
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["8deg", "-8deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-8deg", "8deg"]);
     
     // Icon Parallax
-    const iconX = useTransform(mouseXSpring, [-0.5, 0.5], [-15, 15]);
-    const iconY = useTransform(mouseYSpring, [-0.5, 0.5], [-15, 15]);
+    const iconX = useTransform(mouseXSpring, [-0.5, 0.5], [-12, 12]);
+    const iconY = useTransform(mouseYSpring, [-0.5, 0.5], [-12, 12]);
 
     const handleMouseMove = (e) => {
         if (!cardRef.current) return;
@@ -102,10 +105,8 @@ function FeatureCard({ stat, index }) {
         const height = rect.height;
         const mouseX = e.clientX - rect.left;
         const mouseY = e.clientY - rect.top;
-        const xPct = mouseX / width - 0.5;
-        const yPct = mouseY / height - 0.5;
-        x.set(xPct);
-        y.set(yPct);
+        x.set(mouseX / width - 0.5);
+        y.set(mouseY / height - 0.5);
     };
 
     const handleMouseLeave = () => {
@@ -115,9 +116,6 @@ function FeatureCard({ stat, index }) {
 
     return (
         <motion.div
-            style={{
-                perspective: "1000px",
-            }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -132,20 +130,16 @@ function FeatureCard({ stat, index }) {
                     rotateX,
                     rotateY,
                     transformStyle: "preserve-3d",
+                    perspective: "1000px",
                 }}
-                className="relative h-full w-full rounded-[2.5rem] p-px transition-all duration-300 group overflow-hidden will-change-transform"
+                className="relative h-full w-full group transition-all duration-300 pointer-events-auto"
             >
-                {/* Border Glow Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/5 dark:from-white/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2.5rem]" />
-                
-                {/* Main Card Body - Clear Liquid Glass Style */}
-                <div className="relative h-full w-full bg-white/10 dark:bg-white/5 backdrop-blur-[3px] rounded-[2.5rem] border border-white/30 dark:border-white/20 flex flex-col items-center justify-between p-8 shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden transform-gpu">
-                    
-                    {/* Interior Specular Reflections - Simplified */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-white/5 via-transparent to-transparent pointer-events-none" />
-
-                    {/* Icon Container with Parallax */}
+                <LiquidGlassCard
+                    draggable={false}
+                    borderRadius="48px"
+                    className="h-full w-full p-8 flex flex-col items-center justify-between border border-white/10 dark:border-white/5 shadow-2xl"
+                >
+                    {/* Icon Container with individual glass effect */}
                     <motion.div 
                         style={{ 
                             x: iconX, 
@@ -153,12 +147,18 @@ function FeatureCard({ stat, index }) {
                             translateZ: "60px",
                             '--glow-color': stat.glow 
                         }}
-                        className="relative z-10 p-6 rounded-[2rem] bg-white/10 dark:bg-white/5 border border-white/30 dark:border-white/20 shadow-inner transition-all duration-500 group-hover:shadow-[0_0_40px_-10px] group-hover:shadow-[var(--glow-color)] transform-gpu"
+                        className="relative z-10"
                     >
-                        <Icon className={cn("w-10 h-10 drop-shadow-xl transition-transform duration-500 group-hover:scale-125", stat.color)} />
+                        <LiquidGlassCard 
+                            draggable={false}
+                            borderRadius="2rem"
+                            className="p-6 border border-white/20 shadow-inner group-hover:shadow-[0_0_30px_-5px] group-hover:shadow-[var(--glow-color)] transition-all duration-500"
+                        >
+                            <Icon className={cn("w-10 h-10 drop-shadow-xl transition-transform duration-500 group-hover:scale-110", stat.color)} />
+                        </LiquidGlassCard>
                     </motion.div>
 
-                    {/* Text Content with Depth */}
+                    {/* Text Content */}
                     <motion.div 
                         style={{ translateZ: "40px" }}
                         className="relative z-10 text-center space-y-4 mt-8 flex-1 flex flex-col justify-center"
@@ -176,17 +176,15 @@ function FeatureCard({ stat, index }) {
                         </p>
                     </motion.div>
 
-                    {/* CTA "Liquid" indicator */}
+                    {/* CTA indicator */}
                     <div className="mt-8 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 relative z-10">
                         <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-500 dark:text-white/60">
                             Explore <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </div>
                     </div>
-
-                    {/* Glass Shine Follower */}
-                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-white/10 to-transparent pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity" />
-                </div>
+                </LiquidGlassCard>
             </motion.div>
         </motion.div>
     );
 }
+
