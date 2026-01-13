@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Float, Environment } from '@react-three/drei'
+import { Float, Environment, Edges } from '@react-three/drei'
 import * as THREE from 'three'
 
 function Puzzle({ type = '3x3', position, scale = 1, color, reduceMotion, globalMouse }) {
@@ -52,12 +52,12 @@ function Puzzle({ type = '3x3', position, scale = 1, color, reduceMotion, global
   const dim = parseInt(type.split('x')[0]) || 3
   return (
     <group ref={groupRef} position={position}>
-      <RubiksCube dim={dim} scale={scale} color={color} />
+      <RubiksCube dim={dim} scale={scale} color={color} isDark={globalMouse.current.isDark} />
     </group>
   )
 }
 
-function RubiksCube({ dim, scale, color }) {
+function RubiksCube({ dim, scale, color, isDark }) {
   const size = 0.95
   const gap = 0.05
   const offset = (dim - 1) / 2
@@ -81,34 +81,45 @@ function RubiksCube({ dim, scale, color }) {
       {cubes.map(([x, y, z], i) => (
         <mesh key={i} position={[x * (1 + gap), y * (1 + gap), z * (1 + gap)]}>
           <boxGeometry args={[size, size, size]} />
-          <meshStandardMaterial color="#222" roughness={0.1} metalness={0.1} />
-          {x === offset && <Sticker position={[stickerOffset, 0, 0]} rotation={[0, Math.PI / 2, 0]} color={color?.right || "#ef4444"} />}
-          {x === -offset && <Sticker position={[-stickerOffset, 0, 0]} rotation={[0, -Math.PI / 2, 0]} color={color?.left || "#f97316"} />}
-          {y === offset && <Sticker position={[0, stickerOffset, 0]} rotation={[-Math.PI / 2, 0, 0]} color={color?.top || "#ffffff"} />}
-          {y === -offset && <Sticker position={[0, -stickerOffset, 0]} rotation={[Math.PI / 2, 0, 0]} color={color?.bottom || "#eab308"} />}
-          {z === offset && <Sticker position={[0, 0, stickerOffset]} rotation={[0, 0, 0]} color={color?.front || "#22c55e"} />}
-          {z === -offset && <Sticker position={[0, 0, -stickerOffset]} rotation={[0, Math.PI, 0]} color={color?.back || "#3b82f6"} />}
+          <meshStandardMaterial
+            color={isDark ? "#222" : "#111"}
+            roughness={isDark ? 0.1 : 0.3}
+            metalness={isDark ? 0.1 : 0.05}
+          />
+          {!isDark && <Edges threshold={15} color="#000000" />}
+          {x === offset && <Sticker position={[stickerOffset, 0, 0]} rotation={[0, Math.PI / 2, 0]} color={color?.right || "#ef4444"} isDark={isDark} />}
+          {x === -offset && <Sticker position={[-stickerOffset, 0, 0]} rotation={[0, -Math.PI / 2, 0]} color={color?.left || "#f97316"} isDark={isDark} />}
+          {y === offset && <Sticker position={[0, stickerOffset, 0]} rotation={[-Math.PI / 2, 0, 0]} color={color?.top || "#ffffff"} isDark={isDark} />}
+          {y === -offset && <Sticker position={[0, -stickerOffset, 0]} rotation={[Math.PI / 2, 0, 0]} color={color?.bottom || "#eab308"} isDark={isDark} />}
+          {z === offset && <Sticker position={[0, 0, stickerOffset]} rotation={[0, 0, 0]} color={color?.front || "#22c55e"} isDark={isDark} />}
+          {z === -offset && <Sticker position={[0, 0, -stickerOffset]} rotation={[0, Math.PI, 0]} color={color?.back || "#3b82f6"} isDark={isDark} />}
         </mesh>
       ))}
     </group>
   )
 }
 
-function Sticker({ position, rotation, color }) {
+function Sticker({ position, rotation, color, isDark }) {
   return (
     <mesh position={position} rotation={rotation}>
       <planeGeometry args={[0.85, 0.85]} />
-      <meshStandardMaterial color={color} roughness={0.8} />
+      <meshStandardMaterial
+        color={color}
+        roughness={isDark ? 0.8 : 0.4}
+        metalness={isDark ? 0 : 0.1}
+      />
+      {!isDark && <Edges color="#000000" />}
     </mesh>
   )
 }
 
 function Scene({ reduceMotion, globalMouse }) {
+  const isDark = globalMouse.current.isDark;
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 5]} intensity={1} />
-      <Environment preset="city" />
+      <ambientLight intensity={isDark ? 0.5 : 0.8} />
+      <directionalLight position={[10, 10, 5]} intensity={isDark ? 1 : 1.8} />
+      <Environment preset="city" environmentIntensity={isDark ? 1 : 0.5} />
       <FloatingCubes reduceMotion={reduceMotion} globalMouse={globalMouse} />
       <Rig reduceMotion={reduceMotion} globalMouse={globalMouse} />
     </>
@@ -204,7 +215,7 @@ function Rig({ reduceMotion, globalMouse }) {
 }
 
 export default function ThreeBackground() {
-  const mouseRef = useRef(new THREE.Vector2(0, 0));
+  const mouseRef = useRef({ x: 0, y: 0, isDark: true });
   const [reduceMotion, setReduceMotion] = useState(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('reduceMotion');
@@ -214,12 +225,29 @@ export default function ThreeBackground() {
     return false;
   });
 
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof document !== 'undefined') {
+      return document.documentElement.classList.contains('dark');
+    }
+    return true;
+  });
+
   useEffect(() => {
     const handleMouseMove = (event) => {
       // Convert mouse position to normalized device coordinates (-1 to +1)
       mouseRef.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
+
+    const checkTheme = () => {
+      const dark = document.documentElement.classList.contains('dark');
+      setIsDark(dark);
+      mouseRef.current.isDark = dark;
+    };
+
+    checkTheme();
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     window.addEventListener('mousemove', handleMouseMove);
     const handleReduceMotion = (e) => setReduceMotion(e.detail);
@@ -228,11 +256,13 @@ export default function ThreeBackground() {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('reduce-motion-change', handleReduceMotion);
+      observer.disconnect();
     };
   }, []);
 
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none opacity-40 grayscale-[20%] transition-opacity duration-1000">
+    <div className={`fixed inset-0 z-0 pointer-events-none transition-all duration-1000 ${isDark ? 'opacity-40 grayscale-[20%]' : 'opacity-80 grayscale-0'
+      }`}>
       <Canvas
         camera={{ position: [0, 0, 15], fov: 45 }}
         dpr={[1, 2]}
@@ -243,4 +273,3 @@ export default function ThreeBackground() {
     </div>
   )
 }
-

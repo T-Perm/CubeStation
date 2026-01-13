@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Button } from "./ui/button";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { LiquidGlassCard } from "./ui/liquid-glass";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useNavigate } from "react-router-dom";
@@ -21,28 +21,14 @@ export default function LandingHero() {
             {/* Main content needs pointer events for buttons/links */}
             <motion.div
                 style={{ y: y1, opacity }}
-                className="container relative z-10 max-w-6xl mx-auto text-center pointer-events-auto"
+                className="container relative z-10 max-w-6xl mx-auto text-center pointer-events-auto py-12 px-6 rounded-[4rem] bg-white/[0.02] dark:bg-black/[0.02] backdrop-blur-[2px]"
             >
-                {/* Floating Badge */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-zinc-900/5 dark:bg-white/5 backdrop-blur-md border border-zinc-200 dark:border-white/10 text-zinc-600 dark:text-white/80 text-sm font-medium mb-8 shadow-xl dark:shadow-2xl"
-                >
-                    <span className="flex items-center gap-2">
-                        <Sparkles className="w-4 h-4 text-rubik-yellow" />
-                        <span className="bg-gradient-to-r from-rubik-blue to-rubik-green bg-clip-text text-transparent font-bold">New:</span>
-                        Interactive 3D Masterclasses
-                    </span>
-                </motion.div>
-
                 {/* Main Headline */}
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-4xl md:text-7xl font-bold tracking-tight text-zinc-900 dark:text-white mb-6 leading-[1.1]"
+                    className="text-4xl md:text-7xl font-bold tracking-tight text-zinc-900 dark:text-white mb-6 leading-[1.1] headline-readability"
                 >
                     Master the Cube. <br />
                     <Typewriter
