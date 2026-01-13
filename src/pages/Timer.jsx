@@ -259,10 +259,13 @@ export default function Timer() {
                             timerState === "ready" && "bg-rubik-green border-rubik-green shadow-2xl scale-[1.02]",
                             (timerState === "idle" || timerState === "finished" || timerState === "running" || timerState === "inspection") && "bg-white dark:bg-zinc-900 shadow-sm"
                         )}
-                        onClick={() => {
-                            // Touch support placeholder
-                            if (window.innerWidth < 768 && timerState === 'idle') handleKeyDown({ code: 'Space', preventDefault: () => { } })
+                        onTouchStart={(e) => {
+                            handleKeyDown({ code: "Space", preventDefault: () => { } })
                         }}
+                        onTouchEnd={(e) => {
+                            handleKeyUp({ code: "Space", preventDefault: () => { } })
+                        }}
+                        style={{ touchAction: "none" }}
                     >
                         {/* Background Pulse for Inspection */}
                         {timerState === "inspection" && (
