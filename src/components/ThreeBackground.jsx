@@ -128,16 +128,20 @@ function Scene({ reduceMotion, globalMouse }) {
 
 function FloatingCubes({ reduceMotion, globalMouse }) {
   const puzzles = useMemo(() => [
-    { type: '2x2', pos: [-8, 6, -15], scale: 0.6, speed: 1 },
-    { type: '3x3', pos: [7, -5, -8], scale: 1.2, speed: 0.8 },
-    { type: '4x4', pos: [-10, -5, -20], scale: 1.5, speed: 0.5 },
-    { type: '2x2', pos: [10, 5, -12], scale: 0.7, speed: 0.7 },
-    { type: '3x3', pos: [0, 10, -25], scale: 2.5, speed: 0.3 },
-    { type: '4x4', pos: [-12, 0, -10], scale: 0.8, speed: 0.6 },
-    { type: '3x3', pos: [5, 8, -18], scale: 1.0, speed: 0.9 },
-    { type: '2x2', pos: [-15, -10, -30], scale: 2.0, speed: 0.4 },
-    { type: '3x3', pos: [15, -12, -22], scale: 1.8, speed: 0.2 },
-    { type: '4x4', pos: [-5, 12, -15], scale: 1.2, speed: 1.1 },
+    { type: '2x2', pos: [-16, 8, -15], scale: 0.6, speed: 1 },
+    { type: '3x3', pos: [18, -6, -12], scale: 1.2, speed: 0.8 },
+    { type: '4x4', pos: [-20, -8, -20], scale: 1.5, speed: 0.5 },
+    { type: '2x2', pos: [14, 10, -12], scale: 0.7, speed: 0.7 },
+    { type: '3x3', pos: [-6, 14, -25], scale: 2.5, speed: 0.3 },
+    { type: '4x4', pos: [6, 14, -25], scale: 0.8, speed: 0.6 },
+    { type: '3x3', pos: [-18, 0, -15], scale: 1.0, speed: 0.9 },
+    { type: '2x2', pos: [18, 0, -15], scale: 2.0, speed: 0.4 },
+    { type: '3x3', pos: [-14, -12, -22], scale: 1.8, speed: 0.2 },
+    { type: '4x4', pos: [14, -12, -22], scale: 1.2, speed: 1.1 },
+    { type: '3x3', pos: [22, 4, -10], scale: 0.9, speed: 0.7 },
+    { type: '2x2', pos: [-22, -2, -10], scale: 0.5, speed: 1.2 },
+    { type: '4x4', pos: [10, -16, -20], scale: 1.4, speed: 0.4 },
+    { type: '3x3', pos: [-10, -16, -20], scale: 2.2, speed: 0.3 },
   ], [])
 
   const activePuzzles = useMemo(() => {
