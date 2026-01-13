@@ -80,6 +80,17 @@ export default function Resources() {
                                         <span className="bg-white/20 backdrop-blur-sm text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Start Here</span>
                                         <h3 className="text-4xl font-bold mt-4 mb-2">Beginner's Guide</h3>
                                         <p className="text-white/80 text-lg max-w-md">Learn to solve the cube layer by layer. The fundamental method for everyone.</p>
+
+                                        {/* Progress Bar (Mock for UI completeness) */}
+                                        <div className="mt-6 max-w-xs">
+                                            <div className="flex justify-between items-center text-xs font-bold mb-1.5 opacity-90">
+                                                <span>PROJECTED PROGRESS</span>
+                                                <span>65%</span>
+                                            </div>
+                                            <div className="h-2 w-full bg-white/20 rounded-full overflow-hidden border border-white/10">
+                                                <div className="h-full bg-white w-[65%]" />
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="flex items-center gap-2 font-bold group-hover:gap-4 transition-all">
                                         Start Tutorial <IconArrowLeft className="rotate-180" />

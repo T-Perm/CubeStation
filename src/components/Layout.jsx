@@ -164,6 +164,8 @@ export default function Layout({ children }) {
                             size="icon"
                             className="lg:hidden text-zinc-600 dark:text-zinc-400"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                            aria-expanded={isMobileMenuOpen}
                         >
                             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                         </Button>

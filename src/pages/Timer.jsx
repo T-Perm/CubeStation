@@ -241,6 +241,7 @@ export default function Timer() {
                             onClick={() => setScramble(generateScramble())}
                             className="bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white shrink-0"
                             size="icon"
+                            aria-label="New Scramble"
                         >
                             <RotateCcw className="w-5 h-5" />
                         </Button>
@@ -266,6 +267,9 @@ export default function Timer() {
                             handleKeyUp({ code: "Space", preventDefault: () => { } })
                         }}
                         style={{ touchAction: "none" }}
+                        role="timer"
+                        aria-label={`Speedcube timer. Current state: ${timerState}`}
+                        tabIndex={0}
                     >
                         {/* Background Pulse for Inspection */}
                         {timerState === "inspection" && (
@@ -274,7 +278,10 @@ export default function Timer() {
                             )} />
                         )}
 
-                        <div className={cn("text-[15vw] md:text-[8rem] font-mono font-bold tabular-nums tracking-tighter transition-colors select-none z-10", getTimerColor())}>
+                        <div
+                            className={cn("text-[15vw] md:text-[8rem] font-mono font-bold tabular-nums tracking-tighter transition-colors select-none z-10", getTimerColor())}
+                            aria-live={timerState === "finished" || timerState === "inspection" ? "polite" : "off"}
+                        >
                             {currentDisplayTime()}
                         </div>
 

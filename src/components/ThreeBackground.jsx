@@ -5,7 +5,7 @@ import * as THREE from 'three'
 
 function Puzzle({ type = '3x3', position, scale = 1, color, reduceMotion, globalMouse }) {
   const groupRef = useRef()
-  
+
   // Calculate depth factor: 0 is far, 1 is close
   const depthFactor = useMemo(() => {
     const z = Math.abs(position[2])
@@ -28,18 +28,18 @@ function Puzzle({ type = '3x3', position, scale = 1, color, reduceMotion, global
 
     if (!reduceMotion && globalMouse.current) {
       const mouse = globalMouse.current;
-      
+
       // 1. Horizontal Mouse Parallax Shift (Opposite Direction)
       const targetPosX = position[0] - (mouse.x * 4.5 * depthFactor)
       const targetPosY = position[1] - (mouse.y * 0.5 * depthFactor)
-      
+
       groupRef.current.position.x = THREE.MathUtils.lerp(groupRef.current.position.x, targetPosX, 0.15)
       groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, targetPosY, 0.15)
 
       // 2. Horizontal Tilt Effect
       const tiltY = -mouse.x * 0.5 * depthFactor
       groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, groupRef.current.rotation.y + tiltY, 0.15)
-      
+
       const tiltX = mouse.y * 0.1 * depthFactor
       groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, groupRef.current.rotation.x + tiltX, 0.15)
 
@@ -52,7 +52,7 @@ function Puzzle({ type = '3x3', position, scale = 1, color, reduceMotion, global
   const dim = parseInt(type.split('x')[0]) || 3
   return (
     <group ref={groupRef} position={position}>
-        <RubiksCube dim={dim} scale={scale} color={color} />
+      <RubiksCube dim={dim} scale={scale} color={color} />
     </group>
   )
 }
@@ -129,9 +129,13 @@ function FloatingCubes({ reduceMotion, globalMouse }) {
     { type: '4x4', pos: [-5, 12, -15], scale: 1.2, speed: 1.1 },
   ], [])
 
+  const activePuzzles = useMemo(() => {
+    return reduceMotion ? puzzles.slice(0, 3) : puzzles
+  }, [reduceMotion, puzzles])
+
   return (
     <>
-      {puzzles.map((p, i) => (
+      {activePuzzles.map((p, i) => (
         <Float
           key={i}
           speed={p.speed}
@@ -169,9 +173,9 @@ function Rig({ reduceMotion, globalMouse }) {
 
   useFrame((state, delta) => {
     if (reduceMotion || !globalMouse.current) {
-        camera.position.lerp(new THREE.Vector3(0, 0, 15), 0.05)
-        camera.lookAt(0, 0, 0)
-        return
+      camera.position.lerp(new THREE.Vector3(0, 0, 15), 0.05)
+      camera.lookAt(0, 0, 0)
+      return
     }
 
     const mouse = globalMouse.current;
@@ -179,20 +183,20 @@ function Rig({ reduceMotion, globalMouse }) {
     // 1. Horizontal Camera Parallax (Position)
     const targetX = (mouse.x * 1.5)
     const targetY = (mouse.y * 0.1)
-    
+
     // 2. Scroll-based Vertical Drift
     const scrollTargetY = -(scrollY * 0.005)
     const combinedY = targetY + scrollTargetY
-    
+
     camera.position.lerp(new THREE.Vector3(targetX, combinedY, 15), 0.1)
-    
+
     // 3. Horizontal Camera Yaw (Viewpoint Tilt)
     const lookAtTargetX = THREE.MathUtils.lerp(state.camera.userData.lookAtX || 0, -mouse.x * 3, 0.1)
-    state.camera.userData.lookAtX = lookAtTargetX 
-    
+    state.camera.userData.lookAtX = lookAtTargetX
+
     const lookAtTargetY = scrollTargetY * 0.1
     camera.lookAt(lookAtTargetX, lookAtTargetY, 0)
-    
+
     // 4. Subtle roll on scroll
     camera.rotation.z = THREE.MathUtils.lerp(camera.rotation.z, scrollY * 0.00002, 0.1)
   })
@@ -220,7 +224,7 @@ export default function ThreeBackground() {
     window.addEventListener('mousemove', handleMouseMove);
     const handleReduceMotion = (e) => setReduceMotion(e.detail);
     window.addEventListener('reduce-motion-change', handleReduceMotion);
-    
+
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('reduce-motion-change', handleReduceMotion);
@@ -229,9 +233,9 @@ export default function ThreeBackground() {
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none opacity-40 grayscale-[20%] transition-opacity duration-1000">
-      <Canvas 
+      <Canvas
         camera={{ position: [0, 0, 15], fov: 45 }}
-        dpr={[1, 2]} 
+        dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
       >
         <Scene reduceMotion={reduceMotion} globalMouse={mouseRef} />

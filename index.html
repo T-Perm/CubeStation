@@ -1,17 +1,59 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cubestation</title>
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#3b82f6" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CubeStation | Ultimate Student Speedcubing Hub</title>
+
+  <!-- Competition Specific & SEO Meta Tags -->
+  <meta name="description"
+    content="CubeStation is the premier student-led learning hub for speedcubing. Master the 3x3 Rubik's Cube with tutorials, track your progress with advanced stats, and join live student seminars." />
+  <meta name="keywords"
+    content="speedcubing, rubiks cube, FBLA, speedcube timer, cube tutorials, student learning, CFOP, Roux" />
+  <meta name="author" content="CubeStation Team" />
+
+  <!-- PWA & Mobile Web App -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#3b82f6" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="CubeStation" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cubestation.vercel.app/" />
+  <meta property="og:title" content="CubeStation | Ultimate Student Speedcubing Hub" />
+  <meta property="og:description"
+    content="The ultimate student learning hub for speedcubing mastery. Built for FBLA 2025-2026." />
+  <meta property="og:image" content="/vite.svg" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="CubeStation | Ultimate Student Speedcubing Hub" />
+  <meta property="twitter:description"
+    content="The ultimate student learning hub for speedcubing mastery. Built for FBLA 2025-2026." />
+
+  <!-- JSON-LD Structured Data for FBLA Competition Criteria -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "CubeStation",
+      "description": "Student-led learning platform for Rubik's Cube speedcubing competition prep.",
+      "url": "https://cubestation.vercel.app/",
+      "logo": "https://cubestation.vercel.app/vite.svg",
+      "sameAs": [
+        "https://discord.gg/cubestation"
+      ]
+    }
+    </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
