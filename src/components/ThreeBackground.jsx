@@ -3,6 +3,12 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Float, Environment, Edges } from '@react-three/drei'
 import * as THREE from 'three'
 
+const CUBE_CONFIG = {
+  MIN_COUNT: 14,
+  MAX_COUNT: 14,
+  SAFE_ZONE: { x: 12, y: 8 }
+};
+
 function Puzzle({ type = '3x3', position, scale = 1, color, reduceMotion, globalMouse }) {
   const groupRef = useRef()
 
@@ -128,25 +134,26 @@ function Scene({ reduceMotion, globalMouse }) {
 
 function FloatingCubes({ reduceMotion, globalMouse }) {
   const puzzles = useMemo(() => [
-    { type: '2x2', pos: [-16, 8, -15], scale: 0.6, speed: 1 },
-    { type: '3x3', pos: [18, -6, -12], scale: 1.2, speed: 0.8 },
-    { type: '4x4', pos: [-20, -8, -20], scale: 1.5, speed: 0.5 },
-    { type: '2x2', pos: [14, 10, -12], scale: 0.7, speed: 0.7 },
-    { type: '3x3', pos: [-6, 14, -25], scale: 2.5, speed: 0.3 },
-    { type: '4x4', pos: [6, 14, -25], scale: 0.8, speed: 0.6 },
-    { type: '3x3', pos: [-18, 0, -15], scale: 1.0, speed: 0.9 },
-    { type: '2x2', pos: [18, 0, -15], scale: 2.0, speed: 0.4 },
-    { type: '3x3', pos: [-14, -12, -22], scale: 1.8, speed: 0.2 },
-    { type: '4x4', pos: [14, -12, -22], scale: 1.2, speed: 1.1 },
-    { type: '3x3', pos: [22, 4, -10], scale: 0.9, speed: 0.7 },
-    { type: '2x2', pos: [-22, -2, -10], scale: 0.5, speed: 1.2 },
-    { type: '4x4', pos: [10, -16, -20], scale: 1.4, speed: 0.4 },
-    { type: '3x3', pos: [-10, -16, -20], scale: 2.2, speed: 0.3 },
+    { type: '2x2', pos: [-12, 6, -15], scale: 0.6, speed: 1 },
+    { type: '3x3', pos: [13, -5, -12], scale: 1.2, speed: 0.8 },
+    { type: '4x4', pos: [-14, -6, -20], scale: 1.5, speed: 0.5 },
+    { type: '2x2', pos: [11, 8, -12], scale: 0.7, speed: 0.7 },
+    { type: '3x3', pos: [-5, 10, -25], scale: 2.5, speed: 0.3 },
+    { type: '4x4', pos: [5, 10, -25], scale: 0.8, speed: 0.6 },
+    { type: '3x3', pos: [-13, 0, -15], scale: 1.0, speed: 0.9 },
+    { type: '2x2', pos: [13, 0, -15], scale: 2.0, speed: 0.4 },
+    { type: '3x3', pos: [-10, -9, -22], scale: 1.8, speed: 0.2 },
+    { type: '4x4', pos: [10, -9, -22], scale: 1.2, speed: 1.1 },
+    { type: '3x3', pos: [15, 3, -10], scale: 0.9, speed: 0.7 },
+    { type: '2x2', pos: [-15, -2, -10], scale: 0.5, speed: 1.2 },
+    { type: '4x4', pos: [8, -12, -20], scale: 1.4, speed: 0.4 },
+    { type: '3x3', pos: [-8, -12, -20], scale: 2.2, speed: 0.3 },
   ], [])
 
   const activePuzzles = useMemo(() => {
-    return reduceMotion ? puzzles.slice(0, 3) : puzzles
-  }, [reduceMotion, puzzles])
+    // Unify density across all environments - no longer slicing for reduceMotion
+    return puzzles;
+  }, [puzzles])
 
   return (
     <>
