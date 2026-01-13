@@ -172,7 +172,7 @@ export default function Layout({ children }) {
 
                 {/* Mobile Menu */}
                 {isMobileMenuOpen && (
-                    <div className="md:hidden border-t dark:border-zinc-800 p-4 bg-white dark:bg-zinc-900 shadow-2xl space-y-4 animate-in slide-in-from-top duration-300">
+                    <div className="md:hidden absolute top-16 left-0 w-full border-b border-zinc-200 dark:border-zinc-800 p-4 bg-white dark:bg-zinc-900 shadow-2xl space-y-4 animate-in slide-in-from-top duration-300 z-40">
                         <nav className="flex flex-col gap-1">
                             {navItems.map((item) => (
                                 <Link

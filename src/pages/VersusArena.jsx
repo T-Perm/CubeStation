@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import { useNavigate, useLocation } from "react-router-dom"
-import { Swords, Trophy, Zap, Ghost, Timer as TimerIcon, ArrowLeft, RotateCcw, ShieldCheck, Flame } from "lucide-react"
+import { Trophy, Zap, ArrowLeft, ShieldCheck, Flame } from "lucide-react"
 import Confetti from "react-confetti"
 import { Card } from "../components/ui/card"
 import { Button } from "../components/ui/button"
@@ -66,13 +66,15 @@ export default function VersusArena() {
 
     // Simulate opponent behavior
     useEffect(() => {
+        let timeout
         if (timerState === "running" && opponentStatus === "preparing") {
             setOpponentStatus("solving")
             // Opponent finishes at exactly 15.87s
-            setTimeout(() => {
+            timeout = setTimeout(() => {
                 setOpponentStatus("finished")
             }, 15870)
         }
+        return () => clearTimeout(timeout)
     }, [timerState, opponentStatus])
 
     const handleKeyDown = useCallback((e) => {
@@ -195,7 +197,7 @@ export default function VersusArena() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     {/* Left: You */}
-                    <div className="lg:col-span-4 flex flex-col items-center">
+                    <div className="lg:col-span-4 flex flex-col items-center order-2 lg:order-1">
                         <div className="relative mb-8">
                             <div className="absolute inset-0 bg-rubik-blue/20 blur-[40px] rounded-full" />
                             <img src="https://github.com/shadcn.png" className="w-32 h-32 rounded-full border-4 border-rubik-blue relative z-10" alt="You" />
@@ -223,7 +225,7 @@ export default function VersusArena() {
                     </div>
 
                     {/* Middle: Timer & Battle Info */}
-                    <div className="lg:col-span-4 flex flex-col items-center justify-center">
+                    <div className="lg:col-span-4 flex flex-col items-center justify-center order-1 lg:order-2">
                         <div className="relative w-full aspect-square flex flex-col items-center justify-center">
                             {/* Battle Visual Container */}
                             <div className="absolute inset-x-0 top-0 flex justify-center py-4">
@@ -243,7 +245,7 @@ export default function VersusArena() {
                                 )}
 
                                 <div className={cn(
-                                    "text-7xl font-mono font-black tabular-nums transition-colors z-10",
+                                    "text-5xl md:text-7xl font-mono font-black tabular-nums transition-colors z-10",
                                     (timerState === "holding" || timerState === "ready") ? "text-white" : "text-zinc-900 dark:text-white",
                                     timerState === "inspection" && (inspectionTime <= 8000 ? "text-rubik-orange" : "text-rubik-yellow")
                                 )}>
@@ -339,7 +341,7 @@ export default function VersusArena() {
                     </div>
 
                     {/* Right: Opponent */}
-                    <div className="lg:col-span-4 flex flex-col items-center">
+                    <div className="lg:col-span-4 flex flex-col items-center order-3 lg:order-3">
                         <div className="relative mb-8">
                             <div className="absolute inset-0 bg-rubik-red/20 blur-[40px] rounded-full" />
                             <img src={opponentAvatar} className="w-32 h-32 rounded-full border-4 border-rubik-red relative z-10" alt={opponentName} />

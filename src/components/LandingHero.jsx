@@ -17,7 +17,7 @@ export default function LandingHero() {
     const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
     return (
-        <section ref={containerRef} className="relative min-h-[90vh] flex flex-col items-center justify-center pt-20 pb-32 px-4 overflow-hidden pointer-events-none">
+        <section ref={containerRef} className="relative min-h-[90dvh] flex flex-col items-center justify-center pt-20 pb-32 px-4 overflow-hidden pointer-events-none">
             {/* Main content needs pointer events for buttons/links */}
             <motion.div
                 style={{ y: y1, opacity }}
@@ -91,7 +91,7 @@ export default function LandingHero() {
                             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </span>
                         <div className="absolute inset-0 bg-gradient-to-r from-rubik-blue via-rubik-red to-rubik-yellow opacity-0 group-hover:opacity-20 transition-opacity" />
-                    </Button>
+                    </LiquidButton>
                 </motion.div>
             </motion.div>
 
